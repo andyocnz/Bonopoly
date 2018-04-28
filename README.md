@@ -1,3 +1,4 @@
+![alt text](https://github.com/andyocnz/Bonopoly/blob/master/imgs/logo.png?raw=true)
 # Bonopoply
 Business simulation game for strategy a international business studies. 
 This will help students to understand the complexity of global business in a dynamic and competitive environment. 
@@ -20,10 +21,10 @@ interactive multiplayer environment.
  # How to install?
  
  1. Only works with PHP 5.x
- 2. Upload Mysql database
+ 2. Import sample Mysql database
  3. Change Global.php variables to connect to your db
  4. Change db variable on Graph.php
- 
+ 5. Download and upload pchart
  # How it works?
  
  1. Login to admin dashboard to
@@ -49,13 +50,13 @@ interactive multiplayer environment.
 # Simulation 
 
 Production
-
+![alt text](https://github.com/andyocnz/Bonopoly/blob/master/screeenshot/demand.png?raw=true)
 Characteristic to high-tech companies, production is complicated and high costs are incurred in the beginning phases of the production of new models. This, combined with short product life-cycles, forces the companies to adapt the production process to manufacture a new product model as soon as possible, in pursuit of low costs. Eventually, as the company becomes more acquainted with a specific technology, production cost per unit will fall with the learning curve effect.
 
 Due to the fact that building a plant takes two rounds, there have been times when demand has exceeded production capabilities. At such times the company has been forced to subcontract some of its production. When subcontracting production, the learning curve effect is foregone, thus outsourcing decisions should be weighed carefully. As with producing in-house, the unit cost of outsourcing is inversely related to the age of the technology. Sometimes it can be beneficial to outsource production as the unit cost of outsourced goods may be lower than that of goods produced in-house.
 
 R&D
-
+![alt text](https://github.com/andyocnz/Bonopoly/blob/master/screeenshot/rnd.png?raw=true)
 R&D is extremely important for IT - and other high-tech companies, because of the dynamic nature of the industry. Consumers continuously demand new products and the margins from old products decline rapidly due to tight competition.
 
 The companies have a choice of performing their own R&D or outsourcing the process by purchasing technology licenses for the technologies and their related features. The first step of the R&D process is to develop the base technology upon which up to ten technology-specific product features can be added. There is one notable difference     between     in-house R&D     and     technology licenses: when R&D is performed internally, the benefits are available in the next period. If R&D is outsourced, the new technology/feature is available immediately.
@@ -65,11 +66,12 @@ The cost of in-house R&D is lower when the process is a gradual one, comparing t
 It should be noted that R&D expenditure will not be capitalised on the balance sheet. That is, all R&D expenses are considered as operating expenses and as such R&D investments may cause substantial fluctuations to the companiesí P&L.
 
 Sales and Marketing
-
+![alt text](https://github.com/andyocnz/Bonopoly/blob/master/screeenshot/mkt.png?raw=true)
 The companies have traditionally operated only in the U.S. market. Over the last years, sales networks have been established in Asia and Europe as well. Marketing plays a significant role in promoting the brand and communicating to consumers about the product. Marketing is particularly important in the U.S. and Europe. In Asia the effect of promotion is less but still considerable. Typical marketing spending in the industry is 3-5% of Sales revenue.
 
 
 Technologies
+
 So far the companies have been manufacturing Technology 1 mobile handsets. New mobile networks are developed constantly,   and these will require new technology handsets. Therefore steps should be taken to begin developing new technologies. R&D of new technologies may require relatively large investments, but it is crucial to secure a prosperous future for the company.
 
 It should be mentioned that the technologies are dependent on the networks in which they operate in. Thus, a Technology 2 phone cannot operate in Technology 1 network infrastructure.
@@ -81,7 +83,7 @@ Features
 The underlying technology for mobile handsets is not very different from one company to another, so product differentiation is done with product features. These may be, for example, design, cover, colour screens, polyphonic ring tones, multimedia, mobile games, etc. Product features have different effects on demand in different market     areas.     European     consumers     are     the     most appreciative of product features, whereas the Asian consumers are more sensitive to price.
 
 Transportation and logistics
-
+![alt text](https://github.com/andyocnz/Bonopoly/blob/master/screeenshot/logistic.png?raw=true)
 Transportation to export markets is handled by an independent freight company and the cost of the service cannot be influenced by the teams. The total logistics cost per unit is transportation cost + tariff. There is no logistics cost involved when the good is produced and sold in the same area.
 
 International taxation
@@ -93,7 +95,7 @@ Letís assume that we have 10 plants in the US and 2 plants in Asia, i.e., 12 pl
 While determining transfer prices, multipliers (between 1 and 2) are applied to the direct variable cost of production. In practice this means that the direct variable cost of production can be multiplied with a number between 1 and 2 and the outcome is the transfer price. When used wisely, these multipliers can also be used to benefit from differences in corporate tax rates in different areas. At a minimum, the company should use the multipliers to take benefit from any accumulated losses that may have been created.
 
 Finance
-
+![alt text](https://github.com/andyocnz/Bonopoly/blob/master/screeenshot/finnace.png?raw=true)
 In addition to income financing, the companies can obtain financing from equity investors and lending institutions. The companies are listed on the stock exchange, enabling effective equity financing by issuing shares. Shareholders expect a return on the equity invested in the form of dividends and capital gains.
 
 Over the past few years, the industry has been in a rapid growth phase, and shareholders have not been able to enjoy large dividends. On the other hand, the increase in share price has been remarkable and the companies have outperformed the Nasdaq Composite Index over the last couple of years.
@@ -106,7 +108,7 @@ You can also transfer funds between different countries by internal loans (Inter
 
 
 MARKET AREAS 
-
+![alt text](https://github.com/andyocnz/Bonopoly/blob/master/screeenshot/market%20forecast.png?raw=true)
 USA
 This is the local market of Simul Mobile. The USA is generally known to be a leader in high-tech industries. Features are in general more appreciated here than in Asia and less than in Europe.
 Demand is expected to grow steadily about 5-10% p.a. at	least for the next 2-3 years. There seems to be no reason why growth should stop even after that. According to some of the least conservative estimates, in a few years with the introduction of new technologies, growth in demand may show peaks of up to 15-20% p.a. 
@@ -122,6 +124,8 @@ In Asia, consumers are generally not as appreciative of product features as in o
 
 
 MEASURES OF PERFORMANCE
+
+![alt text](https://github.com/andyocnz/Bonopoly/blob/master/screeenshot/sample%20result.png?raw=true)
 Company performance can be measured both by qualitative and quantitative indicators. Quantitative indicators can be further divided into those that portray the company's financial situation and those that portray its market position.
 
 The primary objective of a firm is to maximize the value to its shareholders. In this case the returns to shareholders are measured by a term called the total shareholder return (TSR). TSR takes into consideration both the dividends paid as well as the capital appreciation of the shares over time. This term is then annualized to portray an annual performance of the company. The board of directors of the company has concluded that the management should aim to perform well on the short-term, without jeopardizing the long-term opportunities of the company. Fluctuations in share price can be explained by changes in certain financial and operational indicators. These include among others ROE, net profit, EPS, market shares in different market areas, and the rate of growth of sales revenue.
@@ -134,6 +138,9 @@ of each round. Areas are: Production, HR, R&D, Investment, Logistics, Marketing 
 1. Production
 
 Demand forecasts 
+
+![alt text](https://github.com/andyocnz/Bonopoly/blob/master/screeenshot/outlook.png?raw=true)
+
 It is important to start decision marking by estimating total market growth. 
 Outlook contains important information of possible future development and will help you in anticipating market movements. 
 
@@ -179,7 +186,7 @@ License purchases are available immediately.
 When you consider investments into new technologies, you should think how many devices you must sell in order to recover the money that you spent on development. Following your competitor may not be the best alternative, since they can go wrong with their investment. 
 
 4. Investment
-
+![alt text](https://github.com/andyocnz/Bonopoly/blob/master/screeenshot/invest.png?raw=true)
 Based on your future growth expectations you can decide to invest into new production facilities in USA and Asia. They will be available for production 2 periods from now and you have to pay for them one period from now. 
 
 Investment tool is designed for future projections, due to it take up to 2 periods to complete new production facilities. 
@@ -213,7 +220,6 @@ Short-term debt paid automatically when possible and the interest for short-term
 
 It is also important to keep in mind that the idea is not to minimize the cost of debt, but to maximize the return on equity. 
 The reason why you should keep approximately equal amount of equity and debt on your balance sheet is that by doing this you can minimize your cost of capital. The smaller the cost of capital, the higher is the net present value of all your company's future cash flows, thus higher the market value of your company.
-
 
 
 
