@@ -1,6 +1,7 @@
 # Bonopoply
 Business simulation game for strategy a international business studies. 
 This will help students to understand the complexity of global business in a dynamic and competitive environment. 
+* Note: This project is no longer in active development
 
 # What is it?
 
