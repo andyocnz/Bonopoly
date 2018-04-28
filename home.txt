@@ -1,0 +1,34 @@
+<div id="latest"><section class="left-col"><div class="note3 grey"><b>Why business simulation?</b>
+<img class=icon src="imgs/study.png">In the past twenty years, numerous publications and pedagogical studies have presented several breakdowns about why simulations ought to be put to use in business school classrooms.
+
+Business simulations can easily seize a student's attention, forming more appealing and fascinating instruction adventures compared to, say, conventional, classroom-PowerPoint-based instruction.
+
+<b>Students can learn and train on the go…</b>
+<img class=icon src="imgs/training.png">Many simulation approaches are currently smartphone-compatible. Today's generation is an information-on-demand age bracket, and the reality that simulation-based instruction can be offered on several operating systems makes it workable for students to connect to knowledge and exercise activities when they want and in a format that correctly matches their tech style.
+
+<b>How is business simulation-based education distinct from more standard approaches?</b>
+<img class=icon src="imgs/difference.png">- Attract way more intensity among college students than conventional lectures or case analyses do.
+- Generates risk-free practice atmospheres, where errors are studying opportunities instead of hidden tragedies. 
+- Participate in jobs that are not only about digesting and studying, but also entail role-making judgments where folks can observe the results of their choices and match them up with other gamer's result.
+
+<b>How do learners respond to working with simulations?</b>
+<img class=icon src="imgs/avatar.jpg">"The experience we had with [Simul] simulations provided both learning and joy at the same time. We learnt because our students had theopportunity of dealing simultaneously with a group of basic variables which simulate daily business reality. ."
+Mr. Bento Costa, Professor of Business (IBMEC)
+
+<img class=icon src="imgs/avatar.jpg">"The experience we had with [Simul] simulations provided both learning and joy at the same time. We learnt because our students had theopportunity of dealing simultaneously with a group of basic variables which simulate daily business reality. ."
+Mr. Bento Costa, Professor of Business (IBMEC)</div></section><aside class="sidebar"><div class="note3 grey"><b>What do higher-education, classroom simulations provide for students?</b>
+<img class=icon src="imgs/benefit.png">- Recall vocabulary.
+- Learn fundamental business principles and standards.
+- Understand the correlations between different business activities eg.advertising, money management, sales, etc. 
+- Make challenging business theories, which may seem fairly simple, clearer. 
+- Help students create business plans and assist learners in effectively implementing them after graduation. 
+- Support folks in passing on what they learned into the business arena.</div>
+<div class="note3 grey"><b>[Simul] Production</b>
+<img class=icon src="imgs/production.png">An online simulation designed for strategy a international business studies. This will help students to understand the complexity of global business in a dynamic and competitive environment. 
+
+<b>[Simul] Retail</b>
+<img class=icon src="imgs/retail.png">An online simulation designed for managing a retail stores. This will develop students's knowledge of how to operating a supermarket. 
+
+<b>[Simul] Real estate</b>
+<img class=icon src="imgs/real.png">An online simulation designed for developing real estate projects, which will helps students to practice and learn about how developers working.</div></aside></div>
+<div class="clearfix"></div>
