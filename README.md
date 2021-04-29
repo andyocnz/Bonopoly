@@ -144,14 +144,14 @@ of each round. Areas are: Production, HR, R&D, Investment, Logistics, Marketing 
 It is important to start decision marking by estimating total market growth. 
 Outlook contains important information of possible future development and will help you in anticipating market movements. 
 
-#### Market shares forecasts 
+### Market shares forecasts 
 After estimating market growth, next step is estimating expected market share for each technology. 
 The factors that affecting the market shares are : the number of offered features, average selling price, promotion, previous round market share and the attractiveness of the technology in market. 
 At the bottom of the Demand page there are graphs showing the development of the different technologies. 
 The infrastructure for a technology is a prerequisite for demand, there are no sales for a technology unless infrastructure is in place. 
 Note that network coverage is an important factor in determining the demand for the devices in new technologies. 
 
-#### Suppliers 
+### Suppliers 
 Lists of suppliers and capacity utilization. 
 Sustainability rating are shown in bar chars for each suppliers. This value indicates their environmental responsibility as well as how well supplier treat their employees. 
 It is important to note that your company CSR level will affect your public image and demand of your products. 
@@ -161,7 +161,7 @@ The factors affecting the production costs are following:
 -Production cost function (U-shaped curve) 
 -Learning curve effect 
 
-#### Capacity allocation 
+### Capacity allocation 
 You have two production area (US, Asia) that you can use to supply to the there market areas. 
 Here you choose which technologies to produce in each production line and how much of the production line capacity you allocate to each product. 
 Here you can choose which supplier to take depending on your company CSR strategy.
