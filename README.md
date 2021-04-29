@@ -82,7 +82,7 @@ You should monitor the network coverage forecasts on the demand-page before you 
 
 The underlying technology for mobile handsets is not very different from one company to another, so product differentiation is done with product features. These may be, for example, design, cover, colour screens, polyphonic ring tones, multimedia, mobile games, etc. Product features have different effects on demand in different market     areas.     European     consumers     are     the     most appreciative of product features, whereas the Asian consumers are more sensitive to price.
 
-Transportation and logistics
+## Transportation and logistics
 ![alt text](https://github.com/andyocnz/Bonopoly/blob/master/screeenshot/logistic.png?raw=true)
 Transportation to export markets is handled by an independent freight company and the cost of the service cannot be influenced by the teams. The total logistics cost per unit is transportation cost + tariff. There is no logistics cost involved when the good is produced and sold in the same area.
 
