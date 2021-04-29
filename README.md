@@ -49,13 +49,13 @@ interactive multiplayer environment.
 
 # Simulation 
 
-Production
+## Production
 ![alt text](https://github.com/andyocnz/Bonopoly/blob/master/screeenshot/demand.png?raw=true)
 Characteristic to high-tech companies, production is complicated and high costs are incurred in the beginning phases of the production of new models. This, combined with short product life-cycles, forces the companies to adapt the production process to manufacture a new product model as soon as possible, in pursuit of low costs. Eventually, as the company becomes more acquainted with a specific technology, production cost per unit will fall with the learning curve effect.
 
 Due to the fact that building a plant takes two rounds, there have been times when demand has exceeded production capabilities. At such times the company has been forced to subcontract some of its production. When subcontracting production, the learning curve effect is foregone, thus outsourcing decisions should be weighed carefully. As with producing in-house, the unit cost of outsourcing is inversely related to the age of the technology. Sometimes it can be beneficial to outsource production as the unit cost of outsourced goods may be lower than that of goods produced in-house.
 
-R&D
+## R&D
 ![alt text](https://github.com/andyocnz/Bonopoly/blob/master/screeenshot/rnd.png?raw=true)
 R&D is extremely important for IT - and other high-tech companies, because of the dynamic nature of the industry. Consumers continuously demand new products and the margins from old products decline rapidly due to tight competition.
 
@@ -65,12 +65,12 @@ The cost of in-house R&D is lower when the process is a gradual one, comparing t
 
 It should be noted that R&D expenditure will not be capitalised on the balance sheet. That is, all R&D expenses are considered as operating expenses and as such R&D investments may cause substantial fluctuations to the companiesí P&L.
 
-Sales and Marketing
+## Sales and Marketing
 ![alt text](https://github.com/andyocnz/Bonopoly/blob/master/screeenshot/mkt.png?raw=true)
 The companies have traditionally operated only in the U.S. market. Over the last years, sales networks have been established in Asia and Europe as well. Marketing plays a significant role in promoting the brand and communicating to consumers about the product. Marketing is particularly important in the U.S. and Europe. In Asia the effect of promotion is less but still considerable. Typical marketing spending in the industry is 3-5% of Sales revenue.
 
 
-Technologies
+## Technologies
 
 So far the companies have been manufacturing Technology 1 mobile handsets. New mobile networks are developed constantly,   and these will require new technology handsets. Therefore steps should be taken to begin developing new technologies. R&D of new technologies may require relatively large investments, but it is crucial to secure a prosperous future for the company.
 
@@ -78,7 +78,7 @@ It should be mentioned that the technologies are dependent on the networks in wh
 
 You should monitor the network coverage forecasts on the demand-page before you plan your R&D as it indicates when the various technologies are economically viable to be introduced.
 
-Features
+## Features
 
 The underlying technology for mobile handsets is not very different from one company to another, so product differentiation is done with product features. These may be, for example, design, cover, colour screens, polyphonic ring tones, multimedia, mobile games, etc. Product features have different effects on demand in different market     areas.     European     consumers     are     the     most appreciative of product features, whereas the Asian consumers are more sensitive to price.
 
@@ -86,7 +86,7 @@ Transportation and logistics
 ![alt text](https://github.com/andyocnz/Bonopoly/blob/master/screeenshot/logistic.png?raw=true)
 Transportation to export markets is handled by an independent freight company and the cost of the service cannot be influenced by the teams. The total logistics cost per unit is transportation cost + tariff. There is no logistics cost involved when the good is produced and sold in the same area.
 
-International taxation
+## International taxation
 
 International taxation and transfer pricing are sensitive issues. The companies have created a system that allows some flexibility, but the ultimate purpose is to even out the cost-impact of the R&D expenditure. R&D functions are located in connection to the production facilities and the costs are allocated on the profit and loss statements with the following principles:
 
@@ -94,7 +94,7 @@ Letís assume that we have 10 plants in the US and 2 plants in Asia, i.e., 12 pl
 
 While determining transfer prices, multipliers (between 1 and 2) are applied to the direct variable cost of production. In practice this means that the direct variable cost of production can be multiplied with a number between 1 and 2 and the outcome is the transfer price. When used wisely, these multipliers can also be used to benefit from differences in corporate tax rates in different areas. At a minimum, the company should use the multipliers to take benefit from any accumulated losses that may have been created.
 
-Finance
+## Finance
 ![alt text](https://github.com/andyocnz/Bonopoly/blob/master/screeenshot/finnace.png?raw=true)
 In addition to income financing, the companies can obtain financing from equity investors and lending institutions. The companies are listed on the stock exchange, enabling effective equity financing by issuing shares. Shareholders expect a return on the equity invested in the form of dividends and capital gains.
 
@@ -107,23 +107,23 @@ Lending institutions provide short- and long-term loans with an interest rate de
 You can also transfer funds between different countries by internal loans (International Treasury Management). You may want to use internal loans if you have accumulated substantial cash reserves in Asia or Europe that can be repatriated and distributed to the owners, or if for instance you need to finance some plant investments in Asia.
 
 
-MARKET AREAS 
+## MARKET AREAS 
 ![alt text](https://github.com/andyocnz/Bonopoly/blob/master/screeenshot/market%20forecast.png?raw=true)
 USA
 This is the local market of Simul Mobile. The USA is generally known to be a leader in high-tech industries. Features are in general more appreciated here than in Asia and less than in Europe.
 Demand is expected to grow steadily about 5-10% p.a. at	least for the next 2-3 years. There seems to be no reason why growth should stop even after that. According to some of the least conservative estimates, in a few years with the introduction of new technologies, growth in demand may show peaks of up to 15-20% p.a. 
 
-Europe
+### Europe
 The companies have been exporting products to Europe for a couple of years. Production facilities will not be established in Europe because of the high labour costs.
 The market growth is expected to be about 10% p.a. and demand is expected to grow steadily for several years to come. There is no fear that the market will mature, as new technologies guarantee constant change and the consumers' will to purchase new phones remains.
 
 
-Asia
+### Asia
 It is predicted that the highest growth potential is in fact in Asia. Currently the market grows at 20% p.a., but long-term growth prospects are hard to make.
 In Asia, consumers are generally not as appreciative of product features as in other regions, and less receptive of new technologies.
 
 
-MEASURES OF PERFORMANCE
+## MEASURES OF PERFORMANCE
 
 ![alt text](https://github.com/andyocnz/Bonopoly/blob/master/screeenshot/sample%20result.png?raw=true)
 Company performance can be measured both by qualitative and quantitative indicators. Quantitative indicators can be further divided into those that portray the company's financial situation and those that portray its market position.
@@ -135,23 +135,23 @@ The primary objective of a firm is to maximize the value to its shareholders. In
 Players need to decide 7 key areas each round to compete with each other base on random Market outlook generated in the begining
 of each round. Areas are: Production, HR, R&D, Investment, Logistics, Marketing and Finance.
 
-1. Production
+## 1. Production
 
-Demand forecasts 
+### Demand forecasts 
 
 ![alt text](https://github.com/andyocnz/Bonopoly/blob/master/screeenshot/outlook.png?raw=true)
 
 It is important to start decision marking by estimating total market growth. 
 Outlook contains important information of possible future development and will help you in anticipating market movements. 
 
-Market shares forecasts 
+#### Market shares forecasts 
 After estimating market growth, next step is estimating expected market share for each technology. 
 The factors that affecting the market shares are : the number of offered features, average selling price, promotion, previous round market share and the attractiveness of the technology in market. 
 At the bottom of the Demand page there are graphs showing the development of the different technologies. 
 The infrastructure for a technology is a prerequisite for demand, there are no sales for a technology unless infrastructure is in place. 
 Note that network coverage is an important factor in determining the demand for the devices in new technologies. 
 
-Suppliers 
+#### Suppliers 
 Lists of suppliers and capacity utilization. 
 Sustainability rating are shown in bar chars for each suppliers. This value indicates their environmental responsibility as well as how well supplier treat their employees. 
 It is important to note that your company CSR level will affect your public image and demand of your products. 
@@ -161,12 +161,12 @@ The factors affecting the production costs are following:
 -Production cost function (U-shaped curve) 
 -Learning curve effect 
 
-Capacity allocation 
+#### Capacity allocation 
 You have two production area (US, Asia) that you can use to supply to the there market areas. 
 Here you choose which technologies to produce in each production line and how much of the production line capacity you allocate to each product. 
 Here you can choose which supplier to take depending on your company CSR strategy.
 
-2. HR
+## 2. HR
 
 The HR function consists of 3 decisions: 
 1. Number of employees this round 
@@ -178,21 +178,21 @@ Key issue to consider in HR include employee turnover and efficiency rate.
 Salary, training and success of the company will affect the employee turnover rate while higher salary will attract talent. 
 Efficiency is measured as an efficiency multiplier, a value of 1.1 means that your R&D is 10% more efficient than standard level of 1. 
 
-3. R&D 
+## 3. R&D 
 
 Own R&D has a one period delay before the feature become available for production. 
 License purchases are available immediately. 
 
 When you consider investments into new technologies, you should think how many devices you must sell in order to recover the money that you spent on development. Following your competitor may not be the best alternative, since they can go wrong with their investment. 
 
-4. Investment
+## 4. Investment
 ![alt text](https://github.com/andyocnz/Bonopoly/blob/master/screeenshot/invest.png?raw=true)
 Based on your future growth expectations you can decide to invest into new production facilities in USA and Asia. They will be available for production 2 periods from now and you have to pay for them one period from now. 
 
 Investment tool is designed for future projections, due to it take up to 2 periods to complete new production facilities. 
 When you make a plant investment you are committing a substantial amount of money into a long-term investment. You need to make sure that you can pay for the investment with the revenue that you are making from it.
 
-5. Logistic
+## 5. Logistic
 
 You can choose in which order you will satisfy your demand in the markets separately for both production areas for all relevant technologies. The logistic order is only enable if your global supply is not enough to satisfy your global demand. 
 
@@ -200,7 +200,7 @@ Total cost of transporting products is the actual transportation cost + tariff. 
 
 When you set delivery priorities you should attempt to maximize your total margin from the products. This can be achieved by prioritizing those markets where unit margins are highest.
 
-6. Marketing
+## 6. Marketing
 
 Here you are able to decide the number of features, sales margins and promotion percentage to be offered. More features attract more customers but it also cause more costs. 
 
@@ -208,7 +208,7 @@ Here you are able to decide the number of features, sales margins and promotion 
 When you make your promotion decision, you should look at the sales margin, usually it it reasonable to over-spend in the beginning when you are launching a new product. 
 As soon as you have decided about product, pricing and promotion, you can see your budget outcome here. If you can not see any budget outcome then you probably forget to set expected demand in production decision making area.
 
-7. Finance
+## 7. Finance
 
 Financial decisions are typically the last set of decisions that you are making. 
 
