@@ -1,0 +1,6 @@
+team_id,team_name,login_code,members,email,created_at
+team1,Team Alpha,ALPHA2024,"John Smith, Mary Jones, Bob Wilson",team1@example.com,2024-12-13 10:00:00
+team2,Team Beta,BETA2024,"Alice Brown, Tom Davis, Sarah Miller",team2@example.com,2024-12-13 10:00:00
+team3,Team Gamma,GAMMA2024,"Mike Taylor, Lisa Anderson, Dave Thomas",team3@example.com,2024-12-13 10:00:00
+team4,Team Delta,DELTA2024,"Emma Martinez, Chris Garcia, Ann Lee",team4@example.com,2024-12-13 10:00:00
+team5,Team Epsilon,EPSIL2024,"Ryan Clark, Kate Rodriguez, Mark Lewis",team5@example.com,2024-12-13 10:00:00

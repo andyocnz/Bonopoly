@@ -1,0 +1,10 @@
+Category,Parameter,Value,Unit
+HR,standard_wage,21,USD/hr
+HR,standard_training_budget,1,USD/emp
+HR,standard_turnover_rate,6,%
+HR,manday_per_worker,273,days
+HR,recruitment_layoff_cost,52,USD
+Finance,receivable_rate,8,%
+Finance,payable_rate,14,%
+Inventory,cost_per_unit,6,USD
+R&D,tech_price_reduce_rate,11,%/round

@@ -1,0 +1,14 @@
+Setting,Value,Description
+game_id,game_001,Unique game identifier
+game_name,Business Simulation Fall 2024,Display name
+instructor_email,instructor@university.edu,Admin access email
+no_of_teams,5,Number of competing teams (max 5)
+no_of_rounds,3,Total rounds (max 5 typically 3)
+practice_rounds,0,Practice rounds before real game starts
+hours_per_round,48,Deadline time per round (hours)
+cost_equation,"0.9,6,-0.85,1.5","Cost multiplier formula: a,b,c,d"
+depreciation_rate,9,Percentage per round
+min_cash,3851000,Minimum cash requirement (USD)
+initial_share_capital,298000,Starting equity (USD)
+share_face_value,10,Par value per share
+capacity_per_plant,1200,Units per plant per round

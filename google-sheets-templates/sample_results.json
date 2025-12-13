@@ -1,0 +1,94 @@
+{
+  "pnl": {
+    "revenue": {
+      "us": 500000,
+      "asia": 350000,
+      "europe": 200000,
+      "total": 1050000
+    },
+    "costs": {
+      "cogs": 450000,
+      "transportation": 25000,
+      "promotion": 50000,
+      "admin": 30000,
+      "rnd": 100000,
+      "total": 655000
+    },
+    "ebitda": 395000,
+    "depreciation": 35000,
+    "ebit": 360000,
+    "netFinancing": 15000,
+    "profitBeforeTax": 345000,
+    "incomeTax": 86250,
+    "profitAfterTax": 258750
+  },
+  "balanceSheet": {
+    "assets": {
+      "fixedAssets": 500000,
+      "inventory": 80000,
+      "receivables": 84000,
+      "cash": 350000,
+      "total": 1014000
+    },
+    "liabilities": {
+      "longtermLoans": 200000,
+      "shorttermLoans": 0,
+      "payables": 91700,
+      "total": 291700
+    },
+    "equity": {
+      "shareCapital": 298000,
+      "retainedEarnings": 165550,
+      "profitForRound": 258750,
+      "total": 722300
+    }
+  },
+  "marketShare": {
+    "us": {
+      "tech1": 22.5,
+      "tech2": 18.3,
+      "tech3": 0,
+      "tech4": 0
+    },
+    "asia": {
+      "tech1": 19.8,
+      "tech2": 15.2,
+      "tech3": 0,
+      "tech4": 0
+    },
+    "europe": {
+      "tech1": 20.1,
+      "tech2": 16.5,
+      "tech3": 0,
+      "tech4": 0
+    }
+  },
+  "ratios": {
+    "roe": 35.8,
+    "ros": 24.6,
+    "eps": 8.68,
+    "marketCap": 2500000,
+    "sharePrice": 83.89,
+    "peRatio": 9.67
+  },
+  "operational": {
+    "hrEfficiency": 1.05,
+    "hrTurnover": 7.2,
+    "capacityUtilization": {
+      "us": 85,
+      "asia": 78
+    },
+    "demandFulfillment": {
+      "us": 95,
+      "asia": 88,
+      "europe": 92
+    }
+  },
+  "competitive": {
+    "rank": 2,
+    "tsr": 12.5,
+    "revenueRank": 1,
+    "profitRank": 3,
+    "marketShareRank": 2
+  }
+}

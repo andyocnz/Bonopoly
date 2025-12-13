@@ -1,0 +1,137 @@
+{
+  "production": {
+    "demandForecast": {
+      "us": {
+        "tech1": 1000,
+        "tech2": 500,
+        "tech3": 0,
+        "tech4": 0
+      },
+      "asia": {
+        "tech1": 800,
+        "tech2": 300,
+        "tech3": 0,
+        "tech4": 0
+      },
+      "europe": {
+        "tech1": 600,
+        "tech2": 200,
+        "tech3": 0,
+        "tech4": 0
+      }
+    },
+    "capacityAllocation": {
+      "usPlants": {
+        "tech1": 70,
+        "tech2": 30,
+        "tech3": 0,
+        "tech4": 0
+      },
+      "asiaPlants": {
+        "tech1": 60,
+        "tech2": 40,
+        "tech3": 0,
+        "tech4": 0
+      }
+    },
+    "suppliers": {
+      "usPlant1": "supplier1",
+      "usPlant2": "supplier2",
+      "asiaPlant1": "supplier3"
+    },
+    "outsourcing": {
+      "us": {
+        "tech1": 0,
+        "tech2": 10
+      },
+      "asia": {
+        "tech1": 5,
+        "tech2": 0
+      }
+    }
+  },
+  "hr": {
+    "employeeCount": 100,
+    "monthlySalary": 2500,
+    "monthlyTrainingBudget": 50000,
+    "targetTurnoverRate": 6
+  },
+  "rnd": {
+    "techDevelopment": {
+      "tech2": 100000,
+      "tech3": 50000,
+      "tech4": 0
+    },
+    "featureDevelopment": {
+      "feature1": 20000,
+      "feature2": 15000,
+      "feature3": 10000
+    },
+    "licensing": {
+      "tech3_license": false,
+      "feature4_license": true
+    }
+  },
+  "investment": {
+    "newPlants": {
+      "us": 0,
+      "asia": 1
+    },
+    "plantUpgrades": {
+      "usPlant1": "automation"
+    }
+  },
+  "logistics": {
+    "deliveryPriority": {
+      "fromUS": ["us", "europe", "asia"],
+      "fromAsia": ["asia", "us", "europe"]
+    },
+    "inventoryPolicy": "FIFO"
+  },
+  "marketing": {
+    "products": {
+      "tech1": {
+        "features": 5,
+        "pricing": {
+          "us": 350,
+          "asia": 300,
+          "europe": 380
+        },
+        "promotion": {
+          "us": 10,
+          "asia": 5,
+          "europe": 8
+        }
+      },
+      "tech2": {
+        "features": 7,
+        "pricing": {
+          "us": 450,
+          "asia": 400,
+          "europe": 480
+        },
+        "promotion": {
+          "us": 12,
+          "asia": 6,
+          "europe": 10
+        }
+      }
+    }
+  },
+  "finance": {
+    "transferPricing": {
+      "us": 1.2,
+      "asia": 1.5,
+      "europe": 1.3
+    },
+    "debt": {
+      "longtermBorrowing": 50000,
+      "longtermRepayment": 0
+    },
+    "equity": {
+      "shareIssuance": 0,
+      "shareBuyback": 0
+    },
+    "dividends": 10000
+  }
+}
