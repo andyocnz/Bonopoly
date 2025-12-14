@@ -1,0 +1,181 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Test Educator Login</title>
+    <style>
+        body {
+            font-family: monospace;
+            padding: 20px;
+            max-width: 800px;
+            margin: 0 auto;
+        }
+        .test-section {
+            border: 2px solid #333;
+            padding: 15px;
+            margin: 20px 0;
+            background: #f5f5f5;
+        }
+        button {
+            padding: 10px 20px;
+            font-size: 16px;
+            cursor: pointer;
+            margin: 5px;
+        }
+        .success { color: green; font-weight: bold; }
+        .error { color: red; font-weight: bold; }
+        pre {
+            background: #fff;
+            padding: 10px;
+            border: 1px solid #ccc;
+            overflow-x: auto;
+        }
+        input {
+            padding: 8px;
+            font-size: 14px;
+            margin: 5px;
+        }
+    </style>
+</head>
+<body>
+    <h1>Educator Login Test</h1>
+
+    <div class="test-section">
+        <h2>Test Credentials</h2>
+        <p><strong>Game Code:</strong> 64ANKP</p>
+        <p><strong>Game PIN:</strong> 1131</p>
+    </div>
+
+    <div class="test-section">
+        <h2>Step 1: Fetch Game Data</h2>
+        <button onclick="testFetchGame()">Fetch Game by Code</button>
+        <div id="fetch-result"></div>
+    </div>
+
+    <div class="test-section">
+        <h2>Step 2: Test Login Logic</h2>
+        <input type="text" id="game_code" placeholder="Game Code" value="64ANKP">
+        <input type="text" id="game_pin" placeholder="Game PIN" value="1131">
+        <button onclick="testLogin()">Test Educator Login</button>
+        <div id="login-result"></div>
+    </div>
+
+    <div class="test-section">
+        <h2>Console Logs</h2>
+        <div id="console-logs"></div>
+    </div>
+
+    <script>
+        const APPS_SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbw_qGZbwl9pHyT7_oASmYBWOBpI0yu4OpCajHaV8j-9qw76CJKcAoPhWR5mb33545IP/exec';
+
+        function log(message, data) {
+            const logsDiv = document.getElementById('console-logs');
+            const logEntry = document.createElement('pre');
+            logEntry.textContent = `[${new Date().toLocaleTimeString()}] ${message}\n${JSON.stringify(data, null, 2)}`;
+            logsDiv.appendChild(logEntry);
+            console.log(message, data);
+        }
+
+        async function testFetchGame() {
+            const resultDiv = document.getElementById('fetch-result');
+            resultDiv.innerHTML = '<p>Loading...</p>';
+
+            try {
+                const url = `${APPS_SCRIPT_URL}?action=read&sheet=game&game_code=64ANKP`;
+                log('Fetching game with URL:', url);
+
+                const response = await fetch(url);
+                const data = await response.json();
+
+                log('Raw response:', data);
+
+                if (data.success && data.data && data.data.length > 0) {
+                    const game = data.data[0];
+
+                    resultDiv.innerHTML = `
+                        <p class="success">✓ Game found!</p>
+                        <pre>${JSON.stringify(game, null, 2)}</pre>
+                        <p><strong>Field Names Check:</strong></p>
+                        <ul>
+                            <li>game.game_code = ${game.game_code}</li>
+                            <li>game.gameCode = ${game.gameCode}</li>
+                            <li>game.game_pin = ${game.game_pin}</li>
+                            <li>game.gamePin = ${game.gamePin}</li>
+                        </ul>
+                    `;
+                } else {
+                    resultDiv.innerHTML = `<p class="error">✗ Game not found</p><pre>${JSON.stringify(data, null, 2)}</pre>`;
+                }
+            } catch (error) {
+                log('Fetch error:', error);
+                resultDiv.innerHTML = `<p class="error">✗ Error: ${error.message}</p>`;
+            }
+        }
+
+        async function testLogin() {
+            const resultDiv = document.getElementById('login-result');
+            const gameCode = document.getElementById('game_code').value;
+            const gamePin = document.getElementById('game_pin').value;
+
+            resultDiv.innerHTML = '<p>Testing login...</p>';
+
+            try {
+                // Step 1: Fetch game
+                const url = `${APPS_SCRIPT_URL}?action=read&sheet=game&game_code=${gameCode}`;
+                log('Login attempt - Fetching game:', { gameCode, gamePin });
+
+                const response = await fetch(url);
+                const data = await response.json();
+
+                log('Login - Game response:', data);
+
+                if (!data.success || !data.data || data.data.length === 0) {
+                    resultDiv.innerHTML = '<p class="error">✗ Invalid game code</p>';
+                    return;
+                }
+
+                const game = data.data[0];
+                log('Login - Game object:', game);
+
+                // Step 2: Check PIN (handle both naming conventions)
+                const actualGamePin = game.game_pin || game.gamePin;
+
+                log('Login - PIN check:', {
+                    'game.game_pin': game.game_pin,
+                    'game.gamePin': game.gamePin,
+                    'actualGamePin': actualGamePin,
+                    'inputGamePin': gamePin,
+                    'match': actualGamePin === gamePin
+                });
+
+                if (actualGamePin !== gamePin) {
+                    resultDiv.innerHTML = `
+                        <p class="error">✗ Invalid game PIN</p>
+                        <p>Expected: ${actualGamePin}</p>
+                        <p>Got: ${gamePin}</p>
+                        <p>Type of expected: ${typeof actualGamePin}</p>
+                        <p>Type of input: ${typeof gamePin}</p>
+                    `;
+                    return;
+                }
+
+                // Success!
+                resultDiv.innerHTML = `
+                    <p class="success">✓ Login successful!</p>
+                    <pre>${JSON.stringify(game, null, 2)}</pre>
+                `;
+
+            } catch (error) {
+                log('Login error:', error);
+                resultDiv.innerHTML = `<p class="error">✗ Error: ${error.message}</p>`;
+            }
+        }
+
+        // Auto-run on load
+        window.onload = function() {
+            testFetchGame();
+        };
+    </script>
+</body>
+</html>
