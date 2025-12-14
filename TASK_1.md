@@ -13,6 +13,24 @@
   - Authentication testing (educator + team login)
   - Full CRUD operations (Create, Read, Update)
   - Editable filter fields
+- ✅ Authentication System (React)
+  - AuthContext with educator/team login
+  - Session persistence with localStorage
+  - Login page UI with role selection
+- ✅ Debug Logger Service
+  - Comprehensive API request/response logging
+  - Error tracking with stack traces
+- ✅ Notification System
+  - Toast notifications (success/error/info)
+  - NotificationContext provider
+- ✅ Game Creation Wizard (Complete)
+  - Single-page form with all game settings
+  - Auto-generated team names (fun/random)
+  - Automatic team creation with unique PINs
+  - Round scenarios with randomized scenario IDs (1-8)
+  - Success screen with game credentials
+  - Team-specific login links with pre-filled PINs
+  - Auto-login to educator dashboard
 
 ### 2. Game Design & Formulas
 - ✅ Complete game formula redesign documented in `IMPROVED_GAME_FORMULAS.md`
@@ -45,27 +63,27 @@
 - [ ] Review routing setup (if exists)
 
 #### 1.2 Authentication System
-- [ ] Create authentication context/store
-- [ ] Implement educator login flow
-  - Input: `game_code` (6 chars) + `game_pin` (4 digits)
+- [x] Create authentication context/store
+- [x] Implement educator login flow
+  - Input: `game_code` (6 chars) + `game_pin` (7 digits)
   - Validate against Google Sheets Game table
   - Store session (game info, educator email)
-- [ ] Implement team login flow
-  - Input: `game_code` (6 chars) + `team_pin` (4 digits)
+- [x] Implement team login flow
+  - Input: `game_code` (6 chars) + `team_pin` (7 digits)
   - Validate against Google Sheets Teams table
   - Store session (game info, team info)
-- [ ] Create login page UI
-- [ ] Add logout functionality
-- [ ] Add session persistence (localStorage or sessionStorage)
+- [x] Create login page UI
+- [x] Add logout functionality
+- [x] Add session persistence (localStorage)
 
 #### 1.3 Debug Mode & Error Handling
 **IMPORTANT: Enhanced debugging in dev mode**
-- [ ] Create debug logger service
+- [x] Create debug logger service
   - In dev mode: Log ALL API requests/responses
   - In dev mode: Show detailed error messages with full stack traces
   - In prod mode: Show user-friendly error messages only
 - [ ] Create error boundary component
-- [ ] Add toast/notification system (similar to test page but more robust)
+- [x] Add toast/notification system (similar to test page but more robust)
   - Success notifications
   - Error notifications with details in dev mode
   - Loading states
@@ -80,7 +98,7 @@
 ### Phase 2: Educator Dashboard
 
 #### 2.1 Game Creation Wizard
-- [ ] Step 1: Basic Info
+- [x] Step 1: Basic Info
   - Game name
   - Educator email
   - Number of teams (3-8)
@@ -88,52 +106,53 @@
   - Hours per round (default: 168 = 1 week)
   - Timezone selection
   - Template selection (Easy/Medium/Hard) - loads different parameters
-- [ ] Step 2: Review & Confirm
+  - Team names and emails (auto-generated fun names)
+- [x] Step 2: Review & Confirm
   - Generate `game_code` (6 chars)
-  - Generate `game_pin` (4 digits)
+  - Generate `game_pin` (7 digits)
   - Show summary
   - Create game in Google Sheets
-- [ ] Step 3: Success Screen
+  - Create all teams automatically
+  - Create round scenarios with randomized scenario IDs
+- [x] Step 3: Success Screen
   - Display game_code and game_pin prominently
-  - Option to download/print game credentials
-  - Button to "Create Teams"
+  - Show team login links with pre-filled PINs
+  - Copy/share functionality for each team
+  - Auto-login button to educator dashboard
 
-#### 2.2 Team Management
-- [ ] Team creation form
-  - Team name
-  - Team email (optional)
-  - Auto-generate `team_pin` (4 digits)
-- [ ] Team list view
-  - Show all teams for current game
-  - Display team_pin for each team
-  - Download/print all team credentials
-- [ ] Bulk team creation (optional)
-  - Upload CSV with team names
-  - Auto-generate all team_pins
-
-#### 2.3 Round Management
-- [ ] Round scenario creation
-  - Select scenario for each region (US, Asia, Europe)
-  - Set deadline for round
-  - Preview scenario effects
-- [ ] Round monitoring dashboard
+#### 2.2 Educator Dashboard (Complete)
+- [x] Dashboard Overview Tab
+  - Game statistics (teams, submissions, rounds)
+  - Current round scenario display
+  - Game information card
+- [x] Team Monitoring Tab
   - See which teams submitted decisions
   - See submission timestamps
-  - Manually lock/unlock decisions
-- [ ] Round results
-  - View all teams' outputs
-  - Download results as CSV/Excel
-  - Leaderboard view
-
-#### 2.4 Game Settings & Control
-- [ ] Update game settings
-  - Change current_round
-  - Change status (active/paused/completed)
-  - Update deadlines
-- [ ] Dev mode toggle
+  - Submission status (submitted/pending)
+- [x] Results Tab
+  - View all teams' results (revenue, costs, profit)
+  - Results visibility based on deadline
+  - Dev mode override for testing
+- [x] Game Settings Dialog
+  - Update current_round
+  - Update status (active/paused/completed)
+  - Update total rounds
+- [x] Dev Mode Toggle
   - Override visibility rules
   - Show results before deadline
-  - Skip deadline validation
+  - Warning indicator when active
+- [x] Header with game info and actions
+  - Game code, current round, status chips
+  - Refresh button for live updates
+  - Settings button
+  - Logout button
+
+#### 2.3 Additional Features (Future)
+- [ ] Download results as CSV/Excel
+- [ ] Leaderboard view with rankings
+- [ ] Manually lock/unlock team decisions
+- [ ] Edit round scenarios after creation
+- [ ] Email notifications to teams
 
 ---
 
@@ -314,27 +333,31 @@ Reference: `IMPROVED_GAME_FORMULAS.md` Section 4
 
 ## 🚀 Immediate Next Steps
 
-### START HERE:
+### CURRENT PROGRESS:
+✅ Authentication system complete
+✅ Game creation wizard complete
+✅ Debug logger complete
+✅ Notification system complete
+✅ **Educator Dashboard complete** (Phase 2.2)
+   - 3-tab interface (Overview, Team Status, Results)
+   - Real-time team monitoring
+   - Game settings management
+   - Dev mode toggle
 
-1. **Review existing React project**
-   - Check what's already built
-   - Identify what needs to be added/modified
-   - Verify dependencies
+### NEXT PRIORITY:
 
-2. **Set up debug infrastructure**
-   - Create debug logger
-   - Create dev mode toggle
-   - Add enhanced error logging
+1. **Build Team Dashboard** (Phase 3) - RECOMMENDED NEXT STEP
+   - Decision input forms (Production, HR, Marketing)
+   - Real-time validation and cost preview
+   - Submit/save decisions
+   - View results after deadline
 
-3. **Build authentication system**
-   - Login page UI
-   - Auth context/store
-   - Session management
-
-4. **Build game creation wizard (educator)**
-   - 3-step wizard
-   - Form validation
-   - Integration with Google Sheets API
+2. **Implement Calculation Engine** (Phase 4)
+   - Cost calculations
+   - Market demand calculations
+   - Market share distribution
+   - P&L calculations
+   - Save results to Outputs sheet
 
 ---
 
@@ -399,5 +422,17 @@ Phase 5-6 Complete when:
 ---
 
 **Last Updated:** 2024-12-14
-**Status:** Ready to start React development
-**Next Action:** Review existing React project structure and start with Phase 1.1
+**Status:** Phase 1 & 2 Complete ✅ (Educator Flow Finished!)
+**Next Action:** Build Team Dashboard (Phase 3) - Let teams submit decisions!
+
+## 🐛 Recent Bug Fixes
+- Fixed hardcoded scenario_id bug (was always 8, now randomized 1-8 for each country/round)
+- Added auto-login flow after game creation (educator automatically logs in and goes to dashboard)
+
+## 📸 Screenshots/Features Added Today
+- **Educator Dashboard**: Full-featured 3-tab interface with:
+  - Overview tab showing game stats, current scenarios, and game info
+  - Team Status tab with real-time submission monitoring
+  - Results tab with P&L summaries (respects deadline unless dev mode)
+  - Settings dialog to update round, status, and game parameters
+  - Dev mode toggle with visual warning

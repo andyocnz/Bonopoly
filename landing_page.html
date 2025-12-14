@@ -1,0 +1,894 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Bonopoly - Business Simulation</title>
+    
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    
+    <!-- Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Poppins:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    
+    <!-- Babel for JSX transformation in browser -->
+    <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
+
+    <!-- Tailwind Config -->
+    <script>
+      tailwind.config = {
+        theme: {
+          extend: {
+            fontFamily: {
+              sans: ['Inter', 'sans-serif'],
+              display: ['Poppins', 'sans-serif'],
+            },
+            colors: {
+              brand: {
+                50: '#eff6ff',
+                100: '#dbeafe',
+                500: '#3b82f6',
+                600: '#2563eb',
+                700: '#1d4ed8',
+                900: '#1e3a8a',
+              },
+              accent: {
+                50: '#fffbeb',
+                100: '#fef3c7',
+                400: '#fbbf24',
+                500: '#f59e0b',
+                600: '#d97706',
+                900: '#78350f',
+              }
+            },
+            boxShadow: {
+              'soft': '0 10px 40px -10px rgba(0,0,0,0.08)',
+            },
+            animation: {
+              blob: "blob 10s infinite",
+              'grid-flow': "grid-flow 40s linear infinite",
+              'cursor-blink': "cursor-blink 1s step-end infinite",
+              'gradient-xy': "gradient-xy 15s ease infinite",
+            },
+            keyframes: {
+              blob: {
+                "0%": { transform: "translate(0px, 0px) scale(1)" },
+                "33%": { transform: "translate(30px, -50px) scale(1.1)" },
+                "66%": { transform: "translate(-20px, 20px) scale(0.9)" },
+                "100%": { transform: "translate(0px, 0px) scale(1)" },
+              },
+              'grid-flow': {
+                "0%": { backgroundPosition: "0 0" },
+                "100%": { backgroundPosition: "40px 40px" },
+              },
+              'cursor-blink': {
+                "0%, 100%": { opacity: "1" },
+                "50%": { opacity: "0" },
+              },
+              'gradient-xy': {
+                '0%, 100%': {
+                    'background-size': '400% 400%',
+                    'background-position': 'left center'
+                },
+                '50%': {
+                    'background-size': '200% 200%',
+                    'background-position': 'right center'
+                }
+              }
+            },
+          }
+        }
+      }
+    </script>
+    
+    <!-- Import Map for React and Lucide -->
+    <script type="importmap">
+{
+  "imports": {
+    "react": "https://esm.sh/react@18.2.0",
+    "react-dom/client": "https://esm.sh/react-dom@18.2.0/client",
+    "lucide-react": "https://esm.sh/lucide-react@0.263.1",
+    "react-dom/": "https://esm.sh/react-dom@^19.2.3/",
+    "react/": "https://esm.sh/react@^19.2.3/"
+  }
+}
+</script>
+</head>
+<body class="bg-white text-slate-600 antialiased selection:bg-accent-500 selection:text-white font-sans">
+    <div id="root"></div>
+
+    <!-- Application Code -->
+    <script type="text/babel" data-type="module">
+      import React, { useState, useEffect } from 'react';
+      import ReactDOM from 'react-dom/client';
+      import { 
+        Menu, X, Building2, AlertTriangle, ArrowRight, PlayCircle, 
+        TrendingUp, Globe, Users, Target, ShieldCheck, BarChart3, 
+        ChevronRight, LayoutDashboard, Check, Terminal, Database, 
+        Settings, Download, BookOpen, UserPlus, Play, Award, Github 
+      } from 'lucide-react';
+
+      // --- DATA CONSTANTS ---
+      
+      const SIMULATION_SECTIONS = [
+        {
+          id: 'production',
+          title: 'Production',
+          imageUrl: 'https://github.com/andyocnz/Bonopoly/blob/master/screeenshot/demand.png?raw=true',
+          content: [
+            "Characteristic to high-tech companies, production is complicated and high costs are incurred in the beginning phases of the production of new models.",
+            "Due to the fact that building a plant takes two rounds, there have been times when demand has exceeded production capabilities. At such times the company has been forced to subcontract some of its production.",
+            "When subcontracting production, the learning curve effect is foregone, thus outsourcing decisions should be weighed carefully."
+          ]
+        },
+        {
+          id: 'rnd',
+          title: 'R&D',
+          imageUrl: 'https://github.com/andyocnz/Bonopoly/blob/master/screeenshot/rnd.png?raw=true',
+          content: [
+            "R&D is extremely important for IT and other high-tech companies because of the dynamic nature of the industry. Consumers continuously demand new products.",
+            "The companies have a choice of performing their own R&D or outsourcing the process by purchasing technology licenses. Internal R&D benefits are available in the next period, while licenses are immediate.",
+            "A typical company in the industry spends as much as 10% of Sales revenue on R&D."
+          ]
+        },
+        {
+          id: 'marketing',
+          title: 'Sales & Marketing',
+          imageUrl: 'https://github.com/andyocnz/Bonopoly/blob/master/screeenshot/mkt.png?raw=true',
+          content: [
+            "The companies have traditionally operated only in the U.S. market, but have expanded to Asia and Europe. Marketing plays a significant role in promoting the brand.",
+            "Marketing is particularly important in the U.S. and Europe. In Asia the effect of promotion is less but still considerable. Typical marketing spending is 3-5% of Sales revenue."
+          ]
+        },
+        {
+          id: 'logistics',
+          title: 'Logistics',
+          imageUrl: 'https://github.com/andyocnz/Bonopoly/blob/master/screeenshot/logistic.png?raw=true',
+          content: [
+            "Transportation to export markets is handled by an independent freight company. The cost cannot be influenced by the teams.",
+            "The total logistics cost per unit is transportation cost + tariff. There is no logistics cost involved when the good is produced and sold in the same area."
+          ]
+        },
+        {
+          id: 'finance',
+          title: 'Finance',
+          imageUrl: 'https://github.com/andyocnz/Bonopoly/blob/master/screeenshot/finnace.png?raw=true',
+          content: [
+            "Companies can obtain financing from equity investors and lending institutions. The companies are listed on the stock exchange.",
+            "You can reward your investors in the form of dividends or share repurchases.",
+            "Lending institutions provide short- and long-term loans. Short-term debt always carries a premium over a long-term loan."
+          ]
+        }
+      ];
+
+      const PLAY_STEPS = [
+        {
+          title: "1. Production Decisions",
+          description: "Estimate market growth and market share. Decide on capacity allocation between US and Asian plants.",
+          imageUrl: 'https://github.com/andyocnz/Bonopoly/blob/master/screeenshot/outlook.png?raw=true',
+          details: [
+            "Analyze demand forecasts and outlooks.",
+            "Check supplier sustainability ratings (CSR).",
+            "Manage capacity allocation and production costs."
+          ]
+        },
+        {
+          title: "2. HR Management",
+          description: "Manage your workforce to optimize efficiency and minimize turnover.",
+          details: [
+            "Decide number of employees.",
+            "Set monthly salaries.",
+            "Allocate training budgets."
+          ]
+        },
+        {
+          title: "3. R&D Strategy",
+          description: "Innovate to stay ahead. Choose between in-house development (cheaper, slower) or licensing (expensive, immediate).",
+          details: []
+        },
+        {
+          title: "4. Investment",
+          description: "Plan for the future. Building new plants takes time.",
+          imageUrl: 'https://github.com/andyocnz/Bonopoly/blob/master/screeenshot/invest.png?raw=true',
+          details: [
+            "Invest in new facilities in USA or Asia.",
+            "Facilities take 2 periods to complete.",
+            "Ensure revenue can cover long-term investment costs."
+          ]
+        },
+        {
+          title: "5. Logistics",
+          description: "Optimize your supply chain to maximize margins.",
+          details: [
+            "Prioritize markets with highest unit margins.",
+            "Account for tariffs and transportation costs."
+          ]
+        },
+        {
+          title: "6. Marketing",
+          description: "Define your product offering and promotion strategy.",
+          details: [
+            "Decide number of features.",
+            "Set sales margins.",
+            "Determine promotion budget percentage."
+          ]
+        },
+        {
+          title: "7. Finance",
+          description: "Manage cash flow, transfer pricing, and debt.",
+          details: [
+            "Use transfer pricing for tax benefits.",
+            "Maintain minimum cash requirements to avoid costly short-term debt.",
+            "Maximize Return on Equity (ROE)."
+          ]
+        }
+      ];
+
+      const MARKET_AREAS = [
+        {
+          name: "USA",
+          description: "Local market. Leader in high-tech. Features moderately appreciated.",
+          growth: "Steady 5-10% p.a."
+        },
+        {
+          name: "Europe",
+          description: "Export market only (high labor costs). Consumers highly appreciate features.",
+          growth: "Steady ~10% p.a."
+        },
+        {
+          name: "Asia",
+          description: "Highest growth potential. Price sensitive, less appreciative of features.",
+          growth: "Rapid ~20% p.a."
+        }
+      ];
+
+      // --- COMPONENTS ---
+
+      const Navbar = () => {
+        const [isScrolled, setIsScrolled] = useState(false);
+        const [isMenuOpen, setIsMenuOpen] = useState(false);
+
+        useEffect(() => {
+          const handleScroll = () => {
+            setIsScrolled(window.scrollY > 20);
+          };
+          window.addEventListener('scroll', handleScroll);
+          return () => window.removeEventListener('scroll', handleScroll);
+        }, []);
+
+        const navLinks = [
+          { name: 'Overview', href: '#overview' },
+          { name: 'Mechanics', href: '#simulation' },
+          { name: 'Curriculum', href: '#how-to-play' },
+          { name: 'Guide', href: '#install' },
+        ];
+
+        return (
+          <nav className={`fixed w-full z-50 transition-all duration-300 ${isScrolled ? 'bg-white shadow-md py-3' : 'bg-transparent py-5'}`}>
+            <div className="container mx-auto px-4 flex justify-between items-center">
+              <a href="#" className="flex items-center gap-2 group">
+                <div className="w-10 h-10 bg-brand-600 rounded-lg flex items-center justify-center text-white transform group-hover:rotate-6 transition-transform shadow-lg shadow-brand-500/20">
+                    <Building2 size={20} />
+                </div>
+                <span className="text-2xl font-bold font-display text-slate-900 tracking-tight group-hover:text-brand-600 transition-colors">
+                  Bonopoly
+                </span>
+              </a>
+
+              {/* Desktop Nav */}
+              <div className="hidden md:flex items-center gap-8">
+                {navLinks.map((link) => (
+                  <a 
+                    key={link.name}
+                    href={link.href}
+                    className="text-sm font-semibold font-display text-slate-700 hover:text-brand-600 transition-colors"
+                  >
+                    {link.name}
+                  </a>
+                ))}
+                <a href="#install" className="px-6 py-2.5 bg-accent-500 hover:bg-accent-600 text-white text-sm font-bold font-display rounded-md transition-all shadow-lg shadow-accent-500/30 transform hover:-translate-y-0.5">
+                  Start Learning
+                </a>
+              </div>
+
+              {/* Mobile Toggle */}
+              <button 
+                className="md:hidden text-slate-800"
+                onClick={() => setIsMenuOpen(!isMenuOpen)}
+              >
+                {isMenuOpen ? <X /> : <Menu />}
+              </button>
+
+              {/* Mobile Menu */}
+              {isMenuOpen && (
+                <div className="absolute top-full left-0 w-full bg-white border-t border-slate-100 p-4 flex flex-col gap-4 md:hidden shadow-xl">
+                  {navLinks.map((link) => (
+                    <a 
+                      key={link.name}
+                      href={link.href}
+                      className="text-slate-700 font-semibold font-display hover:text-brand-600 py-2"
+                      onClick={() => setIsMenuOpen(false)}
+                    >
+                      {link.name}
+                    </a>
+                  ))}
+                  <a href="#install" className="text-center px-6 py-3 bg-accent-500 text-white font-bold rounded-md">
+                    Start Learning
+                  </a>
+                </div>
+              )}
+            </div>
+          </nav>
+        );
+      };
+
+      const Hero = () => {
+        const [text, setText] = useState('');
+        const [isDeleting, setIsDeleting] = useState(false);
+        const [loopNum, setLoopNum] = useState(0);
+        const [typingSpeed, setTypingSpeed] = useState(150);
+
+        const words = ["Business Strategy", "Market Dynamics", "Global Logistics", "Financial Analysis"];
+
+        useEffect(() => {
+          const handleTyping = () => {
+            const i = loopNum % words.length;
+            const fullText = words[i];
+
+            setText(isDeleting 
+              ? fullText.substring(0, text.length - 1) 
+              : fullText.substring(0, text.length + 1)
+            );
+
+            setTypingSpeed(isDeleting ? 30 : 150);
+
+            if (!isDeleting && text === fullText) {
+              setTimeout(() => setIsDeleting(true), 1500); // Pause at end
+            } else if (isDeleting && text === '') {
+              setIsDeleting(false);
+              setLoopNum(loopNum + 1);
+            }
+          };
+
+          const timer = setTimeout(handleTyping, typingSpeed);
+          return () => clearTimeout(timer);
+        }, [text, isDeleting, loopNum, typingSpeed, words]);
+
+        return (
+          <div className="relative overflow-hidden bg-white pt-32 pb-24 lg:pt-40 lg:pb-32">
+            
+            {/* Dynamic Background Layer */}
+            <div className="absolute inset-0 z-0">
+                {/* Animated Gradient Mesh */}
+                <div className="absolute inset-0 bg-gradient-to-br from-brand-50/50 via-white to-accent-50/30 animate-gradient-xy"></div>
+                
+                {/* Soft blur orbs for depth */}
+                <div className="absolute top-[-20%] right-[-10%] w-[800px] h-[800px] bg-brand-100/40 rounded-full blur-3xl mix-blend-multiply opacity-70 animate-blob"></div>
+                <div className="absolute bottom-[-20%] left-[-10%] w-[600px] h-[600px] bg-indigo-100/40 rounded-full blur-3xl mix-blend-multiply opacity-70 animate-blob animation-delay-2000"></div>
+
+                {/* Technical Grid Overlay */}
+                <div className="absolute inset-0 opacity-[0.4] mix-blend-overlay" 
+                   style={{
+                      backgroundImage: 'linear-gradient(#cbd5e1 1px, transparent 1px), linear-gradient(90deg, #cbd5e1 1px, transparent 1px)',
+                      backgroundSize: '40px 40px',
+                      animation: 'grid-flow 60s linear infinite'
+                   }}>
+                </div>
+                
+                {/* Gradient mask to fade grid at bottom */}
+                <div className="absolute inset-0 bg-gradient-to-b from-transparent via-transparent to-white z-0"></div>
+            </div>
+
+            <div className="container mx-auto px-4 relative z-10">
+              <div className="grid lg:grid-cols-2 gap-12 items-center">
+                
+                {/* Text Content */}
+                <div className="text-center lg:text-left">
+                  <div className="inline-flex items-center gap-2 px-4 py-2 bg-white/80 backdrop-blur-sm rounded-full shadow-sm text-slate-500 text-xs font-bold uppercase tracking-wider mb-6 border border-slate-200">
+                    <AlertTriangle size={14} className="text-brand-500"/>
+                    <span>Project Archived</span>
+                  </div>
+
+                  <h1 className="text-4xl lg:text-6xl font-extrabold font-display text-slate-900 leading-tight mb-6 h-[3.5em] lg:h-auto">
+                    Master Global <br/>
+                    {/* Solid color text for typing effect - no gradient fading */}
+                    <span className="text-brand-600">
+                      {text}
+                    </span>
+                    <span className="animate-cursor-blink text-brand-600">|</span>
+                  </h1>
+
+                  <p className="text-lg text-slate-600 mb-8 leading-relaxed max-w-lg mx-auto lg:mx-0 font-medium">
+                    An interactive educational simulation designed for international business studies. Experience the complexity of global markets in a risk-free environment.
+                  </p>
+
+                  <div className="flex flex-col sm:flex-row gap-4 justify-center lg:justify-start">
+                    <a 
+                      href="#simulation" 
+                      className="px-8 py-4 bg-brand-600 hover:bg-brand-700 text-white rounded-lg font-bold font-display transition-all shadow-lg shadow-brand-500/30 flex items-center justify-center gap-2 transform hover:-translate-y-1"
+                    >
+                      View Mechanics <ArrowRight size={20} />
+                    </a>
+                    <a 
+                      href="#how-to-play" 
+                      className="px-8 py-4 bg-white hover:bg-slate-50 text-slate-700 border border-slate-200 rounded-lg font-bold font-display transition-all shadow-sm hover:shadow-md flex items-center justify-center gap-2"
+                    >
+                      <PlayCircle size={20} className="text-brand-500"/> How it Works
+                    </a>
+                  </div>
+                  
+                  <div className="mt-10 flex items-center justify-center lg:justify-start gap-8 text-slate-400 grayscale opacity-70">
+                    <div className="flex flex-col">
+                        <span className="text-2xl font-bold font-display text-slate-800">100%</span>
+                        <span className="text-xs uppercase tracking-wider">Free & Open Source</span>
+                    </div>
+                    <div className="w-px h-10 bg-slate-300"></div>
+                    <div className="flex flex-col">
+                        <span className="text-2xl font-bold font-display text-slate-800">PHP 5.x</span>
+                        <span className="text-xs uppercase tracking-wider">Legacy Support</span>
+                    </div>
+                  </div>
+                </div>
+
+                {/* Image/Graphics */}
+                <div className="relative">
+                  <div className="relative rounded-2xl bg-white p-4 shadow-2xl transform lg:rotate-2 hover:rotate-0 transition-transform duration-500">
+                    <img 
+                      src="https://github.com/andyocnz/Bonopoly/blob/master/screeenshot/sample%20result.png?raw=true" 
+                      alt="Dashboard Preview" 
+                      className="rounded-lg w-full h-auto border border-slate-100"
+                    />
+                    
+                    {/* Floating Badge */}
+                    <div className="absolute -bottom-6 -left-6 bg-white p-4 rounded-xl shadow-xl border border-slate-100 flex items-center gap-3 animate-bounce hidden md:flex">
+                        <div className="w-10 h-10 bg-green-100 rounded-full flex items-center justify-center text-green-600">
+                          <TrendingUp size={20} />
+                        </div>
+                        <div>
+                          <p className="text-xs text-slate-500 font-semibold">Growth Rate</p>
+                          <p className="text-lg font-bold text-slate-800">+24%</p>
+                        </div>
+                    </div>
+                  </div>
+
+                  {/* Decorative background shape behind image */}
+                  <div className="absolute -z-10 top-10 -right-10 w-full h-full border-2 border-dashed border-brand-300 rounded-2xl opacity-50"></div>
+                </div>
+
+              </div>
+            </div>
+          </div>
+        );
+      };
+
+      const Overview = () => {
+        return (
+          <section id="overview" className="py-24 bg-white">
+            <div className="container mx-auto px-4">
+              
+              {/* Features Grid */}
+              <div className="text-center max-w-3xl mx-auto mb-16">
+                <h2 className="text-brand-600 font-bold tracking-wider uppercase text-sm mb-3">Why Bonopoly?</h2>
+                <h3 className="text-3xl md:text-4xl font-bold font-display text-slate-900 mb-6">Develop Your Analytical Mindset</h3>
+                <p className="text-slate-600 text-lg">
+                  Bonopoly facilitates the risk-free practice of business decisions in a highly interactive environment.
+                </p>
+              </div>
+
+              <div className="grid md:grid-cols-3 gap-8 mb-32">
+                {[
+                  {
+                    icon: Target,
+                    title: "Strategic Planning",
+                    desc: "Practice strategy implementation using key financial measures.",
+                    color: "bg-blue-100 text-blue-600"
+                  },
+                  {
+                    icon: ShieldCheck,
+                    title: "Risk-Free Environment",
+                    desc: "See consequences of day-to-day decisions without real-world loss.",
+                    color: "bg-amber-100 text-amber-600"
+                  },
+                  {
+                    icon: BarChart3,
+                    title: "Real-time Analytics",
+                    desc: "Increase operational efficiency through detailed data feedback.",
+                    color: "bg-purple-100 text-purple-600"
+                  }
+                ].map((feature, idx) => (
+                  <div key={idx} className="group p-8 rounded-2xl bg-white border border-slate-100 shadow-soft hover:shadow-xl transition-all duration-300 hover:-translate-y-1">
+                    <div className={`w-14 h-14 ${feature.color} rounded-xl flex items-center justify-center mb-6 group-hover:scale-110 transition-transform duration-300`}>
+                      <feature.icon className="w-6 h-6" />
+                    </div>
+                    <h4 className="text-xl font-bold font-display text-slate-900 mb-3">{feature.title}</h4>
+                    <p className="text-slate-600 leading-relaxed">{feature.desc}</p>
+                  </div>
+                ))}
+              </div>
+
+              {/* Market Areas Section */}
+              <div className="bg-slate-50 rounded-[2.5rem] p-8 md:p-16">
+                <div className="flex flex-col md:flex-row justify-between items-end mb-12 gap-6">
+                  <div className="max-w-xl">
+                    <h3 className="text-3xl font-bold font-display text-slate-900 mb-4">Global Markets</h3>
+                    <p className="text-slate-600">Navigate through three distinct economic regions, each with unique consumer behaviors and growth patterns.</p>
+                  </div>
+                  <a href="#simulation" className="text-brand-600 font-bold hover:text-brand-700 flex items-center gap-2">
+                    View Market Data <TrendingUp size={18} />
+                  </a>
+                </div>
+
+                <div className="grid md:grid-cols-3 gap-6">
+                  {MARKET_AREAS.map((market, idx) => (
+                    <div key={idx} className="bg-white rounded-2xl p-6 shadow-sm border border-slate-100 hover:shadow-md transition-shadow relative overflow-hidden group">
+                      <div className="absolute top-0 right-0 w-24 h-24 bg-brand-50 rounded-bl-full -mr-4 -mt-4 transition-transform group-hover:scale-110"></div>
+                      
+                      <div className="relative z-10">
+                        <div className="w-12 h-12 bg-white border border-slate-100 rounded-full flex items-center justify-center shadow-sm mb-4 text-brand-600">
+                          {idx === 0 ? <Globe size={20} /> : idx === 1 ? <Users size={20} /> : <TrendingUp size={20} />}
+                        </div>
+                        
+                        <h4 className="text-lg font-bold font-display text-slate-900 mb-2">{market.name}</h4>
+                        <p className="text-sm text-slate-500 mb-4 h-10">{market.description}</p>
+                        
+                        <div className="flex items-center gap-2 text-xs font-bold text-accent-600 bg-accent-50 px-3 py-1.5 rounded-full w-fit">
+                          <TrendingUp size={14} /> {market.growth}
+                        </div>
+                      </div>
+                    </div>
+                  ))}
+                </div>
+              </div>
+
+            </div>
+          </section>
+        );
+      };
+
+      const SimulationTabs = () => {
+        const [activeTab, setActiveTab] = useState(SIMULATION_SECTIONS[0].id);
+
+        const activeContent = SIMULATION_SECTIONS.find(s => s.id === activeTab) || SIMULATION_SECTIONS[0];
+
+        return (
+          <section id="simulation" className="py-24 bg-white relative">
+            {/* Decorative background strip */}
+            <div className="absolute top-0 left-0 w-full h-1/2 bg-slate-50 -z-10 skew-y-1 transform origin-top-left"></div>
+
+            <div className="container mx-auto px-4">
+              <div className="flex flex-col md:flex-row gap-4 justify-between items-end mb-12">
+                <div>
+                    <h2 className="text-brand-600 font-bold tracking-wider uppercase text-sm mb-3">Game Mechanics</h2>
+                    <h3 className="text-3xl md:text-4xl font-bold font-display text-slate-900">Simulation Modules</h3>
+                </div>
+              </div>
+
+              <div className="flex flex-col lg:flex-row gap-8">
+                {/* Tabs Navigation */}
+                <div className="lg:w-1/3 bg-white rounded-2xl shadow-soft border border-slate-100 p-2 h-fit">
+                  <div className="flex flex-col">
+                    {SIMULATION_SECTIONS.map((section) => (
+                      <button
+                        key={section.id}
+                        onClick={() => setActiveTab(section.id)}
+                        className={`text-left px-6 py-4 rounded-xl transition-all duration-200 flex items-center justify-between group mb-1 last:mb-0 ${
+                          activeTab === section.id
+                            ? 'bg-brand-50 text-brand-700 font-bold shadow-sm'
+                            : 'text-slate-500 hover:bg-slate-50 hover:text-slate-900 font-medium'
+                        }`}
+                      >
+                        <span className="font-display">{section.title}</span>
+                        <ChevronRight size={18} className={`transition-transform ${activeTab === section.id ? 'rotate-90 text-brand-500' : 'text-slate-300'}`} />
+                      </button>
+                    ))}
+                  </div>
+                </div>
+
+                {/* Tab Content */}
+                <div className="lg:w-2/3">
+                  <div className="bg-white rounded-3xl p-8 md:p-10 shadow-soft border border-slate-100 min-h-[500px]">
+                    <div className="flex items-center gap-3 mb-6">
+                      <div className="p-3 bg-brand-100 text-brand-600 rounded-lg">
+                          <LayoutDashboard size={24} />
+                      </div>
+                      <h3 className="text-2xl font-bold font-display text-slate-900">{activeContent.title}</h3>
+                    </div>
+                    
+                    <div className="grid md:grid-cols-2 gap-8">
+                      <div className="space-y-4 text-slate-600 leading-relaxed order-2 md:order-1">
+                        {activeContent.content.map((paragraph, idx) => (
+                          <p key={idx}>{paragraph}</p>
+                        ))}
+                        
+                        <div className="mt-6 pt-6 border-t border-slate-100">
+                          <span className="text-xs font-bold text-slate-400 uppercase tracking-wider">Key Takeaway</span>
+                          <p className="text-sm font-medium text-slate-800 mt-1">
+                              Mastering {activeContent.title.toLowerCase()} is crucial for maximizing shareholder value.
+                          </p>
+                        </div>
+                      </div>
+                      
+                      {activeContent.imageUrl && (
+                        <div className="order-1 md:order-2">
+                          <div className="relative rounded-2xl overflow-hidden shadow-lg border border-slate-100 group">
+                            <div className="absolute inset-0 bg-brand-900/10 group-hover:bg-transparent transition-colors duration-300"></div>
+                            <img 
+                              src={activeContent.imageUrl} 
+                              alt={activeContent.title}
+                              className="w-full h-auto object-cover transform group-hover:scale-105 transition-transform duration-500"
+                            />
+                          </div>
+                        </div>
+                      )}
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </section>
+        );
+      };
+
+      const HowToPlay = () => {
+        return (
+          <section id="how-to-play" className="py-24 bg-brand-50">
+            <div className="container mx-auto px-4">
+              <div className="text-center mb-16">
+                <h2 className="text-brand-600 font-bold tracking-wider uppercase text-sm mb-3">The Curriculum</h2>
+                <h3 className="text-3xl md:text-4xl font-bold font-display text-slate-900 mb-4">How to Play</h3>
+                <p className="text-slate-600 max-w-2xl mx-auto text-lg">
+                  Follow this strategic roadmap. Each round requires decisions in 7 key areas.
+                </p>
+              </div>
+
+              <div className="max-w-5xl mx-auto">
+                <div className="space-y-6">
+                  {PLAY_STEPS.map((step, index) => (
+                    <div key={index} className="bg-white rounded-2xl p-6 md:p-8 shadow-sm border border-slate-100 hover:shadow-soft transition-all duration-300">
+                      <div className="flex flex-col md:flex-row gap-8">
+                        
+                        {/* Step Number */}
+                        <div className="flex-shrink-0">
+                          <div className="w-16 h-16 bg-gradient-to-br from-brand-500 to-brand-600 text-white rounded-2xl flex items-center justify-center font-display font-bold text-2xl shadow-lg shadow-brand-500/20 transform rotate-3">
+                            {index + 1}
+                          </div>
+                        </div>
+
+                        <div className="flex-grow">
+                          <div className="flex flex-col md:flex-row md:items-center justify-between mb-2">
+                              <h3 className="text-xl font-bold font-display text-slate-900">{step.title}</h3>
+                          </div>
+                          
+                          <p className="text-slate-600 mb-4 leading-relaxed">{step.description}</p>
+                          
+                          {step.details && step.details.length > 0 && (
+                            <div className="flex flex-wrap gap-3">
+                              {step.details.map((detail, dIdx) => (
+                                <span key={dIdx} className="inline-flex items-center gap-1.5 px-3 py-1 bg-slate-50 text-slate-600 text-sm font-medium rounded-full border border-slate-100">
+                                  <Check size={14} className="text-green-500" />
+                                  {detail}
+                                </span>
+                              ))}
+                            </div>
+                          )}
+                        </div>
+                        
+                        {/* Thumbnail if available */}
+                        {step.imageUrl && (
+                          <div className="hidden md:block w-32 flex-shrink-0">
+                              <img src={step.imageUrl} alt={step.title} className="w-full h-24 object-cover rounded-lg border border-slate-100 shadow-sm opacity-80 hover:opacity-100 transition-opacity" />
+                          </div>
+                        )}
+
+                      </div>
+                    </div>
+                  ))}
+                </div>
+                
+                <div className="text-center mt-12">
+                  <a href="#install" className="inline-flex items-center justify-center px-8 py-4 text-base font-bold text-white transition-all duration-200 bg-brand-600 border border-transparent rounded-full shadow-lg hover:bg-brand-700 hover:shadow-brand-500/30 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-brand-500">
+                      Start Installation
+                  </a>
+                </div>
+
+              </div>
+            </div>
+          </section>
+        );
+      };
+
+      const Installation = () => {
+        return (
+          <section id="install" className="py-24 bg-slate-900 text-white overflow-hidden relative">
+            {/* Background decoration */}
+            <div className="absolute top-0 right-0 w-[500px] h-[500px] bg-brand-900 rounded-full blur-3xl opacity-50 -translate-y-1/2 translate-x-1/4"></div>
+            <div className="absolute bottom-0 left-0 w-[500px] h-[500px] bg-accent-900 rounded-full blur-3xl opacity-20 translate-y-1/3 -translate-x-1/4"></div>
+
+            <div className="container mx-auto px-4 relative z-10">
+              <div className="grid lg:grid-cols-2 gap-16">
+                
+                {/* Tech Setup */}
+                <div>
+                  <div className="mb-10">
+                      <h2 className="text-brand-400 font-bold tracking-wider uppercase text-sm mb-3">Technical Setup</h2>
+                      <h3 className="text-3xl font-bold font-display">Get Started</h3>
+                  </div>
+
+                  <div className="space-y-4">
+                    <div className="p-6 bg-slate-800/50 backdrop-blur-sm rounded-xl border border-slate-700 hover:border-brand-500/50 transition-colors group">
+                      <div className="flex gap-4">
+                        <div className="mt-1 w-10 h-10 rounded-lg bg-slate-700 flex items-center justify-center text-brand-400 group-hover:bg-brand-500 group-hover:text-white transition-colors">
+                          <Terminal size={20} />
+                        </div>
+                        <div>
+                          <h3 className="font-bold text-lg mb-1">1. Environment</h3>
+                          <p className="text-slate-400 text-sm">PHP 5.x environment required. Legacy support mode recommended.</p>
+                        </div>
+                      </div>
+                    </div>
+
+                    <div className="p-6 bg-slate-800/50 backdrop-blur-sm rounded-xl border border-slate-700 hover:border-brand-500/50 transition-colors group">
+                      <div className="flex gap-4">
+                        <div className="mt-1 w-10 h-10 rounded-lg bg-slate-700 flex items-center justify-center text-brand-400 group-hover:bg-brand-500 group-hover:text-white transition-colors">
+                          <Database size={20} />
+                        </div>
+                        <div>
+                          <h3 className="font-bold text-lg mb-1">2. Database</h3>
+                          <p className="text-slate-400 text-sm">Import the sample MySQL database to initialize game state.</p>
+                        </div>
+                      </div>
+                    </div>
+
+                    <div className="p-6 bg-slate-800/50 backdrop-blur-sm rounded-xl border border-slate-700 hover:border-brand-500/50 transition-colors group">
+                      <div className="flex gap-4">
+                        <div className="mt-1 w-10 h-10 rounded-lg bg-slate-700 flex items-center justify-center text-brand-400 group-hover:bg-brand-500 group-hover:text-white transition-colors">
+                          <Settings size={20} />
+                        </div>
+                        <div>
+                          <h3 className="font-bold text-lg mb-1">3. Config</h3>
+                          <div className="text-slate-400 text-sm mt-1 space-y-1">
+                            <p>Update <code className="bg-slate-900 px-1 py-0.5 rounded text-brand-200">Global.php</code> with DB credentials.</p>
+                            <p>Update <code className="bg-slate-900 px-1 py-0.5 rounded text-brand-200">Graph.php</code> with DB variables.</p>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+
+                    <div className="p-6 bg-slate-800/50 backdrop-blur-sm rounded-xl border border-slate-700 hover:border-brand-500/50 transition-colors group">
+                      <div className="flex gap-4">
+                        <div className="mt-1 w-10 h-10 rounded-lg bg-slate-700 flex items-center justify-center text-brand-400 group-hover:bg-brand-500 group-hover:text-white transition-colors">
+                          <Download size={20} />
+                        </div>
+                        <div>
+                          <h3 className="font-bold text-lg mb-1">4. Dependencies</h3>
+                          <p className="text-slate-400 text-sm">Download and upload <span className="text-white font-medium">pchart</span> library.</p>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+
+                {/* Teacher's Guide */}
+                <div>
+                  <div className="mb-10">
+                      <h2 className="text-accent-400 font-bold tracking-wider uppercase text-sm mb-3">For Educators</h2>
+                      <h3 className="text-3xl font-bold font-display">Integration Workflow</h3>
+                  </div>
+                  
+                  <div className="bg-white text-slate-900 rounded-3xl p-8 shadow-2xl relative overflow-hidden">
+                    <div className="absolute top-0 right-0 w-32 h-32 bg-brand-100 rounded-bl-full -mr-10 -mt-10"></div>
+                    
+                    <div className="space-y-8 relative z-10">
+                      <div className="flex gap-4 items-start">
+                          <div className="w-12 h-12 bg-brand-100 rounded-full flex items-center justify-center text-brand-600 flex-shrink-0 font-bold">
+                            <BookOpen size={20} />
+                          </div>
+                          <div>
+                            <h4 className="font-bold text-lg">Create Course</h4>
+                            <p className="text-slate-500 text-sm mt-1">Correlate concepts to curriculum & create course instance.</p>
+                          </div>
+                      </div>
+
+                      <div className="flex gap-4 items-start">
+                          <div className="w-12 h-12 bg-orange-100 rounded-full flex items-center justify-center text-orange-600 flex-shrink-0 font-bold">
+                            <UserPlus size={20} />
+                          </div>
+                          <div>
+                            <h4 className="font-bold text-lg">Admin Setup</h4>
+                            <p className="text-slate-500 text-sm mt-1">Create teams and distribute player logins via dashboard.</p>
+                          </div>
+                      </div>
+
+                      <div className="flex gap-4 items-start">
+                          <div className="w-12 h-12 bg-purple-100 rounded-full flex items-center justify-center text-purple-600 flex-shrink-0 font-bold">
+                            <Play size={20} />
+                          </div>
+                          <div>
+                            <h4 className="font-bold text-lg">Run Simulation</h4>
+                            <p className="text-slate-500 text-sm mt-1">Brief students, practice round, then start the game.</p>
+                          </div>
+                      </div>
+
+                      <div className="flex gap-4 items-start">
+                          <div className="w-12 h-12 bg-green-100 rounded-full flex items-center justify-center text-green-600 flex-shrink-0 font-bold">
+                            <Award size={20} />
+                          </div>
+                          <div>
+                            <h4 className="font-bold text-lg">Review & Grade</h4>
+                            <p className="text-slate-500 text-sm mt-1">Analyze performance reports and grade accordingly.</p>
+                          </div>
+                      </div>
+                    </div>
+
+                    <div className="mt-8 pt-8 border-t border-slate-100">
+                      <a href="https://github.com/andyocnz/Bonopoly" target="_blank" className="w-full block text-center py-3 bg-slate-900 text-white rounded-xl font-bold hover:bg-slate-800 transition-colors">
+                          Download Source Code
+                      </a>
+                    </div>
+                  </div>
+                </div>
+
+              </div>
+            </div>
+          </section>
+        );
+      };
+
+      const Footer = () => {
+        return (
+          <footer className="bg-slate-950 text-slate-400 py-12">
+            <div className="container mx-auto px-4 flex flex-col md:flex-row justify-between items-center">
+              <div className="mb-6 md:mb-0">
+                <span className="text-2xl font-bold text-white tracking-tight">Bonopoly</span>
+                <p className="text-sm mt-2">Open source business simulation platform.</p>
+              </div>
+              
+              <div className="flex items-center gap-6">
+                <a 
+                  href="https://github.com/andyocnz/Bonopoly" 
+                  target="_blank" 
+                  rel="noopener noreferrer"
+                  className="flex items-center gap-2 hover:text-white transition-colors"
+                >
+                  <Github size={20} />
+                  <span>View on GitHub</span>
+                </a>
+              </div>
+            </div>
+            <div className="container mx-auto px-4 mt-8 pt-8 border-t border-slate-900 text-center text-xs text-slate-600">
+              <p>© {new Date().getFullYear()} Bonopoly Project. Licensed under MIT. Note: Project is no longer in active development.</p>
+            </div>
+          </footer>
+        );
+      };
+
+      const App = () => {
+        return (
+          <div className="min-h-screen flex flex-col font-sans text-slate-900 bg-slate-50">
+            <Navbar />
+            <main className="flex-grow">
+              <Hero />
+              <Overview />
+              <SimulationTabs />
+              <HowToPlay />
+              <Installation />
+            </main>
+            <Footer />
+          </div>
+        );
+      };
+
+      const rootElement = document.getElementById('root');
+      if (!rootElement) {
+        throw new Error("Could not find root element to mount to");
+      }
+
+      const root = ReactDOM.createRoot(rootElement);
+      root.render(
+        <React.StrictMode>
+          <App />
+        </React.StrictMode>
+      );
+    </script>
+</body>
+</html>

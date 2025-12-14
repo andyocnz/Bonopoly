@@ -33,8 +33,10 @@ import {
 import { Check, ContentCopy, ExpandMore, Share } from '@mui/icons-material';
 import { useNavigate } from 'react-router-dom';
 import { useNotification } from '@/contexts/NotificationContext';
+import { useAuth } from '@/contexts/AuthContext';
 import { generateUniqueGameCode, generateGamePin, generateUniqueTeamPin, writeSheet } from '@/services/googleSheetsApi';
 import { SHEET_NAMES } from '@/config/googleSheets';
+import { ProgressTerminal, type ProgressStep } from '@/components/ProgressTerminal';
 
 const TIMEZONES = [
   // New Zealand
@@ -131,6 +133,7 @@ export default function CreateGamePage() {
   const [isCreating, setIsCreating] = useState(false);
   const [showSuccess, setShowSuccess] = useState(false);
   const [showDebugParams, setShowDebugParams] = useState(false);
+  const [progressSteps, setProgressSteps] = useState<ProgressStep[]>([]);
   const [formData, setFormData] = useState<GameFormData>({
     name: '',
     educator_email: '',
@@ -152,6 +155,7 @@ export default function CreateGamePage() {
   }>>([]);
 
   const { showSuccess: showSuccessNotification, showError } = useNotification();
+  const { loginEducator } = useAuth();
   const navigate = useNavigate();
 
   // Auto-generate fun team names when num_teams changes
@@ -177,15 +181,38 @@ export default function CreateGamePage() {
     setTeams(newTeams);
   };
 
+  const updateProgress = (stepId: string, status: 'running' | 'success' | 'error', message?: string) => {
+    setProgressSteps((prev) =>
+      prev.map((step) =>
+        step.id === stepId
+          ? { ...step, status, message, timestamp: Date.now() }
+          : step
+      )
+    );
+  };
+
   const handleCreateGame = async () => {
     setIsCreating(true);
 
+    // Initialize progress steps
+    const initialSteps: ProgressStep[] = [
+      { id: 'init', label: 'Initializing game creation', status: 'pending' },
+      { id: 'game', label: 'Creating game record', status: 'pending' },
+      { id: 'teams', label: `Creating ${formData.num_teams} teams`, status: 'pending' },
+      { id: 'scenarios', label: `Creating ${formData.num_rounds} round scenarios`, status: 'pending' },
+      { id: 'complete', label: 'Finalizing setup', status: 'pending' },
+    ];
+    setProgressSteps(initialSteps);
+
     try {
-      // Generate unique game code and PIN
+      // Step 1: Generate unique game code and PIN
+      updateProgress('init', 'running');
       const game_code = await generateUniqueGameCode();
       const game_pin = generateGamePin();
+      updateProgress('init', 'success', `Game code: ${game_code}`);
 
-      // Create game in database (game_code is the primary key)
+      // Step 2: Create game in database
+      updateProgress('game', 'running');
       const gameData = {
         game_code,
         game_pin,
@@ -204,10 +231,13 @@ export default function CreateGamePage() {
       const gameResponse = await writeSheet(SHEET_NAMES.GAME, gameData);
 
       if (!gameResponse.success) {
+        updateProgress('game', 'error', gameResponse.error);
         throw new Error(gameResponse.error || 'Failed to create game');
       }
+      updateProgress('game', 'success', formData.name);
 
-      // Create all teams (using game_code as foreign key)
+      // Step 3: Create all teams
+      updateProgress('teams', 'running');
       const createdTeams = [];
       for (let i = 0; i < teams.length; i++) {
         const team = teams[i];
@@ -225,31 +255,42 @@ export default function CreateGamePage() {
 
         if (teamResponse.success) {
           createdTeams.push({ ...teamData, team_pin });
+          updateProgress('teams', 'running', `${createdTeams.length}/${teams.length} teams created`);
         }
       }
+      updateProgress('teams', 'success', `All ${createdTeams.length} teams created`);
 
-      // Create round scenarios (using game_code as foreign key)
+      // Step 4: Create round scenarios
+      updateProgress('scenarios', 'running');
       const startTime = new Date();
       for (let round = 1; round <= formData.num_rounds; round++) {
         const deadline = new Date(startTime);
         deadline.setHours(deadline.getHours() + (formData.hours_per_round * round));
 
+        // Randomize scenario IDs for each country (1-8)
         const scenarioData = {
           game_code,
           round,
           deadline: deadline.toISOString(),
-          us_scenario_id: 8, // Default scenario
-          asia_scenario_id: 8,
-          europe_scenario_id: 8,
+          us_scenario_id: Math.floor(Math.random() * 8) + 1,
+          asia_scenario_id: Math.floor(Math.random() * 8) + 1,
+          europe_scenario_id: Math.floor(Math.random() * 8) + 1,
         };
 
         await writeSheet(SHEET_NAMES.ROUND_SCENARIOS, scenarioData);
+        updateProgress('scenarios', 'running', `Round ${round}/${formData.num_rounds} created`);
       }
+      updateProgress('scenarios', 'success', `All ${formData.num_rounds} rounds configured`);
 
-      // Success!
+      // Step 5: Complete
+      updateProgress('complete', 'running');
       setGameCredentials({ game_code, game_pin, teams: createdTeams });
+      updateProgress('complete', 'success', 'Game ready!');
+
       showSuccessNotification(`Game created with ${createdTeams.length} teams and ${formData.num_rounds} rounds!`);
-      setShowSuccess(true);
+
+      // Wait a moment to show completion, then show success screen
+      setTimeout(() => setShowSuccess(true), 800);
     } catch (error: any) {
       showError('Failed to create game', error);
     } finally {
@@ -494,6 +535,16 @@ export default function CreateGamePage() {
                     {isCreating ? 'Creating Game...' : 'Create Game'}
                   </Button>
                 </Box>
+
+                {/* Progress Terminal */}
+                {isCreating && progressSteps.length > 0 && (
+                  <Box sx={{ mt: 3 }}>
+                    <ProgressTerminal
+                      steps={progressSteps}
+                      title="Creating your game..."
+                    />
+                  </Box>
+                )}
               </>
             ) : gameCredentials ? (
               // Success Screen
@@ -637,16 +688,19 @@ export default function CreateGamePage() {
                 <Button
                   variant="contained"
                   size="large"
-                  onClick={() => {
-                    // Navigate to login with pre-filled game code, user needs to enter PIN
-                    navigate(`/login?role=educator&code=${gameCredentials.game_code}`);
+                  onClick={async () => {
+                    // Auto-login with the credentials we just created
+                    const success = await loginEducator(gameCredentials.game_code, gameCredentials.game_pin);
+                    if (success) {
+                      navigate('/educator/dashboard');
+                    }
                   }}
                   sx={{
                     background: 'linear-gradient(135deg, #667eea 0%, #764ba2 100%)',
                     px: 4,
                   }}
                 >
-                  Login as Educator →
+                  Go to Dashboard →
                 </Button>
               </Box>
             ) : null}

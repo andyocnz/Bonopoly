@@ -11,6 +11,7 @@ import { AuthProvider, useAuth } from './contexts/AuthContext';
 import LoginPage from './pages/LoginPage';
 import CreateGamePage from './pages/CreateGamePage';
 import CreateTeamsPage from './pages/CreateTeamsPage';
+import EducatorDashboardPage from './pages/EducatorDashboardPage';
 
 // Theme configuration
 const theme = createTheme({
@@ -53,19 +54,7 @@ function ProtectedRoute({
   return <>{children}</>;
 }
 
-// Temporary placeholder dashboards
-function EducatorDashboard() {
-  const { game, logout } = useAuth();
-  return (
-    <div style={{ padding: '20px' }}>
-      <h1>Educator Dashboard</h1>
-      <p>Game: {game?.name}</p>
-      <p>Game Code: {game?.game_code}</p>
-      <button onClick={logout}>Logout</button>
-    </div>
-  );
-}
-
+// Temporary placeholder for team dashboard
 function TeamDashboard() {
   const { game, team, logout } = useAuth();
   return (
@@ -95,7 +84,7 @@ function App() {
                 path="/educator/dashboard"
                 element={
                   <ProtectedRoute requiredRole="educator">
-                    <EducatorDashboard />
+                    <EducatorDashboardPage />
                   </ProtectedRoute>
                 }
               />
