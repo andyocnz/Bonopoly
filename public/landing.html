@@ -1,0 +1,3046 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>AIgopoly — Business Simulation for Economic Education</title>
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/favicon/apple-touch-icon.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon/favicon-32x32.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon/favicon-16x16.png">
+  <link rel="shortcut icon" href="/images/favicon/favicon.ico">
+  <link rel="manifest" href="/images/favicon/site.webmanifest">
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script src="https://unpkg.com/lucide@latest"></script>
+  <link
+    href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800&family=Inter:wght@300;400;500;600&family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=IBM+Plex+Mono:wght@400;700&display=swap"
+    rel="stylesheet">
+
+  <style>
+    :root {
+      --bg: #020617;
+      --text: #f8fafc;
+      --accent: #0ea5e9;
+      --accent-dark: #0284c7;
+      --danger: #ef4444;
+      --warning: #f59e0b;
+      --success: #10b981;
+      --glass: rgba(15, 23, 42, 0.65);
+    }
+
+    body {
+      font-family: 'Inter', system-ui, sans-serif;
+      background: var(--bg);
+      color: var(--text);
+      scroll-behavior: smooth;
+      overflow-x: hidden;
+    }
+
+    /* Custom Scrollbar Styles */
+    ::-webkit-scrollbar {
+      width: 10px;
+      height: 10px;
+    }
+
+    ::-webkit-scrollbar-track {
+      background: #f1f5f9;
+    }
+
+    ::-webkit-scrollbar-thumb {
+      background: #cbd5e1;
+      border-radius: 10px;
+      border: 2px solid #f1f5f9;
+      transition: background 0.3s;
+    }
+
+    ::-webkit-scrollbar-thumb:hover {
+      background: #94a3b8;
+    }
+
+    /* Firefox Support */
+    * {
+      scrollbar-width: thin;
+      scrollbar-color: #cbd5e1 #f1f5f9;
+    }
+
+    h1,
+    h2,
+    h3,
+    .font-display {
+      font-family: 'Outfit', sans-serif;
+      font-weight: 700;
+    }
+
+    .glass {
+      background: var(--glass);
+      backdrop-filter: blur(12px);
+      border: 1px solid rgba(255, 255, 255, 0.08);
+      border-radius: 1.5rem;
+    }
+
+    .grid-bg {
+      background-image:
+        radial-gradient(circle at 1px 1px, rgba(14, 165, 233, 0.12) 1px, transparent 0);
+      background-size: 40px 40px;
+    }
+
+    .scan {
+      position: absolute;
+      inset: 0;
+      pointer-events: none;
+      background: linear-gradient(to bottom, transparent, var(--accent), transparent);
+      opacity: 0.15;
+      animation: scan 12s linear infinite;
+      z-index: 5;
+      /* Keep below nav and content of intro */
+    }
+
+    @keyframes scan {
+      0% {
+        transform: translateY(-100%);
+      }
+
+      100% {
+        transform: translateY(100%);
+      }
+    }
+
+    /* Classroom OS Section Styles */
+    #educational-intro,
+    #educational-intro h1,
+    #educational-intro h2,
+    #educational-intro h3,
+    #educational-intro p,
+    #educational-intro span {
+      font-family: 'Plus Jakarta Sans', sans-serif !important;
+    }
+
+    #educational-intro {
+      background-color: #ffffff;
+      color: #0f172a;
+      letter-spacing: -0.01em;
+      scroll-snap-align: start;
+    }
+
+    .skill-tag {
+      background: #f1f5f9;
+      padding: 4px 12px;
+      border-radius: 6px;
+      font-size: 0.75rem;
+      font-weight: 600;
+      color: #475569;
+    }
+
+    .educational-hero-gradient {
+      background: radial-gradient(circle at 0% 0%, #f8fafc 0%, #ffffff 100%);
+    }
+
+    .feature-border {
+      border-left: 2px solid #e2e8f0;
+      padding-left: 1.5rem;
+      transition: border-color 0.3s ease;
+    }
+
+    .feature-border:hover {
+      border-color: #3b82f6;
+    }
+
+    .font-800 {
+      font-weight: 600;
+      /* Reduced from 700/800 to be more elegant */
+    }
+
+    /* Evolution of Trust Simulation Styles */
+    .compact-container-sim {
+      background: #1e293b;
+      border-radius: 1.5rem;
+      overflow: hidden;
+      border: 1px solid #334155;
+      box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.5);
+      margin-bottom: 2rem;
+    }
+
+    .stat-bar {
+      transition: width 0.6s cubic-bezier(0.34, 1.56, 0.64, 1);
+    }
+
+    #sim-canvas {
+      background: radial-gradient(circle at center, #1e293b 0%, #0f172a 100%);
+      cursor: crosshair;
+    }
+
+    .glass-panel {
+      background: rgba(15, 23, 42, 0.6);
+      backdrop-filter: blur(8px);
+    }
+
+    .chart-container-sim {
+      height: 100px;
+      width: 100%;
+      position: relative;
+      margin-top: 10px;
+      border-top: 1px solid #334155;
+      padding-top: 10px;
+    }
+
+    .glow {
+      text-shadow: 0 0 15px rgba(14, 165, 233, 0.3);
+    }
+
+    .section {
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+      position: relative;
+      padding: 6rem 1.5rem 4rem;
+    }
+
+    .hero-gradient {
+      background: linear-gradient(135deg, #0f172a 0%, #020617 100%);
+    }
+
+    .bg-hero-pattern {
+      background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 800 800'%3E%3Cdefs%3E%3CradialGradient id='g'%3E%3Cstop offset='0%25' stop-color='%230ea5e9' /%3E%3Cstop offset='100%25' stop-color='transparent' /%3E%3C/radialGradient%3E%3C/defs%3E%3Ccircle cx='400' cy='400' r='600' fill='url(%23g)' opacity='0.08' /%3E%3C/svg%3E");
+      background-repeat: no-repeat;
+      background-position: center;
+      background-size: cover;
+    }
+
+    @media (min-width: 1024px) {
+      .section {
+        padding: 8rem 3rem 6rem;
+      }
+    }
+
+    .journey-step {
+      opacity: 0;
+      transform: translateY(20px);
+      animation: fadeInUp 0.6s forwards;
+    }
+
+    @keyframes fadeInUp {
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    .journey-step:nth-child(1) {
+      animation-delay: 0.1s;
+    }
+
+    .journey-step:nth-child(2) {
+      animation-delay: 0.2s;
+    }
+
+    .journey-step:nth-child(3) {
+      animation-delay: 0.3s;
+    }
+
+    .journey-step:nth-child(4) {
+      animation-delay: 0.4s;
+    }
+
+    .journey-step:nth-child(5) {
+      animation-delay: 0.5s;
+    }
+
+    .journey-step:nth-child(6) {
+      animation-delay: 0.6s;
+    }
+
+    /* Simulator Styles */
+    .range-slider {
+      width: 100%;
+      height: 8px;
+      border-radius: 5px;
+      background: rgba(255, 255, 255, 0.1);
+      outline: none;
+      -webkit-appearance: none;
+      appearance: none;
+    }
+
+    .range-slider::-webkit-slider-thumb {
+      -webkit-appearance: none;
+      appearance: none;
+      width: 20px;
+      height: 20px;
+      border-radius: 50%;
+      background: var(--accent);
+      cursor: pointer;
+      box-shadow: 0 2px 8px rgba(14, 165, 233, 0.4);
+    }
+
+    .range-slider::-moz-range-thumb {
+      width: 20px;
+      height: 20px;
+      border-radius: 50%;
+      background: var(--accent);
+      cursor: pointer;
+      border: none;
+      box-shadow: 0 2px 8px rgba(14, 165, 233, 0.4);
+    }
+
+    .metric-card {
+      background: rgba(255, 255, 255, 0.05);
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      padding: 1.5rem;
+      border-radius: 1rem;
+      text-align: center;
+    }
+
+    .metric-label {
+      font-size: 0.75rem;
+      text-transform: uppercase;
+      color: rgba(255, 255, 255, 0.6);
+      font-weight: 700;
+      letter-spacing: 0.05em;
+      margin-bottom: 0.5rem;
+    }
+
+    .metric-value {
+      font-size: 2rem;
+      font-weight: 800;
+      color: var(--accent);
+    }
+
+    .efficiency-meter {
+      position: relative;
+      width: 45px;
+      height: 140px;
+      background: rgba(255, 255, 255, 0.05);
+      border-radius: 2rem;
+      overflow: hidden;
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      display: flex;
+      flex-direction: column;
+      justify-content: flex-end;
+    }
+
+    .meter-fill {
+      width: 100%;
+      background: var(--success);
+      transition: height 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+      border-radius: 2rem;
+      z-index: 2;
+    }
+
+    .meter-zones {
+      position: absolute;
+      inset: 0;
+      display: flex;
+      flex-direction: column-reverse;
+      z-index: 1;
+    }
+
+    .zone-low {
+      height: 60%;
+      background: rgba(16, 185, 129, 0.1);
+    }
+
+    .zone-mid {
+      height: 20%;
+      background: rgba(16, 185, 129, 0.2);
+    }
+
+    .zone-high {
+      height: 20%;
+      background: rgba(245, 158, 11, 0.1);
+    }
+
+    /* Better Snap Scrolling on Body */
+    html {
+      scroll-snap-type: y proximity;
+      scroll-behavior: smooth;
+    }
+
+    section,
+    .journey-step {
+      scroll-snap-align: start;
+    }
+
+    footer {
+      scroll-snap-align: end;
+    }
+
+    section.section:not(#journey) {
+      scroll-snap-align: start;
+    }
+
+    .journey-step {
+      min-height: 25vh;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      padding: 4rem 0;
+      border-bottom: 2px solid rgba(255, 255, 255, 0.05);
+      scroll-snap-align: center;
+    }
+
+    .reorder-btn {
+      opacity: 0.3;
+      transition: all 0.2s;
+    }
+
+    .priority-item:hover .reorder-btn {
+      opacity: 1;
+    }
+
+    .reorder-btn:hover {
+      color: var(--accent);
+      transform: scale(1.2);
+    }
+
+    .drag-handle {
+      cursor: grab;
+      color: rgba(255, 255, 255, 0.3);
+      transition: color 0.2s;
+    }
+
+    .drag-handle:hover {
+      color: var(--accent);
+    }
+
+    .meter-label-display {
+      text-align: center;
+      margin-top: 1.5rem;
+    }
+
+    /* Tour Styles */
+    #tour-overlay {
+      display: none;
+      position: fixed;
+      inset: 0;
+      background: transparent;
+      z-index: 9999;
+      pointer-events: none;
+    }
+
+    #tour-tooltip {
+      display: none;
+      position: fixed;
+      right: 2rem;
+      top: 50%;
+      transform: translateY(-50%);
+      width: 460px;
+      /* 15% increase from 400px */
+      background: #0f172a;
+      border: 1px solid var(--accent);
+      border-radius: 0.75rem;
+      padding: 1.25rem;
+      z-index: 10001;
+      box-shadow: 0 20px 50px rgba(0, 0, 0, 0.8), 0 0 30px rgba(14, 165, 233, 0.2);
+      font-size: 0.9rem;
+      pointer-events: auto;
+    }
+
+    #tour-spotlight {
+      display: none;
+      position: fixed;
+      z-index: 9998;
+      pointer-events: none;
+      box-shadow: 0 0 0 9999px rgba(0, 0, 0, 0.45);
+      border-radius: 12px;
+      transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+    }
+
+    .tour-btn {
+      padding: 0.5rem 1rem;
+      border-radius: 0.5rem;
+      font-weight: 600;
+      font-size: 0.875rem;
+      transition: all 0.2s;
+    }
+
+    .tour-btn-primary {
+      background: var(--accent);
+      color: black;
+    }
+
+    .tour-btn-secondary {
+      background: rgba(255, 255, 255, 0.1);
+      color: white;
+    }
+
+    .tour-btn:hover {
+      transform: translateY(-1px);
+      filter: brightness(1.1);
+    }
+
+    .tour-highlight {
+      outline: 6px solid #fbbf24 !important;
+      /* Amber-400 */
+      outline-offset: 6px;
+      box-shadow: 0 0 100px rgba(251, 191, 36, 1), inset 0 0 40px rgba(251, 191, 36, 0.6) !important;
+      position: relative;
+      z-index: 10002 !important;
+      animation: tourPulse 1.5s infinite linear;
+      filter: brightness(1.1) contrast(1.1);
+    }
+
+    @keyframes tourPulse {
+      0% {
+        box-shadow: 0 0 30px rgba(251, 191, 36, 0.4);
+      }
+
+      50% {
+        box-shadow: 0 0 100px rgba(251, 191, 36, 0.9);
+      }
+
+      100% {
+        box-shadow: 0 0 30px rgba(251, 191, 36, 0.4);
+      }
+    }
+
+    /* Dropdown Styling */
+    .dark-select {
+      background-color: #0f172a;
+      color: #f8fafc;
+      border: 1px solid rgba(255, 255, 255, 0.3);
+      border-radius: 0.75rem;
+      padding: 0.85rem 1rem;
+      width: 100%;
+      cursor: pointer;
+      appearance: none;
+      background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' fill='none' viewBox='0 0 24 24' stroke='white'%3E%3Cpath stroke-linecap='round' stroke-linejoin='round' stroke-width='2' d='M19 9l-7 7-7-7'%3E%3C/path%3E%3C/svg%3E");
+      background-repeat: no-repeat;
+      background-position: right 1rem center;
+      background-size: 1.2rem;
+      transition: all 0.2s;
+    }
+
+    .dark-select option {
+      background-color: #0f172a;
+      color: white;
+      padding: 1rem;
+    }
+
+    /* Typing Effect Cursor */
+    .typing::after {
+      content: '|';
+      animation: blink 0.7s infinite;
+      margin-left: 2px;
+      color: var(--accent);
+    }
+
+    @keyframes blink {
+
+      0%,
+      100% {
+        opacity: 1;
+      }
+
+      50% {
+        opacity: 0;
+      }
+    }
+
+    .reveal-item {
+      opacity: 0;
+      transform: translateY(20px);
+      transition: all 0.8s cubic-bezier(0.4, 0, 0.2, 1);
+    }
+
+    .reveal-item.show {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    /* Cinematic Background Truck Animation */
+    .animated-car {
+      position: absolute;
+      bottom: 25%;
+      left: -200px;
+      width: 200px;
+      height: 200px;
+      color: var(--accent);
+      opacity: 0.2;
+      filter: blur(1px) drop-shadow(0 0 20px rgba(14, 165, 233, 0.4));
+      pointer-events: none;
+      z-index: 1;
+      animation: carDrive 12s linear infinite;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .animated-car i {
+      width: 100% !important;
+      height: 100% !important;
+      stroke-width: 1px;
+    }
+
+    @keyframes carDrive {
+      0% {
+        left: -200px;
+        transform: translateY(0);
+      }
+
+      50% {
+        transform: translateY(-10px);
+      }
+
+      100% {
+        left: 100vw;
+        transform: translateY(0);
+      }
+    }
+
+    .vibrate {
+      animation: vibrate 0.3s infinite ease-in-out;
+    }
+
+    @keyframes vibrate {
+
+      0%,
+      100% {
+        transform: translateY(0);
+      }
+
+      50% {
+        transform: translateY(-0.8px);
+      }
+    }
+
+    .filter-cyan {
+      filter: drop-shadow(0 0 20px rgba(14, 165, 233, 0.4)) brightness(1.1);
+    }
+
+    .road-line-container {
+      position: absolute;
+      bottom: -8px;
+      left: 0;
+      width: 100%;
+      height: 1px;
+      overflow: hidden;
+      opacity: 0.5;
+    }
+
+    .road-line-dash {
+      width: 200%;
+      height: 100%;
+      background: repeating-linear-gradient(to right,
+          #fbbf24 0,
+          #fbbf24 6px,
+          transparent 6px,
+          transparent 12px);
+      animation: dashMove 0.4s infinite linear;
+    }
+
+    @keyframes dashMove {
+      from {
+        transform: translateX(0);
+      }
+
+      to {
+        transform: translateX(-12px);
+      }
+    }
+
+    /* Smoke Animation */
+    .smoke-container {
+      position: absolute;
+      right: 100%;
+      top: 50%;
+      display: flex;
+      gap: 4px;
+      pointer-events: none;
+    }
+
+    .smoke-particle {
+      width: 8px;
+      height: 8px;
+      background: rgba(255, 255, 255, 0.4);
+      border-radius: 50%;
+      filter: blur(4px);
+      opacity: 0;
+      animation: smokeCloud 2s infinite;
+    }
+
+    .smoke-particle:nth-child(2) {
+      animation-delay: 0.4s;
+    }
+
+    .smoke-particle:nth-child(3) {
+      animation-delay: 0.8s;
+    }
+
+    @keyframes smokeCloud {
+      0% {
+        transform: scale(0.5) translate(0, 0);
+        opacity: 0.8;
+      }
+
+      100% {
+        transform: scale(3) translate(-40px, -20px);
+        opacity: 0;
+      }
+    }
+
+    .factory-icon {
+      filter: drop-shadow(0 0 10px rgba(14, 165, 233, 0.3));
+      animation: factoryShake 4s infinite ease-in-out;
+    }
+
+    @keyframes factoryShake {
+
+      0%,
+      100% {
+        transform: scale(1);
+      }
+
+      50% {
+        transform: scale(1.1) rotate(2deg);
+      }
+    }
+
+    /* Terminal Section Styles */
+    @import url('https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@300;400;700&display=swap');
+
+    .story-page {
+      --primary-glow: rgba(0, 255, 157, 0.4);
+      background: linear-gradient(135deg, #0f172a 0%, #020617 100%);
+      color: #e0e0e0;
+      font-family: 'JetBrains Mono', monospace;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .terminal-container {
+      height: 100vh;
+      display: flex;
+      flex-direction: column;
+      padding: 2rem;
+      position: relative;
+      z-index: 10;
+      max-width: 1200px;
+      margin: 0 auto;
+      width: 100%;
+    }
+
+    .crt-overlay {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: linear-gradient(rgba(18, 16, 16, 0) 50%, rgba(0, 0, 0, 0.25) 50%),
+        linear-gradient(90deg, rgba(255, 0, 0, 0.06), rgba(0, 255, 0, 0.02), rgba(0, 0, 255, 0.06));
+      background-size: 100% 2px, 3px 100%;
+      pointer-events: none;
+      z-index: 100;
+    }
+
+    .scanline {
+      width: 100%;
+      height: 100px;
+      z-index: 101;
+      background: linear-gradient(0deg, rgba(0, 0, 0, 0) 0%, rgba(0, 255, 157, 0.05) 50%, rgba(0, 0, 0, 0) 100%);
+      opacity: 0.1;
+      position: absolute;
+      bottom: 100%;
+      animation: scanline 10s linear infinite;
+      pointer-events: none;
+    }
+
+    @keyframes scanline {
+      0% {
+        bottom: 100%;
+      }
+
+      100% {
+        bottom: -100px;
+      }
+    }
+
+    .typing-container {
+      flex-grow: 1;
+      scale: 0.9;
+      transform-origin: center center;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      width: 100%;
+    }
+
+    .cursor {
+      display: inline-block;
+      width: 10px;
+      height: 1.2em;
+      background-color: #00ff9d;
+      margin-left: 5px;
+      animation: blink 1s infinite;
+      vertical-align: middle;
+    }
+
+    @keyframes blink {
+      50% {
+        opacity: 0;
+      }
+    }
+
+    .choice-btn {
+      background: transparent;
+      border: 1px solid #444;
+      color: #888;
+      padding: 1rem 2rem;
+      transition: all 0.3s ease;
+      text-align: left;
+      margin-bottom: 1rem;
+      cursor: pointer;
+      position: relative;
+      overflow: hidden;
+      font-family: 'JetBrains Mono', monospace;
+      width: 100%;
+      max-width: 600px;
+    }
+
+    .choice-btn:hover {
+      border-color: #00ff9d;
+      color: #00ff9d;
+      background: rgba(0, 255, 157, 0.05);
+      box-shadow: 0 0 15px var(--primary-glow);
+    }
+
+    .choice-btn::before {
+      content: "> ";
+      opacity: 0;
+      transition: opacity 0.3s;
+    }
+
+    .choice-btn:hover::before {
+      opacity: 1;
+    }
+
+    .stat-bar {
+      height: 2px;
+      background: #222;
+      width: 100%;
+      margin-top: 0.5rem;
+    }
+
+    .stat-fill {
+      height: 100%;
+      background: #00ff9d;
+      width: 0%;
+      transition: width 1s ease-out;
+    }
+
+    .hidden {
+      display: none;
+    }
+
+    .glitch-text {
+      text-shadow: 2px 0 #ff00c1, -2px 0 #00fff9;
+    }
+
+    /* Supernova Transition Styles */
+    #bridge-overlay {
+      position: fixed;
+      inset: 0;
+      z-index: 100;
+      pointer-events: none;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      overflow: hidden;
+    }
+
+    .supernova-flash {
+      position: absolute;
+      inset: 0;
+      background: white;
+      opacity: 0;
+      z-index: 101;
+    }
+
+    .active-supernova .supernova-flash {
+      animation: flashBurn 1.8s ease-out forwards;
+    }
+
+    @keyframes flashBurn {
+      0% {
+        opacity: 1;
+      }
+
+      40% {
+        opacity: 1;
+      }
+
+      100% {
+        opacity: 0;
+      }
+    }
+
+    .star {
+      position: absolute;
+      background: white;
+      width: 2px;
+      height: 2px;
+      border-radius: 50%;
+      opacity: 0;
+      box-shadow: 0 0 10px white;
+    }
+
+    .active-supernova .star {
+      animation: starWarp 3s cubic-bezier(0.1, 0, 0.2, 1) forwards;
+      animation-delay: 0.2s;
+    }
+
+    @keyframes starWarp {
+      0% {
+        transform: translate(0, 0) scale(0);
+        opacity: 0;
+      }
+
+      10% {
+        opacity: 1;
+        transform: translate(0, 0) scale(2.5);
+      }
+
+      100% {
+        transform: translate(var(--tx), var(--ty)) scale(0);
+        opacity: 0;
+      }
+    }
+
+    /* Initial Scroll Lock */
+    body.scroll-locked {
+      overflow: hidden;
+    }
+
+    #bridge-overlay {
+      z-index: 9999 !important;
+    }
+
+    /* Styles from landing_new.html */
+    .edu-section {
+      background-color: #ffffff;
+      color: #0f172a;
+      letter-spacing: -0.01em;
+    }
+
+    .edu-section h1,
+    .edu-section h2,
+    .edu-section h3,
+    .edu-section p,
+    .edu-section span {
+      font-family: 'Plus Jakarta Sans', sans-serif !important;
+    }
+
+    /* Carousel / Accordion Styles */
+    .accordion-content {
+      max-height: 0;
+      overflow: hidden;
+      transition: max-height 0.3s ease-out;
+    }
+
+    .accordion-item.active .accordion-content {
+      max-height: 500px;
+    }
+
+    .accordion-item.active .chevron {
+      transform: rotate(180deg);
+    }
+
+    /* Comparison Table Styles */
+    @media (max-width: 768px) {
+      .comparison-table {
+        display: none;
+      }
+
+      .comparison-cards {
+        display: block;
+      }
+    }
+
+    @media (min-width: 769px) {
+      .comparison-table {
+        display: table;
+      }
+
+      .comparison-cards {
+        display: none;
+      }
+    }
+
+    /* Story Mode Locking */
+    .story-mode-hidden #hero,
+    .story-mode-hidden #story-part-1,
+    .story-mode-hidden #story-part-2,
+    .story-mode-hidden #journey,
+    .story-mode-hidden #join,
+    .story-mode-hidden footer.bg-slate-950 {
+      display: none !important;
+    }
+  </style>
+</head>
+
+<body id="main-body" class="grid-bg relative story-mode-hidden">
+
+
+
+  <!-- Tour Overlay & Tooltip -->
+  <div id="tour-overlay"></div>
+  <div id="tour-spotlight"></div>
+  <div id="tour-tooltip" class="pointer-events-auto" style="font-size: 0.8rem !important;">
+    <div id="tour-step-count" class="text-[10px] text-accent font-bold uppercase mb-1 font-mono"></div>
+    <h4 id="tour-title" class="text-sm font-bold mb-2 text-white font-mono"></h4>
+    <div id="tour-text" class="text-xs">
+      <!-- Content injected via JS -->
+    </div>
+    <div class="flex justify-between items-center mt-4 pt-3 border-t border-white/10">
+      <button onclick="skipTour()" class="text-[10px] text-slate-500 hover:text-white transition-colors">Disable
+        Tour</button>
+      <div class="flex gap-2">
+        <button onclick="closeTourStep()" class="tour-btn tour-btn-secondary text-[10px] px-3 py-1">Close</button>
+        <button id="tour-next" onclick="nextStep()"
+          class="tour-btn tour-btn-primary text-[10px] px-3 py-1">Next</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Scan lines moved into specific sections below -->
+
+  <!-- Educational Introduction (from 1stpage.html) -->
+  <section id="educational-intro" class="min-h-screen flex flex-col educational-hero-gradient">
+    <!-- Navigation -->
+    <nav class="flex justify-between items-center px-8 py-6">
+      <div class="flex items-center gap-2">
+        <div class="w-8 h-8 bg-blue-600 rounded-lg flex items-center justify-center shadow-lg shadow-blue-200">
+          <i data-lucide="brain" class="w-5 h-5 text-white fill-white/20"></i>
+        </div>
+        <span class="font-display text-xl tracking-tight font-semibold">
+          <span class="text-slate-900 mr-1"
+            style="font-family: 'IBM Plex Mono', monospace !important; font-weight: 700;">[AI]</span><span
+            class="text-blue-600">Decision Lab</span>
+        </span>
+      </div>
+      <div class="flex items-center gap-8">
+        <div class="hidden md:flex gap-6 text-sm font-medium text-slate-500">
+          <a href="/educator-login" target="_blank" rel="noopener noreferrer"
+            onclick="window.open('/educator-login','_blank','noopener'); return false;"
+            class="hover:text-blue-600 transition-colors">Educators</a>
+          <a href="mailto:hello@aidecisionlab.nz" class="hover:text-blue-600 transition-colors">Contact</a>
+        </div>
+        <div class="flex items-center gap-4">
+          <a href="/team-login"
+            class="px-6 py-2.5 border border-slate-200 rounded-full font-semibold text-sm hover:bg-slate-50 hover:border-slate-300 transition-all text-slate-900">
+            Login
+          </a>
+          <a href="#" onclick="runSupernova(); return false;"
+            class="hidden sm:inline-flex bg-blue-600 text-white px-6 py-2.5 rounded-full font-semibold text-sm hover:bg-blue-700 shadow-lg shadow-blue-200 transition-all">
+            Quick Tour
+          </a>
+        </div>
+      </div>
+    </nav>
+
+    <!-- Main Content -->
+    <main class="flex-grow flex flex-col justify-center px-8 max-w-7xl mx-auto w-full py-12">
+      <div class="grid lg:grid-cols-2 gap-16 items-center">
+        <!-- Left Side: Hero & Problem/Solution -->
+        <div>
+          <span
+            class="inline-block py-1 px-3 bg-blue-50 text-blue-600 text-[10px] font-bold uppercase tracking-widest rounded-full mb-6">
+            The Modern Classroom OS
+          </span>
+          <h1 class="text-5xl lg:text-6xl font-bold text-slate-900 mb-6 leading-[1.1] tracking-tight">
+            Bridging the <br />
+            <span class="text-blue-600">Classroom Gap.</span>
+          </h1>
+          <p class="text-slate-500 text-lg mb-10 leading-relaxed max-w-lg">
+            Converting game theory into practice: A risk-free sandbox where aspiring leaders become active
+            decision-makers in
+            Supply Chain, Finance, and Strategy.
+          </p>
+
+
+
+          <div id="bridge-overlay"></div>
+
+          <div class="flex gap-12 border-t border-slate-100 pt-8">
+            <div>
+              <span class="block text-2xl font-800 text-slate-900">75%</span>
+              <span class="text-xs font-semibold text-slate-400 uppercase tracking-wider">Retention via Doing</span>
+            </div>
+            <div>
+              <span class="block text-2xl font-800 text-red-400">&lt; 10%</span>
+              <span class="text-xs font-semibold text-slate-400 uppercase tracking-wider">Lecture Retention
+                Standard</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- Right Side: Features & Skills -->
+        <div class="space-y-10">
+          <!-- Evolution of Trust Simulation -->
+          <div id="trust-sim-container" class="compact-container-sim">
+            <!-- Simulation Header -->
+            <div class="px-3 py-2 border-b border-slate-700 flex justify-between items-center bg-slate-800/50">
+              <div>
+                <h1 class="text-sm font-bold text-white leading-tight">Market Competition Dynamics</h1>
+                <p class="text-[8px] text-slate-500 uppercase tracking-widest font-semibold">Business Strategy Foundation</p>
+              </div>
+              <div class="flex gap-2">
+                <button id="sim-btn" onclick="toggleSim()"
+                  class="px-3 py-1 bg-blue-600 hover:bg-blue-500 rounded-full text-[10px] font-bold transition-all shadow-lg shadow-blue-900/40">
+                  Start
+                </button>
+                <button onclick="resetSim()"
+                  class="px-3 py-1 bg-slate-700 hover:bg-slate-600 rounded-full text-[10px] font-bold transition-all">
+                  Reset
+                </button>
+                <button id="info-btn" onclick="toggleSimInfo()"
+                  class="px-3 py-1 bg-slate-600 hover:bg-slate-500 rounded-full text-[10px] font-bold text-white transition-all"
+                  title="Show business context">
+                  Info
+                </button>
+              </div>
+            </div>
+            <!-- Simulation Body -->
+            <div class="grid md:grid-cols-5 h-[185px]">
+              <!-- Live Canvas Viewport -->
+              <div class="md:col-span-3 relative border-r border-slate-700 overflow-hidden">
+                <canvas id="sim-canvas" class="w-full h-full"></canvas>
+
+                <div
+                  class="absolute top-2 right-2 text-[8px] font-mono text-slate-500 glass-panel px-1.5 py-0.5 rounded">
+                  GEN: <span id="gen-count" class="text-white">0</span>
+                </div>
+              </div>
+
+              <!-- Dashboard / Strategy Explainers -->
+              <div class="md:col-span-2 p-2 flex flex-col justify-between bg-slate-900/30">
+                <div class="space-y-2">
+                  <div class="space-y-0.5">
+                    <div class="flex justify-between items-end">
+                      <span class="text-[8px] font-bold text-blue-400">Tit-For-Tat</span>
+                      <span class="text-[8px] text-white" id="score-tft">0</span>
+                    </div>
+                    <div class="h-1 w-full bg-slate-800 rounded-full overflow-hidden">
+                      <div id="bar-tft" class="stat-bar h-full bg-blue-500" style="width: 33%"></div>
+                    </div>
+                  </div>
+
+                  <div class="space-y-0.5">
+                    <div class="flex justify-between items-end">
+                      <span class="text-[8px] font-bold text-rose-400">Cheater</span>
+                      <span class="text-[8px] text-white" id="score-def">0</span>
+                    </div>
+                    <div class="h-1 w-full bg-slate-800 rounded-full overflow-hidden">
+                      <div id="bar-def" class="stat-bar h-full bg-rose-500" style="width: 33%"></div>
+                    </div>
+                  </div>
+
+                  <div class="space-y-0.5">
+                    <div class="flex justify-between items-end">
+                      <span class="text-[8px] font-bold text-emerald-400">Cooperator</span>
+                      <span class="text-[8px] text-white" id="score-coop">0</span>
+                    </div>
+                    <div class="h-1 w-full bg-slate-800 rounded-full overflow-hidden">
+                      <div id="bar-coop" class="stat-bar h-full bg-emerald-500" style="width: 33%"></div>
+                    </div>
+                  </div>
+
+                  <div class="chart-container-sim mt-3 pt-3 border-t border-slate-700/50">
+                    <canvas id="chart-canvas" class="w-full h-12 bg-transparent"></canvas>
+                    <div class="flex gap-2 justify-center mt-2">
+                      <div class="flex items-center gap-1">
+                        <div class="w-2 h-2 rounded-full bg-[#3b82f6]"></div>
+                        <span class="text-[7px] text-slate-400">TFT</span>
+                      </div>
+                      <div class="flex items-center gap-1">
+                        <div class="w-2 h-2 rounded-full bg-[#f43f5e]"></div>
+                        <span class="text-[7px] text-slate-400">Cheater</span>
+                      </div>
+                      <div class="flex items-center gap-1">
+                        <div class="w-2 h-2 rounded-full bg-[#10b981]"></div>
+                        <span class="text-[7px] text-slate-400">Coop</span>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Business Context - Toggleable Panel -->
+          <div id="sim-info-panel" class="mt-4 p-4 bg-gradient-to-r from-blue-50 to-purple-50 rounded-2xl border border-blue-100 hidden" style="display: none;">
+            <div class="flex justify-between items-start mb-2">
+              <span class="font-bold text-blue-600">What This Means for Business:</span>
+              <button onclick="toggleSimInfo()" class="text-slate-400 hover:text-slate-600 text-xs">✕</button>
+            </div>
+            <p class="text-xs text-slate-700 mb-2">
+              Watch three pricing strategies compete in real-time. <span class="font-semibold text-emerald-600">Cooperators</span> use premium strategy maintaining high margins,
+              <span class="font-semibold text-rose-600">Aggressive Players</span> undercut on price, and
+              <span class="font-semibold text-blue-600">Tit-for-Tat</span> adapts to match market conditions.
+              Notice how premium pricing can thrive when competitors cooperate, but price wars hurt everyone.
+            </p>
+            <p class="text-[10px] text-slate-500 italic">
+              These competitive dynamics power AIgopoly's AI opponents, creating realistic market conditions for your students.
+            </p>
+          </div>
+
+          <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+            <div class="feature-border">
+              <h3 class="font-bold text-slate-900 mb-2">Simulation Mechanics</h3>
+              <p class="text-sm text-slate-500">Real-world elasticity and cost models at scale.</p>
+            </div>
+            <div class="feature-border">
+              <h3 class="font-bold text-slate-900 mb-2">Educator Tools</h3>
+              <p class="text-sm text-slate-500">Zero install, automated assessment, live monitoring.</p>
+            </div>
+          </div>
+
+          <div class="bg-slate-50 p-8 rounded-3xl">
+            <h3 class="text-xs font-bold text-slate-400 uppercase tracking-[0.2em] mb-6">Skills Mastery</h3>
+            <div class="flex flex-wrap gap-2">
+              <span class="skill-tag">Financial Statement Analysis</span>
+            
+              <span class="skill-tag">Decision-Making Under Uncertainty</span>
+             
+              <span class="skill-tag">Strategic Trade-Off Analysis</span>
+              <span class="skill-tag">Collaborative Problem Solving</span>
+              <span class="skill-tag">Game Theory</span>
+    
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Trust Section -->
+      <div class="mt-16 pt-8 border-t border-slate-100">
+        <div class="flex flex-wrap items-center justify-between gap-8 opacity-40">
+          <span class="text-[10px] font-bold uppercase tracking-widest text-slate-900">Trusted By</span>
+          <span class="font-extrabold text-sm grayscale"> </span>
+          <span class="font-extrabold text-sm grayscale"> </span>
+          <span class="font-extrabold text-sm grayscale"> </span>
+          <span class="font-extrabold text-sm grayscale"> </span>
+          <span class="font-extrabold text-sm grayscale"> </span>
+          <span class="font-extrabold text-sm grayscale"> </span>
+        </div>
+      </div>
+    </main>
+
+    <!-- Scroll indicator -->
+    <div
+      class="absolute bottom-10 left-1/2 -translate-x-1/2 flex flex-col items-center gap-2 text-slate-400 animate-bounce cursor-pointer"
+      onclick="document.getElementById('solution').scrollIntoView({ behavior: 'smooth' })">
+      <span class="text-[10px] font-bold uppercase tracking-[0.2em]">Scroll to Discover</span>
+      <i data-lucide="chevron-down" class="w-5 h-5"></i>
+    </div>
+
+    <!-- Footer -->
+    <footer
+      class="px-8 py-6 flex justify-end items-center gap-6 text-[10px] font-bold text-slate-400 uppercase tracking-widest">
+      
+      <a href="/legal" class="hover:text-slate-900 transition-colors">Disclaimer</a>
+      <span>&copy; 2026 AI Decision Lab Global</span>
+    </footer>
+  </section>
+
+  <!-- SECTION 2: THE SOLUTION -->
+  <section id="solution" class="py-24 edu-section bg-slate-900 text-white">
+    <div class="max-w-7xl mx-auto px-8">
+      <div class="text-center mb-20">
+        <h2 class="text-4xl md:text-5xl font-bold mb-6">Learn Strategy Through Competition, Not Memorization
+        </h2>
+        <p class="text-slate-400 text-lg">A 3-step process to mastering business dynamics.</p>
+      </div>
+
+      <div class="space-y-32">
+        <!-- Step 1 -->
+        <div class="grid lg:grid-cols-2 gap-16 items-center">
+          <div>
+            <div class="text-blue-500 font-bold mb-4 uppercase tracking-[0.2em]">Step 1</div>
+            <h3 class="text-3xl font-bold mb-6">Students Make Strategic Decisions</h3>
+            <p class="text-slate-400 text-lg mb-8 leading-relaxed">
+              Every round, teams manage 5 key categories with deep interdependencies.
+            </p>
+            <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+              <div class="bg-white/5 p-4 rounded-xl border border-white/10">
+                <span class="block text-xl mb-2">💰</span>
+                <span class="font-bold text-sm">Pricing & Marketing</span>
+              </div>
+              <div class="bg-white/5 p-4 rounded-xl border border-white/10">
+                <span class="block text-xl mb-2">🏭</span>
+                <span class="font-bold text-sm">Production & Ops</span>
+              </div>
+              <div class="bg-white/5 p-4 rounded-xl border border-white/10">
+                <span class="block text-xl mb-2">🔬</span>
+                <span class="font-bold text-sm">R&D & Innovation</span>
+              </div>
+              <div class="bg-white/5 p-4 rounded-xl border border-white/10">
+                <span class="block text-xl mb-2">💼</span>
+                <span class="font-bold text-sm">Finance & Capital</span>
+              </div>
+            </div>
+          </div>
+          <div class="glass overflow-hidden border-white/20 p-2">
+            <img src="/images/landingpage/decisions.png" alt="Decision interface"
+              class="rounded-2xl opacity-95 hover:opacity-100 transition-opacity">
+          </div>
+        </div>
+
+        <!-- Step 2 -->
+        <div class="grid lg:grid-cols-2 gap-16 items-center flex-row-reverse">
+          <div class="lg:order-2">
+            <div class="text-blue-500 font-bold mb-4 uppercase tracking-[0.2em]">Step 2</div>
+            <h3 class="text-3xl font-bold mb-6">The Market Judges Them</h3>
+            <ul class="space-y-6 text-slate-400">
+              <li class="flex items-start gap-4">
+                <div class="w-8 h-8 bg-blue-500/20 text-blue-500 rounded-lg flex items-center justify-center shrink-0">
+                  1</div>
+                <div><span class="text-white font-bold">Game-Theoretic Competition:</span> Market share
+                  is calculated using weighted attractiveness models.</div>
+              </li>
+              <li class="flex items-start gap-4">
+                <div class="w-8 h-8 bg-blue-500/20 text-blue-500 rounded-lg flex items-center justify-center shrink-0">
+                  2</div>
+                <div><span class="text-white font-bold">Strategic Interdependence:</span> Price too
+                  high? Competitors steal your customers.</div>
+              </li>
+              <li class="flex items-start gap-4">
+                <div class="w-8 h-8 bg-blue-500/20 text-blue-500 rounded-lg flex items-center justify-center shrink-0">
+                  3</div>
+                <div><span class="text-white font-bold">Capacity Constraints:</span> Run out of
+                  inventory? Competitors capture your unmet demand.</div>
+              </li>
+            </ul>
+          </div>
+          <div class="lg:order-1 glass overflow-hidden border-white/20 p-2">
+            <img src="/images/landingpage/marketshare.png" alt="Market share results"
+              class="rounded-2xl opacity-95 hover:opacity-100 transition-opacity">
+          </div>
+        </div>
+
+        <!-- Step 3 -->
+        <div class="grid lg:grid-cols-2 gap-16 items-center">
+          <div>
+            <div class="text-blue-500 font-bold mb-4 uppercase tracking-[0.2em]">Step 3</div>
+            <h3 class="text-3xl font-bold mb-6">Real Financial Consequences</h3>
+            <p class="text-slate-400 text-lg mb-8 leading-relaxed">
+              GAAP-compliant financials teach students that Profit ≠ Cash and Leverage is a double-edged
+              sword.
+            </p>
+            <div class="space-y-4">
+              <div class="flex items-center gap-4 bg-white/5 p-4 rounded-xl border border-white/10">
+                <i data-lucide="file-text" class="text-blue-500"></i>
+                <span class="font-bold">Income Statement</span>
+              </div>
+              <div class="flex items-center gap-4 bg-white/5 p-4 rounded-xl border border-white/10">
+                <i data-lucide="layers" class="text-blue-500"></i>
+                <span class="font-bold">Balance Sheet (A = L + E)</span>
+              </div>
+              <div class="flex items-center gap-4 bg-white/5 p-4 rounded-xl border border-white/10">
+                <i data-lucide="refresh-cw" class="text-blue-500"></i>
+                <span class="font-bold">Statement of Cash Flows</span>
+              </div>
+            </div>
+          </div>
+          <div class="glass overflow-hidden border-white/20 p-2">
+            <img src="/images/landingpage/financial report.png" alt="Financial statements"
+              class="rounded-2xl opacity-95 hover:opacity-100 transition-opacity">
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- SECTION 3: WHY EDUCATORS CHOOSE -->
+  <section id="features" class="py-24 edu-section">
+    <div class="max-w-7xl mx-auto px-8">
+      <div class="text-center mb-20">
+        <h2 class="text-4xl md:text-5xl font-bold text-slate-900 mb-6">Built for Serious Business Education</h2>
+        <p class="text-slate-500 text-lg">Designed for rigorous analysis without classroom complexity.</p>
+      </div>
+
+      <div class="grid md:grid-cols-2 lg:grid-cols-4 gap-8">
+        <!-- Feature 1 -->
+        <div class="space-y-6">
+          <div class="w-12 h-12 bg-blue-100 text-blue-600 rounded-2xl flex items-center justify-center">
+            <i data-lucide="bot"></i>
+          </div>
+          <h3 class="text-xl font-bold">Intelligent Simulation Design</h3>
+          <ul class="text-sm text-slate-500 space-y-4">
+            <li><span class="font-bold text-slate-900">Dynamic scenario generation:</span> Macro-economic shocks (e.g. demand cycles, cost volatility, policy constraints) introduce uncertainty across rounds.</li>
+            <li><span class="font-bold text-slate-900">Adaptive competitor behavior:</span> Algorithmic firms maintain competitive pressure across different class sizes.</li>
+            <li><span class="font-bold text-slate-900">In-round feedback cues:</span> AI-assisted insights support student reflection and decision review.</li>
+          </ul>
+        </div>
+        <!-- Feature 2 -->
+        <div class="space-y-6">
+          <div class="w-12 h-12 bg-purple-100 text-purple-600 rounded-2xl flex items-center justify-center">
+            <i data-lucide="graduation-cap"></i>
+          </div>
+          <h3 class="text-xl font-bold">Academic Rigor & Flexibility</h3>
+          <ul class="text-sm text-slate-500 space-y-4">
+            <li><span class="font-bold text-slate-900">Highly configurable model:</span> Extensive parameters allow instructors to adjust demand sensitivity, cost structures, and strategic weights.</li>
+            <li><span class="font-bold text-slate-900">Game-theoretic foundations:</span> Oligopolistic market dynamics inspired by Cournot and Bertrand competition.</li>
+            <li><span class="font-bold text-slate-900">Learning outcomes support:</span> Structured outputs designed to align with assurance-of-learning and accreditation processes.</li>
+          </ul>
+        </div>
+        <!-- Feature 3 -->
+        <div class="space-y-6">
+          <div class="w-12 h-12 bg-emerald-100 text-emerald-600 rounded-2xl flex items-center justify-center">
+            <i data-lucide="clock"></i>
+          </div>
+          <h3 class="text-xl font-bold">Teaching Efficiency at Scale</h3>
+          <ul class="text-sm text-slate-500 space-y-4">
+            <li><span class="font-bold text-slate-900">Reduced grading overhead:</span> Quantitative outputs and decision logs support scalable assessment.</li>
+            <li><span class="font-bold text-slate-900">Low setup friction:</span> Web-based access with pre-configured teaching materials.</li>
+            <li><span class="font-bold text-slate-900">Rapid onboarding:</span> Instructors can configure and launch a game within a short setup window.</li>
+          </ul>
+        </div>
+        <!-- Feature 4 -->
+        <div class="space-y-6">
+          <div class="w-12 h-12 bg-orange-100 text-orange-600 rounded-2xl flex items-center justify-center">
+            <i data-lucide="briefcase"></i>
+          </div>
+          <h3 class="text-xl font-bold">Professional-Grade Outputs</h3>
+          <ul class="text-sm text-slate-500 space-y-4">
+            <li><span class="font-bold text-slate-900">Integrated financial statements:</span> Income statement, balance sheet, and cash flow generated each round.</li>
+            <li><span class="font-bold text-slate-900">Research-ready data exports:</span> Granular round-level data available for analysis, comparison, and classroom research.</li>
+
+          </ul>
+          <p class="text-xs text-slate-400 italic">Designed in consultation with university educators and iteratively refined through early demonstrations.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- SECTION 3B: CLASSROOM EXPERIMENTS -->
+  <section id="classroom-experiments" class="py-24 edu-section bg-slate-50">
+    <div class="max-w-7xl mx-auto px-8">
+      <div class="text-center mb-14">
+        <h2 class="text-4xl md:text-5xl font-bold text-slate-900 mb-6">Classroom Experiments</h2>
+        <p class="text-slate-500 text-lg max-w-4xl mx-auto">Ready-to-launch Classroom Experiments with live host controls, join links, and instant classroom engagement.</p>
+      </div>
+
+      <div class="grid md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
+        <article class="bg-white border border-slate-200 rounded-2xl p-6 shadow-sm">
+          <div class="w-full h-[70px] mb-4 rounded-lg bg-slate-100 border border-slate-200 overflow-hidden">
+            <svg viewBox="0 0 120 70" class="w-full h-full">
+              <rect x="72" y="28" width="36" height="30" rx="2" fill="#dbeafe" stroke="#3b82f6" stroke-width="1.5"/>
+              <polygon points="68,28 112,28 90,14" fill="#bfdbfe" stroke="#3b82f6" stroke-width="1.5"/>
+              <rect x="83" y="42" width="14" height="16" fill="#3b82f6"/>
+              <circle cx="12" cy="28" r="4" fill="#f59e0b"/><circle cx="26" cy="28" r="4" fill="#f59e0b"/><circle cx="40" cy="28" r="4" fill="#f59e0b"/>
+              <path d="M52 40 L65 40" stroke="#ef4444" stroke-width="2" fill="none"/>
+              <polygon points="65,37 70,40 65,43" fill="#ef4444"/>
+            </svg>
+          </div>
+          <h3 class="text-lg font-bold text-slate-900 mb-2">Bank Run</h3>
+          <p class="text-sm text-slate-600 mb-4">Trust, panic, and liquidity pressure in a live classroom bank run.</p>
+          <span class="inline-flex items-center rounded-full bg-blue-50 text-blue-700 text-xs font-semibold px-2 py-1">Intro</span>
+        </article>
+        <article class="bg-white border border-slate-200 rounded-2xl p-6 shadow-sm">
+          <div class="w-full h-[70px] mb-4 rounded-lg bg-slate-100 border border-slate-200 overflow-hidden">
+            <svg viewBox="0 0 120 70" class="w-full h-full">
+              <path d="M20 55 A40 40 0 0 1 100 55" fill="none" stroke="#e2e8f0" stroke-width="10" stroke-linecap="round"/>
+              <path d="M20 55 A40 40 0 0 1 40 22" fill="none" stroke="#fca5a5" stroke-width="10" stroke-linecap="round"/>
+              <path d="M40 22 A40 40 0 0 1 60 15" fill="none" stroke="#fde68a" stroke-width="10" stroke-linecap="round"/>
+              <path d="M60 15 A40 40 0 0 1 80 22" fill="none" stroke="#86efac" stroke-width="10" stroke-linecap="round"/>
+              <path d="M80 22 A40 40 0 0 1 100 55" fill="none" stroke="#4ade80" stroke-width="10" stroke-linecap="round"/>
+              <line x1="60" y1="55" x2="74" y2="26" stroke="#1e293b" stroke-width="2" stroke-linecap="round"/>
+              <circle cx="60" cy="55" r="4" fill="#1e293b"/>
+            </svg>
+          </div>
+          <h3 class="text-lg font-bold text-slate-900 mb-2">Credit Score</h3>
+          <p class="text-sm text-slate-600 mb-4">Personal finance choices across rounds with delayed credit impact.</p>
+          <span class="inline-flex items-center rounded-full bg-blue-50 text-blue-700 text-xs font-semibold px-2 py-1">Intro</span>
+        </article>
+        <article class="bg-white border border-slate-200 rounded-2xl p-6 shadow-sm">
+          <div class="w-full h-[70px] mb-4 rounded-lg bg-slate-100 border border-slate-200 overflow-hidden">
+            <svg viewBox="0 0 120 70" class="w-full h-full">
+              <rect x="42" y="12" width="32" height="24" rx="3" fill="#bbf7d0" stroke="#cbd5e1"/>
+              <rect x="78" y="12" width="32" height="24" rx="3" fill="#fef08a" stroke="#cbd5e1"/>
+              <rect x="42" y="38" width="32" height="24" rx="3" fill="#fef08a" stroke="#cbd5e1"/>
+              <rect x="78" y="38" width="32" height="24" rx="3" fill="#fecaca" stroke="#dc2626" stroke-width="2"/>
+              <text x="58" y="26" text-anchor="middle" font-size="9" font-weight="700" fill="#15803d">3/3</text>
+              <text x="94" y="26" text-anchor="middle" font-size="9" font-weight="700" fill="#854d0e">0/5</text>
+              <text x="58" y="52" text-anchor="middle" font-size="9" font-weight="700" fill="#854d0e">5/0</text>
+              <text x="94" y="52" text-anchor="middle" font-size="9" font-weight="700" fill="#dc2626">1/1</text>
+            </svg>
+          </div>
+          <h3 class="text-lg font-bold text-slate-900 mb-2">Prisoner's Dilemma</h3>
+          <p class="text-sm text-slate-600 mb-4">Classic cooperation vs. self-interest under repeated strategic play.</p>
+          <span class="inline-flex items-center rounded-full bg-blue-50 text-blue-700 text-xs font-semibold px-2 py-1">Intro</span>
+        </article>
+        <article class="bg-white border border-slate-200 rounded-2xl p-6 shadow-sm">
+          <div class="w-full h-[70px] mb-4 rounded-lg bg-slate-100 border border-slate-200 overflow-hidden">
+            <svg viewBox="0 0 120 70" class="w-full h-full">
+              <circle cx="60" cy="38" r="26" fill="#f1f5f9" stroke="#cbd5e1"/>
+              <path d="M60 38 L60 12 A26 26 0 1 1 34.9 54.1 Z" fill="#bfdbfe" stroke="#3b82f6" stroke-width="1.5"/>
+              <path d="M60 38 L34.9 54.1 A26 26 0 0 1 60 12 Z" fill="#bbf7d0" stroke="#16a34a" stroke-width="1.5"/>
+              <text x="72" y="35" text-anchor="middle" font-size="8" fill="#1d4ed8" font-weight="700">70%</text>
+              <text x="44" y="58" text-anchor="middle" font-size="8" fill="#15803d" font-weight="700">30%</text>
+            </svg>
+          </div>
+          <h3 class="text-lg font-bold text-slate-900 mb-2">Ultimatum Game</h3>
+          <p class="text-sm text-slate-600 mb-4">Fairness, bargaining power, and acceptance thresholds in action.</p>
+          <span class="inline-flex items-center rounded-full bg-blue-50 text-blue-700 text-xs font-semibold px-2 py-1">Intro</span>
+        </article>
+        <article class="bg-white border border-slate-200 rounded-2xl p-6 shadow-sm">
+          <div class="w-full h-[70px] mb-4 rounded-lg bg-slate-100 border border-slate-200 overflow-hidden">
+            <svg viewBox="0 0 120 70" class="w-full h-full">
+              <ellipse cx="60" cy="50" rx="52" ry="16" fill="#dbeafe" stroke="#93c5fd"/>
+              <ellipse cx="30" cy="48" rx="8" ry="5" fill="#60a5fa"/><ellipse cx="48" cy="44" rx="8" ry="5" fill="#60a5fa"/><ellipse cx="65" cy="50" rx="8" ry="5" fill="#60a5fa"/>
+              <ellipse cx="80" cy="46" rx="8" ry="5" fill="#60a5fa" opacity="0.3"/><ellipse cx="95" cy="49" rx="8" ry="5" fill="#60a5fa" opacity="0.2"/>
+              <line x1="25" y1="8" x2="30" y2="48" stroke="#94a3b8" stroke-dasharray="3,2"/>
+              <line x1="75" y1="8" x2="80" y2="46" stroke="#94a3b8" stroke-dasharray="3,2"/>
+            </svg>
+          </div>
+          <h3 class="text-lg font-bold text-slate-900 mb-2">Fishery Commons</h3>
+          <p class="text-sm text-slate-600 mb-4">Common-pool resource decisions between short-term gain and sustainability.</p>
+          <span class="inline-flex items-center rounded-full bg-violet-50 text-violet-700 text-xs font-semibold px-2 py-1">Intro-Intermediate</span>
+        </article>
+        <article class="bg-white border border-slate-200 rounded-2xl p-6 shadow-sm">
+          <div class="w-full h-[70px] mb-4 rounded-lg bg-slate-100 border border-slate-200 overflow-hidden">
+            <svg viewBox="0 0 120 70" class="w-full h-full">
+              <circle cx="22" cy="35" r="16" fill="#dbeafe" stroke="#3b82f6" stroke-width="1.5"/>
+              <circle cx="98" cy="35" r="16" fill="#dcfce7" stroke="#16a34a" stroke-width="1.5"/>
+              <path d="M39 29 Q60 18 81 29" stroke="#3b82f6" stroke-width="1.5" fill="none"/>
+              <polygon points="81,26 84,32 78,31" fill="#3b82f6"/>
+              <path d="M81 41 Q60 54 39 41" stroke="#16a34a" stroke-width="1.5" fill="none" stroke-dasharray="4,2"/>
+              <polygon points="39,44 36,38 42,39" fill="#16a34a"/>
+            </svg>
+          </div>
+          <h3 class="text-lg font-bold text-slate-900 mb-2">Trust Game</h3>
+          <p class="text-sm text-slate-600 mb-4">Reciprocity and trust formation when returns depend on others.</p>
+          <span class="inline-flex items-center rounded-full bg-violet-50 text-violet-700 text-xs font-semibold px-2 py-1">Intro-Intermediate</span>
+        </article>
+        <article class="bg-white border border-slate-200 rounded-2xl p-6 shadow-sm">
+          <div class="w-full h-[70px] mb-4 rounded-lg bg-slate-100 border border-slate-200 overflow-hidden">
+            <svg viewBox="0 0 120 70" class="w-full h-full">
+              <ellipse cx="60" cy="48" rx="22" ry="14" fill="#dbeafe" stroke="#3b82f6" stroke-width="1.5"/>
+              <circle cx="15" cy="20" r="10" fill="#f0fdf4" stroke="#16a34a" stroke-width="1.5"/>
+              <circle cx="60" cy="8" r="10" fill="#f0fdf4" stroke="#16a34a" stroke-width="1.5"/>
+              <circle cx="105" cy="20" r="10" fill="#f0fdf4" stroke="#16a34a" stroke-width="1.5"/>
+              <line x1="15" y1="30" x2="38" y2="38" stroke="#16a34a" stroke-width="1.5"/>
+              <line x1="60" y1="18" x2="60" y2="38" stroke="#16a34a" stroke-width="1.5"/>
+              <line x1="105" y1="30" x2="82" y2="38" stroke="#16a34a" stroke-width="1.5"/>
+            </svg>
+          </div>
+          <h3 class="text-lg font-bold text-slate-900 mb-2">Public Goods Game</h3>
+          <p class="text-sm text-slate-600 mb-4">Free-rider pressure and contribution strategy in shared outcomes.</p>
+          <span class="inline-flex items-center rounded-full bg-violet-50 text-violet-700 text-xs font-semibold px-2 py-1">Intro-Intermediate</span>
+        </article>
+        <article class="bg-white border border-slate-200 rounded-2xl p-6 shadow-sm">
+          <div class="w-full h-[70px] mb-4 rounded-lg bg-slate-100 border border-slate-200 overflow-hidden">
+            <svg viewBox="0 0 120 70" class="w-full h-full">
+              <line x1="15" y1="62" x2="110" y2="62" stroke="#cbd5e1"/><line x1="15" y1="62" x2="15" y2="8" stroke="#cbd5e1"/>
+              <polyline points="18,14 38,14 38,26 58,26 58,38 78,38 78,50 98,50" fill="none" stroke="#3b82f6" stroke-width="2"/>
+              <polyline points="18,56 38,56 38,44 58,44 58,32 78,32 78,20 98,20" fill="none" stroke="#ef4444" stroke-width="2"/>
+              <circle cx="68" cy="38" r="5" fill="#fff" stroke="#7c3aed" stroke-width="2"/>
+            </svg>
+          </div>
+          <h3 class="text-lg font-bold text-slate-900 mb-2">Double Auction</h3>
+          <p class="text-sm text-slate-600 mb-4">Real-time buyer-seller bids reveal market-clearing price dynamics.</p>
+          <span class="inline-flex items-center rounded-full bg-emerald-50 text-emerald-700 text-xs font-semibold px-2 py-1">Intermediate</span>
+        </article>
+        <article class="bg-white border border-slate-200 rounded-2xl p-6 shadow-sm">
+          <div class="w-full h-[70px] mb-4 rounded-lg bg-slate-100 border border-slate-200 overflow-hidden">
+            <svg viewBox="0 0 120 70" class="w-full h-full">
+              <rect x="28" y="10" width="36" height="28" rx="4" fill="#bbf7d0" stroke="#cbd5e1"/>
+              <rect x="72" y="10" width="36" height="28" rx="4" fill="#fecaca" stroke="#cbd5e1"/>
+              <rect x="28" y="40" width="36" height="28" rx="4" fill="#fecaca" stroke="#cbd5e1"/>
+              <rect x="72" y="40" width="36" height="28" rx="4" fill="#bbf7d0" stroke="#cbd5e1"/>
+              <text x="60" y="67" text-anchor="middle" font-size="7" fill="#7c3aed">No pure NE</text>
+            </svg>
+          </div>
+          <h3 class="text-lg font-bold text-slate-900 mb-2">Matching Pennies</h3>
+          <p class="text-sm text-slate-600 mb-4">Zero-sum strategic randomness and mixed-strategy equilibrium.</p>
+          <span class="inline-flex items-center rounded-full bg-emerald-50 text-emerald-700 text-xs font-semibold px-2 py-1">Intermediate</span>
+        </article>
+        <article class="bg-white border border-slate-200 rounded-2xl p-6 shadow-sm">
+          <div class="w-full h-[70px] mb-4 rounded-lg bg-slate-100 border border-slate-200 overflow-hidden">
+            <svg viewBox="0 0 120 70" class="w-full h-full">
+              <line x1="10" y1="62" x2="110" y2="62" stroke="#cbd5e1"/><line x1="10" y1="62" x2="10" y2="8" stroke="#cbd5e1"/>
+              <line x1="14" y1="14" x2="90" y2="58" stroke="#3b82f6" stroke-width="2"/>
+              <line x1="90" y1="14" x2="14" y2="58" stroke="#ef4444" stroke-width="2"/>
+              <circle cx="52" cy="36" r="5" fill="#fff" stroke="#7c3aed" stroke-width="2"/>
+              <text x="58" y="30" font-size="7" fill="#7c3aed" font-weight="700">NE</text>
+            </svg>
+          </div>
+          <h3 class="text-lg font-bold text-slate-900 mb-2">Cournot Competition</h3>
+          <p class="text-sm text-slate-600 mb-4">Quantity-setting competition in oligopoly markets.</p>
+          <span class="inline-flex items-center rounded-full bg-emerald-50 text-emerald-700 text-xs font-semibold px-2 py-1">Intermediate</span>
+        </article>
+        <article class="bg-white border border-slate-200 rounded-2xl p-6 shadow-sm">
+          <div class="w-full h-[70px] mb-4 rounded-lg bg-slate-100 border border-slate-200 overflow-hidden">
+            <svg viewBox="0 0 120 70" class="w-full h-full">
+              <rect x="20" y="10" width="28" height="52" rx="2" fill="#bfdbfe" stroke="#3b82f6" opacity="0.5"/>
+              <rect x="20" y="22" width="28" height="40" rx="2" fill="#bfdbfe" stroke="#3b82f6" opacity="0.7"/>
+              <rect x="20" y="32" width="28" height="30" rx="2" fill="#fecaca" stroke="#3b82f6"/>
+              <rect x="65" y="14" width="28" height="48" rx="2" fill="#dcfce7" stroke="#16a34a" opacity="0.5"/>
+              <rect x="65" y="24" width="28" height="38" rx="2" fill="#dcfce7" stroke="#16a34a" opacity="0.7"/>
+              <rect x="65" y="32" width="28" height="30" rx="2" fill="#fecaca" stroke="#16a34a"/>
+              <line x1="8" y1="40" x2="112" y2="40" stroke="#ef4444" stroke-width="1.5" stroke-dasharray="4,2"/>
+            </svg>
+          </div>
+          <h3 class="text-lg font-bold text-slate-900 mb-2">Bertrand Competition</h3>
+          <p class="text-sm text-slate-600 mb-4">Price competition dynamics and margin pressure under rivalry.</p>
+          <span class="inline-flex items-center rounded-full bg-emerald-50 text-emerald-700 text-xs font-semibold px-2 py-1">Intermediate</span>
+        </article>
+        <article class="bg-white border border-slate-200 rounded-2xl p-6 shadow-sm">
+          <div class="w-full h-[70px] mb-4 rounded-lg bg-slate-100 border border-slate-200 overflow-hidden">
+            <svg viewBox="0 0 120 70" class="w-full h-full">
+              <line x1="10" y1="62" x2="110" y2="62" stroke="#cbd5e1"/>
+              <rect x="12" y="48" width="12" height="14" rx="2" fill="#dbeafe" stroke="#93c5fd"/>
+              <rect x="28" y="40" width="12" height="22" rx="2" fill="#dbeafe" stroke="#93c5fd"/>
+              <rect x="44" y="30" width="12" height="32" rx="2" fill="#dbeafe" stroke="#93c5fd"/>
+              <rect x="60" y="18" width="12" height="44" rx="2" fill="#dbeafe" stroke="#93c5fd"/>
+              <rect x="76" y="10" width="12" height="52" rx="2" fill="#fde68a" stroke="#f59e0b" stroke-width="1.5"/>
+              <rect x="88" y="8" width="22" height="8" rx="2" fill="#78716c" stroke="#57534e"/>
+              <line x1="99" y1="16" x2="107" y2="28" stroke="#a8a29e" stroke-width="3" stroke-linecap="round"/>
+            </svg>
+          </div>
+          <h3 class="text-lg font-bold text-slate-900 mb-2">English Auction</h3>
+          <p class="text-sm text-slate-600 mb-4">Ascending-bid behavior, valuation gaps, and bidding discipline.</p>
+          <span class="inline-flex items-center rounded-full bg-emerald-50 text-emerald-700 text-xs font-semibold px-2 py-1">Intermediate</span>
+        </article>
+      </div>
+
+      <div class="mt-8 text-center">
+        <p class="text-slate-500 text-base">And more experiments available in the catalog across Intro, Intro-Intermediate, and Intermediate levels.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- SECTION 4: LEARNING OUTCOMES -->
+  <section class="py-24 edu-section bg-slate-50">
+    <div class="max-w-6xl mx-auto px-8">
+      <div class="text-center mb-12">
+        <h2 class="text-4xl font-bold text-slate-900 mb-3">One Simulation. Multiple Business Disciplines.</h2>
+        <p class="text-slate-500 text-lg">All concepts integrated in a single competitive environment</p>
+      </div>
+
+      <div class="grid md:grid-cols-2 gap-6">
+        <!-- Economics -->
+        <div class="bg-white border border-slate-200 rounded-xl p-6 shadow-sm hover:shadow-md transition-shadow">
+          <div class="flex items-center gap-3 mb-4 pb-3 border-b border-slate-100">
+            <div class="w-10 h-10 rounded-lg bg-blue-100 flex items-center justify-center text-blue-600 font-bold text-lg">E</div>
+            <h3 class="text-lg font-bold text-slate-900">Economics</h3>
+          </div>
+          <ul class="text-sm text-slate-600 space-y-2">
+            <li>• Oligopolistic competition and strategic interdependence</li>
+            <li>• Diminishing returns to R&D investment</li>
+            <li>• Price elasticity and demand sensitivity</li>
+            <li>• Macro-level demand and cost shocks</li>
+          </ul>
+        </div>
+
+        <!-- Finance & Accounting -->
+        <div class="bg-white border border-slate-200 rounded-xl p-6 shadow-sm hover:shadow-md transition-shadow">
+          <div class="flex items-center gap-3 mb-4 pb-3 border-b border-slate-100">
+            <div class="w-10 h-10 rounded-lg bg-emerald-100 flex items-center justify-center text-emerald-600 font-bold text-lg">F</div>
+            <h3 class="text-lg font-bold text-slate-900">Finance & Accounting</h3>
+          </div>
+          <ul class="text-sm text-slate-600 space-y-2">
+            <li>• Accrual-based revenue and expense recognition</li>
+            <li>• Financial ratio interpretation</li>
+            <li>• Capital structure trade-offs (debt vs equity)</li>
+            <li>• Payout decisions and signaling intuition</li>
+          </ul>
+        </div>
+
+        <!-- Strategy -->
+        <div class="bg-white border border-slate-200 rounded-xl p-6 shadow-sm hover:shadow-md transition-shadow">
+          <div class="flex items-center gap-3 mb-4 pb-3 border-b border-slate-100">
+            <div class="w-10 h-10 rounded-lg bg-amber-100 flex items-center justify-center text-amber-600 font-bold text-lg">S</div>
+            <h3 class="text-lg font-bold text-slate-900">Strategy</h3>
+          </div>
+          <ul class="text-sm text-slate-600 space-y-2">
+            <li>• Generic competitive strategies</li>
+            <li>• Positioning and differentiation trade-offs</li>
+            <li>• Timing decisions in R&D and market entry</li>
+            <li>• Integrated scenario-based decision-making</li>
+          </ul>
+        </div>
+
+        <!-- Operations -->
+        <div class="bg-white border border-slate-200 rounded-xl p-6 shadow-sm hover:shadow-md transition-shadow">
+          <div class="flex items-center gap-3 mb-4 pb-3 border-b border-slate-100">
+            <div class="w-10 h-10 rounded-lg bg-rose-100 flex items-center justify-center text-rose-600 font-bold text-lg">O</div>
+            <h3 class="text-lg font-bold text-slate-900">Operations</h3>
+          </div>
+          <ul class="text-sm text-slate-600 space-y-2">
+            <li>• Capacity planning and utilization decisions</li>
+            <li>• Inventory and holding cost trade-offs</li>
+            <li>• Supply chain considerations and Corporate Social Responsibility (CSR) constraints</li>
+            <li>• Make-or-buy decision logic</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- MathX.nz Mission Strip -->
+  <div style="background:#f8fafc;">
+    <div style="max-width:1200px;margin:0 auto;padding:14px 2rem;display:flex;align-items:center;justify-content:center;gap:12px;flex-wrap:wrap;text-align:center;">
+      <a href="https://mathx.nz" target="_blank" rel="noopener" style="display:inline-flex;align-items:center;justify-content:center;">
+        <img src="https://pbiwise.com/images/mathx.nz.png" alt="MathX.nz logo" style="display:block;" loading="lazy" referrerpolicy="no-referrer">
+      </a>
+      <p style="font-size:1.125rem;line-height:1.75rem;font-weight:400;color:#334155;margin:0;">
+        Proudly supporting <a href="https://mathx.nz" target="_blank" rel="noopener"
+          style="color:#0f172a;font-weight:600;text-decoration:underline;text-underline-offset:3px;text-decoration-color:rgba(15,23,42,0.35);"
+          onmouseover="this.style.textDecorationColor='rgba(15,23,42,0.7)'"
+          onmouseout="this.style.textDecorationColor='rgba(15,23,42,0.35)'">MathX.nz</a>
+        &mdash; free, open-source maths for every student.
+      </p>
+    </div>
+  </div>
+
+  <!-- SECTION 7: EARLY FEEDBACK -->
+  <section class="py-24 edu-section">
+    <div class="max-w-7xl mx-auto px-8">
+      <div class="text-center mb-16">
+        <h2 class="text-4xl font-bold text-slate-900 mb-6">Early Educator Feedback</h2>
+      </div>
+
+      <div class="grid md:grid-cols-3 gap-8">
+        <!-- Feedback 1 -->
+        <div class="bg-slate-50 p-8 rounded-3xl border border-slate-100">
+          <div class="flex gap-1 mb-4 text-blue-600">
+            <i data-lucide="star" class="w-4 h-4 fill-current"></i>
+            <i data-lucide="star" class="w-4 h-4 fill-current"></i>
+            <i data-lucide="star" class="w-4 h-4 fill-current"></i>
+            <i data-lucide="star" class="w-4 h-4 fill-current"></i>
+            <i data-lucide="star" class="w-4 h-4 fill-current"></i>
+          </div>
+          <p class="text-slate-600 italic leading-relaxed">"I like that outcomes can be unexpected. It creates better classroom discussion than traditional cases, where students just repeat the same frameworks."</p>
+        </div>
+        <!-- Feedback 2 -->
+        <div class="bg-slate-50 p-8 rounded-3xl border border-slate-100">
+          <div class="flex gap-1 mb-4 text-blue-600">
+            <i data-lucide="star" class="w-4 h-4 fill-current"></i>
+            <i data-lucide="star" class="w-4 h-4 fill-current"></i>
+            <i data-lucide="star" class="w-4 h-4 fill-current"></i>
+            <i data-lucide="star" class="w-4 h-4 fill-current"></i>
+            <i data-lucide="star" class="w-4 h-4 fill-current"></i>
+          </div>
+          <p class="text-slate-600 italic leading-relaxed">"This feels much closer to how real managers think. There isn't an obvious right answer, which forces students to explain and defend their decisions."</p>
+        </div>
+        <!-- Feedback 3 -->
+        <div class="bg-slate-50 p-8 rounded-3xl border border-slate-100">
+          <div class="flex gap-1 mb-4 text-blue-600">
+            <i data-lucide="star" class="w-4 h-4 fill-current"></i>
+            <i data-lucide="star" class="w-4 h-4 fill-current"></i>
+            <i data-lucide="star" class="w-4 h-4 fill-current"></i>
+            <i data-lucide="star" class="w-4 h-4 fill-current"></i>
+            <i data-lucide="star" class="w-4 h-4 fill-current"></i>
+          </div>
+          <p class="text-slate-600 italic leading-relaxed">"The financial statements help students connect strategy with numbers in a way spreadsheets alone never quite achieve."</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- SECTION 5: COMPARISON -->
+  <section class="py-24 edu-section">
+    <div class="max-w-7xl mx-auto px-8">
+      <div class="text-center mb-16">
+        <h2 class="text-3xl md:text-4xl font-bold mb-6">How AI Decision Lab Complements Traditional Case Studies
+        </h2>
+      </div>
+
+      <div class="max-w-5xl mx-auto">
+        <div class="bg-white rounded-xl shadow-lg border border-slate-200 overflow-hidden">
+          <table class="w-full">
+            <thead>
+              <tr>
+                <th class="bg-slate-100 text-left py-4 px-5 text-xs font-bold text-slate-600 uppercase tracking-wide w-1/5"></th>
+                <th class="bg-slate-50 text-left py-4 px-5 font-semibold text-slate-800">Traditional Case Studies</th>
+                <th class="bg-blue-50 text-left py-4 px-5 font-semibold text-blue-700 border-l-2 border-blue-200">AI Decision Lab</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr class="border-t border-slate-100">
+                <td class="py-4 px-5 font-semibold text-slate-700 bg-slate-50">Learning Mode</td>
+                <td class="py-4 px-5 text-slate-600">Static, retrospective analysis</td>
+                <td class="py-4 px-5 text-blue-900 bg-blue-50/30 border-l-2 border-blue-200">Interactive, forward-looking decisions</td>
+              </tr>
+              <tr class="border-t border-slate-100">
+                <td class="py-4 px-5 font-semibold text-slate-700 bg-slate-50">Student Role</td>
+                <td class="py-4 px-5 text-slate-600">Analyst of past events</td>
+                <td class="py-4 px-5 text-blue-900 bg-blue-50/30 border-l-2 border-blue-200">Decision-maker under uncertainty</td>
+              </tr>
+              <tr class="border-t border-slate-100">
+                <td class="py-4 px-5 font-semibold text-slate-700 bg-slate-50">Financial Depth</td>
+                <td class="py-4 px-5 text-slate-600">Simplified or partial financials</td>
+                <td class="py-4 px-5 text-blue-900 bg-blue-50/30 border-l-2 border-blue-200">Integrated financial statements across rounds</td>
+              </tr>
+              <tr class="border-t border-slate-100">
+                <td class="py-4 px-5 font-semibold text-slate-700 bg-slate-50">Assessment Effort</td>
+                <td class="py-4 px-5 text-slate-600">Manual review of written submissions</td>
+                <td class="py-4 px-5 text-blue-900 bg-blue-50/30 border-l-2 border-blue-200">Structured outputs support scalable assessment</td>
+              </tr>
+              <tr class="border-t border-slate-100">
+                <td class="py-4 px-5 font-semibold text-slate-700 bg-slate-50">Feedback Timing</td>
+                <td class="py-4 px-5 text-slate-600">Delayed, instructor-dependent</td>
+                <td class="py-4 px-5 text-blue-900 bg-blue-50/30 border-l-2 border-blue-200">Immediate, in-round feedback and reflection</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- SECTION 6: PRICING -->
+  <section id="pricing" class="py-24 edu-section bg-slate-50 hidden">
+    <div class="max-w-7xl mx-auto px-8">
+      <div class="text-center mb-16">
+        <h2 class="text-4xl font-bold mb-4">Flexible Pricing for Every Institution</h2>
+        <p class="text-slate-500">More sophisticated than competitors, more affordable than textbooks.</p>
+      </div>
+
+      <div class="grid md:grid-cols-3 gap-8">
+        <!-- Single Course -->
+        <div class="bg-white p-10 rounded-3xl shadow-sm border border-slate-200">
+          <h3 class="text-xl font-bold mb-2">Single Course</h3>
+          <div class="text-4xl font-black mb-6">$50 <span class="text-sm font-normal text-slate-400">/student</span>
+          </div>
+          <ul class="space-y-4 text-sm text-slate-500 mb-10">
+            <li>✅ 1 course section (30-50 students)</li>
+            <li>✅ Undergrad & MBA access</li>
+            <li>✅ Instructor analytical dashboard</li>
+            <li>✅ Standard email support</li>
+          </ul>
+          <button class="w-full py-4 rounded-xl border border-slate-200 font-bold hover:bg-slate-50 transition-all">Get
+            Started</button>
+        </div>
+        <!-- Department -->
+        <div class="bg-white p-10 rounded-3xl shadow-xl border-2 border-blue-600 relative">
+          <div
+            class="absolute -top-3 left-1/2 -translate-x-1/2 bg-blue-600 text-white text-[10px] font-black uppercase px-3 py-1 rounded-full">
+            Most Popular</div>
+          <h3 class="text-xl font-bold mb-2">Departmental</h3>
+          <div class="text-4xl font-black mb-6 text-blue-600">$45 <span
+              class="text-sm font-normal text-slate-400">/student</span></div>
+          <ul class="space-y-4 text-sm text-slate-500 mb-10">
+            <li>✅ 3-5 course sections</li>
+            <li>✅ Volume discount (10% off)</li>
+            <li>✅ Dedicated account manager</li>
+            <li>✅ Priority instructor support</li>
+          </ul>
+          <button
+            class="w-full py-4 rounded-xl bg-blue-600 text-white font-bold hover:bg-blue-700 transition-all shadow-xl shadow-blue-200">Schedule
+            Demo</button>
+        </div>
+        <!-- Institution -->
+        <div class="bg-white p-10 rounded-3xl shadow-sm border border-slate-200">
+          <h3 class="text-xl font-bold mb-2">Institution</h3>
+          <div class="text-4xl font-black mb-6">Custom</div>
+          <ul class="space-y-4 text-sm text-slate-500 mb-10">
+            <li>✅ 100+ students & multi-year</li>
+            <li>✅ $35/student (30% off)</li>
+            <li>✅ White-label branding</li>
+            <li>✅ API access for research</li>
+          </ul>
+          <button
+            class="w-full py-4 rounded-xl border border-slate-200 font-bold hover:bg-slate-50 transition-all">Contact
+            Sales</button>
+        </div>
+      </div>
+
+      <div class="mt-12 bg-blue-600 rounded-3xl p-8 text-center text-white">
+        <h4 class="text-xl font-bold mb-2">🎓 FOUNDING PARTNER PROGRAM 🎓</h4>
+        <p class="text-blue-100 mb-0">First 10 universities: 50% off pilot semester ($25/student). Fall 2026
+          enrollments.</p>
+      </div>
+    </div>
+  </section>
+
+  <div id="sales-section"></div>
+
+
+  <!-- Final CTA -->
+  <section class="py-24 edu-section bg-slate-900 text-white relative overflow-hidden">
+    <div class="absolute inset-0 bg-[radial-gradient(circle_at_50%_0%,rgba(59,130,246,0.1),transparent_70%)]"></div>
+    <div class="max-w-4xl mx-auto px-8 text-center relative z-10">
+      <h2 class="text-5xl md:text-6xl font-bold mb-8">Ready to Transform Your Course?</h2>
+      <p class="text-slate-400 text-xl mb-12">The first business simulation that teaches strategy through real
+        competition, not just theory.</p>
+      <div class="flex flex-col sm:flex-row gap-4 justify-center items-center">
+        <a href="mailto:hello@aidecisionlab.nz"
+          class="bg-blue-600/10 text-blue-600 border border-blue-600/20 px-8 py-4 rounded-2xl font-bold text-lg hover:bg-blue-600 hover:text-white transition-all">Schedule
+          Live Demo</a>
+        <a href="#" onclick="runSupernova(); return false;"
+          class="bg-blue-600 text-white px-8 py-4 rounded-2xl font-bold text-lg hover:bg-blue-700 shadow-2xl shadow-blue-500/20 transition-all">Quick
+          Tour</a>
+        <a href="/team-login"
+          class="bg-white/10 backdrop-blur-md text-white border border-white/20 px-8 py-4 rounded-2xl font-bold text-lg hover:bg-white/20 transition-all">Team
+          Login</a>
+      </div>
+    </div>
+  </section>
+
+  <section id="hero" class="section hero-gradient relative overflow-hidden">
+    <div class="absolute inset-0 opacity-30 bg-hero-pattern"></div>
+    <!-- Scan line restricted to this section -->
+    <div class="scan pointer-events-none"></div>
+
+    <div id="hero-content" class="relative z-10 max-w-6xl mx-auto text-center transition-opacity duration-1000"
+      style="opacity: 0;">
+      <div
+        class="inline-flex items-center gap-3 px-6 py-2 rounded-full bg-accent/10 border border-accent/20 text-accent text-sm font-bold uppercase mb-10">
+        <i data-lucide="zap" class="w-5 h-5"></i>
+        TAKE THE THRONE:CEO REQUIRED
+      </div>
+
+      <h1 class="text-6xl sm:text-8xl md:text-9xl font-black leading-none tracking-tighter mb-8 glow">
+        THE CHAIR<br />IS VACANT
+      </h1>
+
+      <p class="text-sm sm:text-base md:text-lg text-emerald-400 max-w-4xl mx-auto mb-12 leading-relaxed"
+        style="font-family: 'JetBrains Mono', monospace;">
+        $100 Million. 1 monopoly.<br />
+        <span class="font-semibold">Real-time market shifts. </span>Can you dominate?
+      </p>
+
+      <div class="flex justify-center items-center">
+        <a href="#story-part-1"
+          class="group relative px-16 py-6 text-accent font-black text-xl border border-accent/40 rounded-sm shadow-[0_0_30px_rgba(14,165,233,0.1)] hover:border-accent hover:text-white hover:shadow-[0_0_50px_rgba(14,165,233,0.4)] transform hover:scale-105 transition-all flex items-center gap-4 tracking-[0.3em] uppercase">
+          <span class="relative z-10">Begin Your Story</span>
+          <i data-lucide="play" class="w-6 h-6 relative z-10 fill-current"></i>
+          <div class="absolute inset-0 bg-accent/5 opacity-0 group-hover:opacity-100 transition-opacity"></div>
+        </a>
+      </div>
+
+      <p class="mt-12 text-sm text-white/90 font-medium tracking-wide"
+        style="font-family: 'JetBrains Mono', monospace;">
+        A brutal economic simulation • No luck • Pure strategy
+      </p>
+    </div>
+  </section>
+
+  <!-- Apex Motors Story (Terminal Style) -->
+  <!-- Apex Motors Story (Terminal Style) - Page 1 -->
+  <section id="story-part-1"
+    class="min-h-screen relative overflow-hidden flex flex-col items-center justify-center story-page story-part-1">
+    <div class="crt-overlay"></div>
+    <div class="scanline"></div>
+
+
+
+    <div class="typing-container max-w-5xl mx-auto flex flex-col justify-center h-full">
+      <div id="narrative-text-1" class="text-2xl md:text-5xl leading-tight font-medium mb-12 min-h-[200px] text-center">
+      </div>
+      <div id="scroll-indicator"
+        class="text-center animate-bounce opacity-50 mt-12 transition-opacity cursor-pointer hover:opacity-100 transition-all"
+        style="opacity: 0;" onclick="document.getElementById('story-part-2').scrollIntoView({ behavior: 'smooth' })">
+        <span class="text-xs text-emerald-500 uppercase tracking-widest">Scroll for Briefing</span>
+        <i data-lucide="chevron-down" class="w-6 h-6 text-emerald-500 mx-auto mt-2"></i>
+      </div>
+    </div>
+    </div>
+  </section>
+
+  <!-- Apex Motors Story (Terminal Style) - Page 2 -->
+  <section id="story-part-2"
+    class="min-h-screen relative overflow-hidden flex flex-col items-center justify-center story-page story-part-2">
+    <div class="crt-overlay"></div>
+    <div class="scanline"></div>
+
+
+
+    <div class="typing-container max-w-5xl mx-auto flex flex-col justify-center h-full">
+      <div id="narrative-text-2" class="text-2xl md:text-5xl leading-tight font-medium mb-12 min-h-[200px] text-center">
+      </div>
+
+      <div id="final-controls" class="opacity-0 transition-opacity duration-1000 flex justify-center mt-8">
+        <button onclick="document.getElementById('journey').scrollIntoView({ behavior: 'smooth' })"
+          class="group flex flex-col items-center gap-2 text-emerald-500 hover:text-emerald-400 transition-colors cursor-pointer">
+          <span class="text-sm font-bold tracking-[0.2em] uppercase animate-pulse">Begin Demo</span>
+          <div
+            class="w-12 h-12 border border-emerald-500/30 rounded-full flex items-center justify-center group-hover:bg-emerald-500/10 transition-all">
+            <i data-lucide="arrow-down" class="w-6 h-6 animate-bounce"></i>
+          </div>
+        </button>
+      </div>
+    </div>
+    </div>
+  </section>
+
+  <!-- Your Journey -->
+  <section id="journey" class="section flex-col bg-slate-950 relative">
+    <div class="max-w-screen-2xl mx-auto w-full px-8">
+      <div class="grid lg:grid-cols-[1fr_400px] gap-12">
+        <div class="space-y-16">
+
+          <!-- STEP 0: FORECASTING GROWTH -->
+          <div class="journey-step glass p-10 relative">
+            <button onclick="manualShowTour(0)"
+              class="absolute top-6 right-6 text-slate-500 hover:text-accent transition-colors" title="View Guide">
+              <i data-lucide="book-open" class="w-5 h-5"></i>
+            </button>
+            <div class="grid lg:grid-cols-2 gap-12 items-center">
+              <div>
+                <div class="flex items-start gap-8 mb-6">
+                  <div class="flex-shrink-0 relative group">
+                    <div
+                      class="w-16 h-16 bg-accent/20 border border-accent/40 rounded-xl flex items-center justify-center text-accent font-black text-2xl">
+                      1
+                    </div>
+                  </div>
+                  <div class="flex-1">
+                    <h3 class="text-3xl font-black mb-4 text-accent">What's Your Growth Target? 📈</h3>
+                    <p class="text-slate-300 text-sm">
+                      Set realistic growth expectations. Your forecast impacts inventory planning, cash flow,
+                      and factory capacity decisions.
+                    </p>
+                  </div>
+                </div>
+
+                <div class="bg-white/5 border border-white/10 rounded-xl p-6">
+                  <div class="mb-6">
+                    <div class="flex justify-between mb-3">
+                      <span class="font-bold">Quarterly Growth Target</span>
+                      <span class="font-bold text-accent text-lg" id="forecast_pct_display">12%</span>
+                    </div>
+                    <input type="range" id="forecast_growth" min="5" max="40" value="12" class="range-slider"
+                      oninput="updateForecast()">
+                    <div class="text-xs text-slate-500 mt-2">Range: 5% - 40% growth</div>
+                  </div>
+                </div>
+              </div>
+
+              <div class="space-y-4">
+                <div class="bg-white/5 p-6 rounded-xl border border-white/10">
+                  <div class="text-xs text-slate-400 mb-1 uppercase tracking-wider font-bold">Total Projected Demand
+                  </div>
+                  <div class="text-4xl font-black text-white" id="market_opp">90k units</div>
+                  <div class="text-xs text-success mt-2 font-bold">↑ +8% vs last quarter</div>
+                </div>
+                <div class="bg-white/5 p-6 rounded-xl border border-white/10">
+                  <div class="text-xs text-slate-400 mb-1 uppercase tracking-wider font-bold">Total Projected Revenue
+                  </div>
+                  <div class="text-4xl font-black text-accent" id="forecast_revenue">$67.5M</div>
+                  <div class="text-xs text-slate-500 mt-2">At current average selling price</div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+
+          <!-- STEP 1: PRODUCTION -->
+          <div class="journey-step glass p-10 relative">
+            <button onclick="manualShowTour(1)"
+              class="absolute top-6 right-6 text-slate-500 hover:text-accent transition-colors" title="View Guide">
+              <i data-lucide="book-open" class="w-5 h-5"></i>
+            </button>
+            <div class="flex items-start gap-8 mb-8">
+              <div class="flex-shrink-0 relative group">
+                <div
+                  class="w-16 h-16 bg-accent/20 border border-accent/40 rounded-xl flex items-center justify-center text-accent font-black text-2xl">
+                  2
+                </div>
+              </div>
+              <div class="flex-1">
+                <h3 class="text-3xl font-black mb-4 text-accent">How Much Will You Produce? ⚙️</h3>
+                <p class="text-lg text-slate-300 mb-8">
+                  Set your production volume. Higher volume improves unit economics through scale, but pushing beyond
+                  80%
+                  capacity triggers overtime and inefficiency costs. Balance growth ambitions with operational
+                  reality.
+                </p>
+              </div>
+            </div>
+
+            <div class="grid lg:grid-cols-12 gap-8">
+              <!-- Left Side: Controls -->
+              <div class="lg:col-span-8 glass p-6">
+                <div class="text-lg font-bold mb-6 flex items-center gap-4">
+                  <div class="relative">
+                    <div class="text-3xl factory-icon relative z-10">🏭</div>
+                    <!-- Smoke for factory -->
+                    <div class="smoke-container" style="right: auto; left: 50%; top: -10px; flex-direction: column;">
+                      <div class="smoke-particle"></div>
+                      <div class="smoke-particle"></div>
+                    </div>
+                  </div>
+                  Global Manufacturing Control
+                </div>
+
+                <div class="mb-8">
+                  <div class="flex justify-between mb-3 text-sm">
+                    <span class="text-slate-300 font-bold uppercase tracking-wider">Operational Strategy</span>
+                  </div>
+                  <div class="space-y-6">
+                    <!-- Supplier Selection -->
+                    <div class="mb-2">
+                      <div class="flex justify-between mb-2">
+                        <span class="text-xs text-slate-400 font-bold">Primary Supplier</span>
+                        <span class="font-bold text-accent text-xs" id="us_supplier_display">Low CSR</span>
+                      </div>
+                      <select id="us_supplier" class="dark-select" onchange="updateProd()">
+                        <option value="10">🏭 Sustainability Low ($10)</option>
+                        <option value="12">🌿 Medium CSR ($12)</option>
+                        <option value="15">💎 High CSR ($15)</option>
+                      </select>
+                    </div>
+
+                    <!-- Shift Strategy -->
+                    <div class="mb-2">
+                      <div class="flex justify-between mb-2">
+                        <span class="text-xs text-slate-400 font-bold">Shift Schedule</span>
+                        <span class="font-bold text-accent text-xs" id="us_shift_display">1 Shift</span>
+                      </div>
+                      <select id="us_shift" class="dark-select" onchange="updateProd()">
+                        <option value="1.2">🌅 1 Shift (+20%)</option>
+                        <option value="1.5">🌆 2 Shifts (+50%)</option>
+                        <option value="2.0">🌃 3 Shifts (+100%)</option>
+                      </select>
+                    </div>
+                  </div>
+                </div>
+
+                <div class="mb-6">
+                  <div class="flex justify-between mb-3">
+                    <span class="text-sm text-slate-300">Production Volume</span>
+                    <span class="font-bold text-accent" id="us_factory_val">450k</span>
+                  </div>
+                  <input type="range" id="us_factory" min="0" max="300000" value="150000" step="5000"
+                    class="range-slider mb-4" oninput="updateProd()">
+                  <div class="text-xs text-slate-500 mb-6" id="us_max_cap_label">Max Capacity: 300,000 units</div>
+
+                  <!-- Moved: Unit Cost Analysis -->
+                  <div class="bg-accent/5 border border-accent/20 rounded-xl p-5 flex items-center justify-between">
+                    <div>
+                      <div class="text-[10px] text-slate-400 uppercase font-bold mb-1">Current Unit Cost</div>
+                      <div class="text-3xl font-black text-white" id="us_total_cost_big">$26.0k</div>
+                    </div>
+                    <div class="text-right">
+                      <div class="text-[10px] text-slate-400 uppercase font-bold mb-1">Operational Status</div>
+                      <div class="text-sm font-black uppercase tracking-wider text-accent" id="cost_status_label">
+                        Optimized</div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              <!-- Right Side: Real-time Analysis -->
+              <div class="lg:col-span-4 glass p-6 flex flex-col">
+                <div class="text-[10px] text-slate-500 uppercase font-black tracking-widest mb-6">Factory Efficiency
+                </div>
+
+                <div class="flex-1 flex flex-col justify-center items-center">
+                  <div class="efficiency-meter">
+                    <div class="meter-zones">
+                      <div class="zone-low"></div>
+                      <div class="zone-mid"></div>
+                      <div class="zone-high"></div>
+                    </div>
+                    <div class="meter-fill" id="us_efficiency_bar" style="height: 50%;"></div>
+                  </div>
+
+                  <div class="meter-label-display">
+                    <div id="us_efficiency_pct" class="text-4xl font-black text-success mb-1">50%</div>
+                    <div class="text-xs text-slate-400 font-bold" id="us_efficiency_status_line">
+                      <span id="us_efficiency_status">Optimal</span> · Optimal 80%
+                    </div>
+                  </div>
+
+                  <div class="w-full mt-8">
+
+                    <div class="bg-white/5 border border-white/10 rounded-lg p-4">
+                      <div class="flex justify-between text-xs text-slate-400 mb-2">Purchase Intent Score</div>
+                      <div class="flex items-end gap-1 h-12 mb-2" id="purchase_intent_container">
+                        <!-- Status bars injected by JS -->
+                      </div>
+                      <div class="flex justify-between items-center">
+                        <div class="text-2xl font-black text-accent" id="purchase_intent_score">65</div>
+                        <div class="text-[10px] uppercase font-bold text-slate-500" id="purchase_intent_label">
+                          Moderate
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- STEP 2: PRICING & MARKETING -->
+          <div class="journey-step glass p-10 relative">
+            <button onclick="manualShowTour(2)"
+              class="absolute top-6 right-6 text-slate-500 hover:text-accent transition-colors" title="View Guide">
+              <i data-lucide="book-open" class="w-5 h-5"></i>
+            </button>
+            <div class="flex items-start gap-8 mb-8">
+              <div class="flex-shrink-0 relative group">
+                <div
+                  class="w-16 h-16 bg-accent/20 border border-accent/40 rounded-xl flex items-center justify-center text-accent font-black text-2xl">
+                  3
+                </div>
+              </div>
+              <div class="flex-1">
+                <h3 class="text-3xl font-black mb-4 text-accent">What Price Point Wins Markets? 💰</h3>
+                <p class="text-lg text-slate-300 mb-8">
+                  Price elasticity is real. Set prices too high and demand evaporates. Too low and you're leaving
+                  margin
+                  on the table. Marketing budget drives market attractiveness.
+                </p>
+              </div>
+            </div>
+
+
+            <div class="grid lg:grid-cols-12 gap-8 mb-8">
+              <!-- Pricing Controls (Left) -->
+              <div class="lg:col-span-8 bg-white/5 border border-white/10 rounded-xl p-8">
+                <div class="flex justify-between items-start mb-8">
+                  <div>
+                    <div class="text-2xl font-bold flex items-center gap-2">
+                      <span class="text-3xl"></span>Regional Strategy
+                    </div>
+                    <div class="text-sm text-slate-400">Primary target market for high-margin growth</div>
+                  </div>
+                  <div
+                    class="text-xs bg-accent/20 text-accent px-4 py-2 rounded-full font-bold tracking-wider uppercase">
+                    Market Active</div>
+                </div>
+
+                <div class="space-y-10">
+                  <div>
+                    <div class="flex justify-between mb-4">
+                      <span class="text-sm font-bold text-slate-300">Unit Price</span>
+                      <span class="font-bold text-accent text-xl" id="na_price_display">$135</span>
+                    </div>
+                    <input type="range" id="na_price" min="80" max="250" value="135" class="range-slider mb-2"
+                      oninput="updateMarketing()">
+                    <div class="flex justify-between text-[10px] text-slate-500 uppercase tracking-tighter">
+                      <span>Economic ($80)</span>
+                      <span>Premium ($250)</span>
+                    </div>
+                  </div>
+
+                  <div>
+                    <div class="flex justify-between mb-4">
+                      <span class="text-sm font-bold text-slate-300">Marketing Budget</span>
+                      <span class="font-bold text-accent text-xl" id="na_promo_display">8%</span>
+                    </div>
+                    <input type="range" id="na_promo" min="0" max="30" value="8" class="range-slider mb-2"
+                      oninput="updateMarketing()">
+                    <div class="flex justify-between text-[10px] text-slate-500 uppercase tracking-tighter">
+                      <span>Maintenance (0%)</span>
+                      <span>Aggressive (30%)</span>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              <!-- Market Intelligence (Right) -->
+              <div class="lg:col-span-4 flex flex-col gap-6">
+                <div class="bg-white/5 border border-white/10 rounded-xl p-6 flex-1">
+                  <div class="text-sm font-bold text-slate-400 mb-4">Market Purchase Intent</div>
+                  <div class="flex items-end gap-1 h-20 mb-4" id="market_intent_container">
+                    <!-- Intent bars injected by JS -->
+                  </div>
+                  <div class="flex justify-between items-center mb-1">
+                    <div class="text-3xl font-black text-accent" id="market_intent_score">72</div>
+                    <div class="text-xs uppercase font-black text-slate-500" id="market_intent_label">Strong</div>
+                  </div>
+                  <p class="text-[10px] text-slate-500">Combines price positioning, promotion reach, and product
+                    quality
+                    scores.</p>
+                </div>
+
+                <div
+                  class="bg-accent/10 border border-accent/20 rounded-xl p-8 text-center flex flex-col justify-center">
+                  <div class="text-xs text-accent font-black uppercase tracking-widest mb-2">Estimated Market Revenue
+                  </div>
+                  <div class="text-5xl font-black text-white glow" id="total_revenue_est">$18.5M</div>
+                  <div class="text-xs text-accent/60 mt-4">Projected based on North America conversion rate</div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- STEP 3: LOGISTICS & DISTRIBUTION -->
+          <div class="journey-step glass p-10 relative">
+            <button onclick="manualShowTour(3)"
+              class="absolute top-6 right-6 text-slate-500 hover:text-accent transition-colors" title="View Guide">
+              <i data-lucide="book-open" class="w-5 h-5"></i>
+            </button>
+            <div class="flex items-start gap-8 mb-8">
+              <div class="flex-shrink-0 relative group">
+                <div
+                  class="w-16 h-16 bg-accent/20 border border-accent/40 rounded-xl flex items-center justify-center text-accent font-black text-2xl">
+                  4
+                </div>
+              </div>
+              <div class="flex-1">
+                <h3 class="text-3xl font-black mb-4 text-accent">Who Gets Your Limited Supply? 📦</h3>
+                <p class="text-lg text-slate-300 mb-6">
+                  You can't fulfill all demand. Set market priorities to determine which regions get orders first.
+                  When
+                  inventory runs low, lower-priority markets miss out.
+                </p>
+                <div class="glass p-5 bg-accent/10 border-accent/20 max-w-2xl mb-8">
+                  <div class="flex items-center gap-4">
+                    <div class="w-10 h-10 bg-accent/20 rounded-full flex items-center justify-center text-xl">💡</div>
+                    <div>
+                      <div class="font-bold text-accent text-sm">Local Manufacturing Advantage</div>
+                      <p class="text-xs text-slate-300">Produce locally to bypass international
+                        shipping
+                        tariffs.
+
+                      </p>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="flex items-center justify-between mb-8">
+              <div id="cost_feedback_box"
+                class="hidden animate-bounce bg-danger border-2 border-white/20 px-6 py-3 rounded-2xl flex items-center gap-4 shadow-[0_0_30px_rgba(239,68,68,0.5)]">
+                <div class="bg-white/20 p-2 rounded-full">
+                  <i data-lucide="alert-circle" class="w-6 h-6 text-white text-white"></i>
+                </div>
+                <div>
+                  <div class="text-[10px] uppercase font-black text-white/70 leading-none mb-1">Efficiency Alert</div>
+                  <div class="text-xl font-black text-white leading-none" id="cost_feedback_text">+$2.4M Cost Impact
+                  </div>
+                </div>
+              </div>
+              <div class="flex items-center gap-6 ml-auto">
+                <div class="text-right">
+                  <div class="text-[10px] text-slate-500 uppercase font-bold text-slate-400">Total Products Available
+                  </div>
+                  <div class="text-xl font-black text-white" id="total_allocated">375k</div>
+                </div>
+                <div class="text-right border-l border-white/10 pl-6">
+                  <div class="text-[10px] text-slate-500 uppercase font-bold text-slate-400">Global Tariffs</div>
+                  <div class="text-xl font-black text-accent" id="shipping_total">$5.2M</div>
+                </div>
+              </div>
+            </div>
+
+            <div class="grid lg:grid-cols-2 gap-8 mb-8">
+              <!-- Left: Priority List -->
+              <div>
+                <div class="flex items-center justify-between mb-6">
+                  <div>
+                    <div class="text-lg font-bold">Market Priority Order</div>
+                    <div class="text-[10px] text-slate-400 uppercase tracking-wider">Drag items to reorder fulfillment
+                      priority</div>
+                  </div>
+                </div>
+                <div class="space-y-3 drag-container" id="priority-list">
+                  <div
+                    class="priority-item glass p-4 cursor-grab active:cursor-grabbing border-l-4 border-emerald-500 relative group"
+                    draggable="true" data-market="NA">
+                    <div class="flex items-center justify-between">
+                      <div class="flex items-center gap-4">
+                        <div class="flex flex-col gap-1 reorder-btns">
+                          <button onclick="reorderMarket('NA', -1)" class="reorder-btn"><i data-lucide="chevron-up"
+                              class="w-4 h-4"></i></button>
+                          <button onclick="reorderMarket('NA', 1)" class="reorder-btn"><i data-lucide="chevron-down"
+                              class="w-4 h-4"></i></button>
+                        </div>
+                        <span class="text-2xl"></span>
+                        <div>
+                          <div class="font-bold">America</div>
+                          <div class="text-xs text-slate-400">Est. Demand: 194k</div>
+                        </div>
+                      </div>
+                      <div class="flex items-center gap-3">
+                        <div class="text-right">
+                          <div class="text-xs text-slate-400">Shipping tariffs</div>
+                          <div class="font-bold text-success">Free</div>
+                        </div>
+                        <div class="bg-emerald-500/20 text-emerald-400 px-3 py-1 rounded text-xs font-bold">Priority 1
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+
+                  <div
+                    class="priority-item glass p-4 cursor-grab active:cursor-grabbing border-l-4 border-yellow-500 relative group"
+                    draggable="true" data-market="AP">
+                    <div class="flex items-center justify-between">
+                      <div class="flex items-center gap-4">
+                        <div class="flex flex-col gap-1 reorder-btns">
+                          <button onclick="reorderMarket('AP', -1)" class="reorder-btn"><i data-lucide="chevron-up"
+                              class="w-4 h-4"></i></button>
+                          <button onclick="reorderMarket('AP', 1)" class="reorder-btn"><i data-lucide="chevron-down"
+                              class="w-4 h-4"></i></button>
+                        </div>
+                        <span class="text-2xl">🌏</span>
+                        <div>
+                          <div class="font-bold">Asia Pacific</div>
+                          <div class="text-xs text-slate-400">Est. Demand: 690k</div>
+                        </div>
+                      </div>
+                      <div class="flex items-center gap-3">
+                        <div class="text-right">
+                          <div class="text-xs text-slate-400">Shipping tariffs</div>
+                          <div class="font-bold text-yellow-400">$12/unit</div>
+                        </div>
+                        <div class="bg-yellow-500/20 text-yellow-400 px-3 py-1 rounded text-xs font-bold">Priority 2
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+
+                  <div
+                    class="priority-item glass p-4 cursor-grab active:cursor-grabbing border-l-4 border-red-500 relative group"
+                    draggable="true" data-market="EU">
+                    <div class="flex items-center justify-between">
+                      <div class="flex items-center gap-4">
+                        <div class="flex flex-col gap-1 reorder-btns">
+                          <button onclick="reorderMarket('EU', -1)" class="reorder-btn"><i data-lucide="chevron-up"
+                              class="w-4 h-4"></i></button>
+                          <button onclick="reorderMarket('EU', 1)" class="reorder-btn"><i data-lucide="chevron-down"
+                              class="w-4 h-4"></i></button>
+                        </div>
+                        <span class="text-2xl">🇪🇺</span>
+                        <div>
+                          <div class="font-bold">Europe</div>
+                          <div class="text-xs text-slate-400">Est. Demand: 120k</div>
+                        </div>
+                      </div>
+                      <div class="flex items-center gap-3">
+                        <div class="text-right">
+                          <div class="text-xs text-slate-400">Shipping tariffs</div>
+                          <div class="font-bold text-red-400">$7/unit</div>
+                        </div>
+                        <div class="bg-red-500/20 text-red-400 px-3 py-1 rounded text-xs font-bold">Priority 3</div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              <!-- Right: Fulfillment Analysis -->
+              <div class="glass p-6">
+                <div class="text-lg font-bold mb-6">Market Fulfillment Analysis</div>
+                <div class="space-y-3">
+                  <div class="grid grid-cols-3 gap-4 pb-3 border-b border-white/10 text-xs font-bold text-slate-400">
+                    <div>Market</div>
+                    <div>Shipping</div>
+                    <div class="text-right">Fulfillment</div>
+                  </div>
+
+                  <div class="grid grid-cols-3 gap-4 items-center pb-4 border-b border-white/10">
+                    <div class="font-bold text-sm" id="log_na_name">🇺🇸 NA</div>
+                    <div class="text-success text-xs font-bold">Free</div>
+                    <div class="text-right">
+                      <div class="flex flex-col items-end gap-1">
+                        <div class="w-full max-w-[100px] h-2 bg-white/10 rounded-full overflow-hidden">
+                          <div id="log_na_bar" class="h-full bg-success transition-all duration-500" style="width: 39%">
+                          </div>
+                        </div>
+                        <span id="log_na_pct" class="text-[10px] font-black text-success">39%</span>
+                      </div>
+                    </div>
+                  </div>
+
+                  <div class="grid grid-cols-3 gap-4 items-center pb-4 border-b border-white/10">
+                    <div class="font-bold text-sm" id="log_ap_name">🌏 AP</div>
+                    <div class="text-slate-400 text-xs">$12/u</div>
+                    <div class="text-right">
+                      <div class="flex flex-col items-end gap-1">
+                        <div class="w-full max-w-[100px] h-2 bg-white/10 rounded-full overflow-hidden">
+                          <div id="log_ap_bar" class="h-full bg-warning transition-all duration-500" style="width: 36%">
+                          </div>
+                        </div>
+                        <span id="log_ap_pct" class="text-[10px] font-black text-warning">36%</span>
+                      </div>
+                    </div>
+                  </div>
+
+                  <div class="grid grid-cols-3 gap-4 items-center">
+                    <div class="font-bold text-sm" id="log_eu_name">🇪🇺 EU</div>
+                    <div class="text-slate-400 text-xs">$7/u</div>
+                    <div class="text-right">
+                      <div class="flex flex-col items-end gap-1">
+                        <div class="w-full max-w-[100px] h-2 bg-white/10 rounded-full overflow-hidden">
+                          <div id="log_eu_bar" class="h-full bg-danger transition-all duration-500" style="width: 0%">
+                          </div>
+                        </div>
+                        <span id="log_eu_pct" class="text-[10px] font-black text-danger">0%</span>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+
+          </div>
+
+          <!-- STEP 4: R&D & INNOVATION -->
+          <div class="journey-step glass p-10 relative">
+            <button onclick="manualShowTour(4)"
+              class="absolute top-6 right-6 text-slate-500 hover:text-accent transition-colors" title="View Guide">
+              <i data-lucide="book-open" class="w-5 h-5"></i>
+            </button>
+            <div class="flex items-start gap-8 mb-8">
+              <div class="flex-shrink-0 relative group">
+                <div
+                  class="w-16 h-16 bg-accent/20 border border-accent/40 rounded-xl flex items-center justify-center text-accent font-black text-2xl">
+                  5
+                </div>
+              </div>
+              <div class="flex-1">
+                <h3 class="text-3xl font-black mb-4 text-accent">How Much Will You Invest in Innovation? 🧪</h3>
+                <p class="text-lg text-slate-300 mb-8">
+                  Invest in research to unlock premium features. More staff + advanced training = faster innovation.
+                  Innovation commands premium pricing but requires capital investment.
+                </p>
+              </div>
+            </div>
+
+
+            <div class="glass p-6 mb-8 bg-white/5 border border-white/10">
+              <div class="flex justify-between items-end mb-6">
+                <div>
+                  <div class="text-sm text-slate-400 mb-2 font-bold uppercase tracking-wider">Next Feature Unlock
+                  </div>
+                  <div class="text-2xl font-black text-white">Full Self Driving 🚗✨</div>
+                </div>
+                <div class="text-right">
+                  <div class="text-sm text-slate-400 mb-1">Unlocking Progress</div>
+                  <div class="text-3xl font-black text-accent glow" id="rnd_progress_val">75%</div>
+                </div>
+              </div>
+              <div class="w-full h-4 bg-white/10 rounded-full overflow-hidden p-1 border border-white/5">
+                <div
+                  class="h-full bg-gradient-to-r from-accent to-accent-dark rounded-full transition-all duration-700 shadow-[0_0_15px_rgba(14,165,233,0.5)]"
+                  id="rnd_progress_bar" style="width: 75%; min-width: 5px; background-color: #0ea5e9;">
+                </div>
+              </div>
+            </div>
+
+            <div class="grid lg:grid-cols-2 gap-6">
+              <div class="bg-white/5 border border-white/10 rounded-xl p-6">
+                <div class="text-sm font-bold text-slate-400 mb-6">Research Headcount</div>
+                <div class="mb-4">
+                  <div class="flex justify-between mb-3">
+                    <span>Monthly Staff</span>
+                    <span class="font-bold text-accent text-lg" id="rnd_staff_display">60</span>
+                  </div>
+                  <input type="range" id="rnd_staff" min="10" max="200" value="60" class="range-slider"
+                    oninput="updateRnD()">
+                </div>
+                <div class="bg-white/5 p-4 rounded border border-white/10 text-sm space-y-2">
+                  <div class="flex justify-between">
+                    <span>Development Hours</span>
+                    <span class="font-bold text-accent" id="rnd_hours_display">1.2k hrs</span>
+                  </div>
+                  <div class="flex justify-between text-[10px] text-slate-400">
+                    <span>Research Overhead</span>
+                    <span id="rnd_cost_display">$300k</span>
+                  </div>
+                </div>
+              </div>
+
+              <div class="bg-white/5 border border-white/10 rounded-xl p-6">
+                <div class="text-sm font-bold text-slate-400 mb-6">Training Level</div>
+                <select id="training_level" class="dark-select mb-4" onchange="updateRnD()">
+                  <option value="1">🎓 Basic Training</option>
+                  <option value="2" selected>🏅 Standard Training</option>
+                </select>
+                <div class="space-y-4">
+                  <div class="bg-white/5 border border-white/10 rounded-lg p-4">
+                    <div class="flex justify-between text-xs text-slate-400 mb-2 font-bold uppercase tracking-widest">
+                      Market Purchase Intent</div>
+                    <div class="flex items-end gap-1 h-12 mb-2" id="innovation_intent_container">
+                      <!-- Status bars injected by JS -->
+                    </div>
+                    <div class="flex justify-between items-center">
+                      <div class="text-3xl font-black text-accent" id="innovation_intent_display">72</div>
+                      <div class="text-[10px] uppercase font-bold text-slate-500" id="innovation_intent_label">Growing
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+
+          <!-- STEP 6: FINANCIAL STRATEGY -->
+          <div class="journey-step glass p-10 relative">
+            <button onclick="manualShowTour(5)"
+              class="absolute top-6 right-6 text-slate-500 hover:text-accent transition-colors" title="View Guide">
+              <i data-lucide="book-open" class="w-5 h-5"></i>
+            </button>
+            <div class="flex items-start gap-8 mb-8">
+              <div class="flex-shrink-0 relative group">
+                <div
+                  class="w-16 h-16 bg-accent/20 border border-accent/40 rounded-xl flex items-center justify-center text-accent font-black text-2xl">
+                  6
+                </div>
+              </div>
+              <div class="flex-1">
+                <h3 class="text-3xl font-black mb-4 text-accent">Will You Borrow to Grow or Pay Dividends? 🏦</h3>
+                <p class="text-lg text-slate-300 mb-8">
+                  Borrow to accelerate growth or return cash to shareholders. Your debt/equity mix and dividend policy
+                  signal confidence to the market. Each impacts your stock price.
+                </p>
+              </div>
+            </div>
+
+
+            <div class="grid lg:grid-cols-2 gap-6">
+              <div class="bg-white/5 border border-white/10 rounded-xl p-6 flex flex-col h-full">
+                <h4 class="font-bold mb-6">Debt Management</h4>
+                <div class="mb-6">
+                  <div class="flex justify-between mb-3 text-sm">
+                    <span class="font-bold text-slate-400">Projected Debt / Limit</span>
+                    <span class="font-bold text-accent" id="debt_display">$15.0M / $40.0M</span>
+                  </div>
+                  <div class="w-full h-4 bg-white/10 rounded-full overflow-hidden p-1 border border-white/5">
+                    <div id="debt_progress_bar"
+                      class="h-full bg-gradient-to-r from-[#10b981] via-[#f59e0b] to-[#ef4444] rounded-full transition-all duration-500 shadow-[0_0_10px_rgba(16,185,129,0.3)]"
+                      style="width: 37.5%;"></div>
+                  </div>
+                  <div class="text-sm text-slate-400 mt-3" id="debt_ratio_label">Debt Ratio: <span
+                      class="font-black text-white" id="debt_ratio_val">14.6%</span> (Safe < 40%)</div>
+                  </div>
+
+                  <div>
+                    <div class="flex justify-between mb-3">
+                      <span class="font-bold">New Debt / Repay</span>
+                      <span class="font-bold text-accent text-lg" id="new_debt_display">+$5.0M</span>
+                    </div>
+                    <input type="range" id="new_debt" min="-15" max="25" value="5" class="range-slider"
+                      oninput="updateFinance()">
+                    <div class="text-xs text-slate-500 mt-2 flex justify-between">
+                      <span>Repay $15M</span>
+                      <span>Borrow $25M</span>
+                    </div>
+                  </div>
+                </div>
+
+                <div class="bg-white/5 border border-white/10 rounded-xl p-6 flex flex-col h-full">
+                  <h4 class="font-bold mb-6">Shareholder Returns</h4>
+                  <div class="mb-6">
+                    <div class="flex justify-between mb-3">
+                      <span class="font-bold">Dividend Payout</span>
+                      <span class="font-bold text-success text-lg" id="dividend_display">$0.0M</span>
+                    </div>
+                    <input type="range" id="dividend" min="0" max="10" value="0" class="range-slider"
+                      oninput="updateFinance()">
+                    <div class="text-xs text-slate-500 mt-2">Max allowed: $4.1M (50% of profit)</div>
+                  </div>
+
+                  <div
+                    class="space-y-3 bg-white/5 p-4 rounded border border-white/10 flex flex-col justify-center items-center flex-1 min-h-[140px]">
+                    <div class="text-xs text-slate-400 uppercase font-black tracking-widest mb-2">Projected Cash
+                      Position
+                    </div>
+                    <div class="text-5xl font-black text-white glow" id="cash_display">$12.4M</div>
+                    <div class="text-xs text-success mt-2">Post-dividend liquidity remains healthy</div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+  </section>
+
+  <!-- Final Call to Action -->
+  <section id="join" class="section bg-gradient-to-br from-accent/10 via-slate-950 to-slate-950 relative">
+    <div class="absolute inset-0 bg-[radial-gradient(circle_at_50%_50%,rgba(14,165,233,0.08),transparent_70%)]"></div>
+
+    <div class="relative z-10 max-w-4xl mx-auto text-center">
+      <i data-lucide="crown" class="w-24 h-24 mx-auto mb-10 text-accent"></i>
+
+      <h2 class="text-6xl md:text-8xl font-black mb-10 leading-none glow">
+        THE THRONE<br />AWAITS
+      </h2>
+
+      <p class="text-2xl md:text-3xl text-slate-200 mb-16 max-w-3xl mx-auto">
+        The other teams are already moving.<br />
+        Markets are shifting. Time is not on your side.
+      </p>
+
+      <div class="flex flex-col sm:flex-row gap-6 justify-center items-center">
+        <a href="/team-login"
+          class="bg-emerald-500/10 text-emerald-500 border border-emerald-500/40 px-16 py-6 rounded-sm font-black text-xl hover:bg-emerald-500 hover:text-white transition-all shadow-[0_0_30px_rgba(16,185,129,0.2)] hover:shadow-[0_0_50px_rgba(16,185,129,0.4)] uppercase tracking-[0.2em]">
+          Login
+        </a>
+        <a href="mailto:hello@aidecisionlab.nz"
+          class="border border-white/20 px-12 py-5 rounded-sm font-bold text-lg text-white/70 hover:text-white hover:border-white/40 transition-all uppercase tracking-[0.1em]">
+          Contact Us
+        </a>
+      </div>
+
+      <p class="mt-16 text-white/50 text-xs font-medium tracking-widest uppercase"
+        style="font-family: 'JetBrains Mono', monospace;">
+        A deep strategic business simulation • Real economics
+      </p>
+    </div>
+  </section>
+
+  <!-- Footer -->
+  <footer class="bg-slate-950 border-t border-white/5 py-12 relative overflow-hidden">
+    <div class="absolute inset-0 bg-grid-white/[0.02] pointer-events-none"></div>
+    <div class="max-w-7xl mx-auto px-6 relative z-10">
+      <div class="flex flex-col md:flex-row justify-between items-center gap-8">
+        <div class="flex items-center gap-3">
+          <div class="w-10 h-10 bg-blue-600 rounded-lg flex items-center justify-center text-white">
+            <svg class="w-5 h-5" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"
+              fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M12 18V5" />
+              <path d="M15 13a4.17 4.17 0 0 1-3-4 4.17 4.17 0 0 1-3 4" />
+              <path d="M17.598 6.5A3 3 0 1 0 12 5a3 3 0 1 0-5.598 1.5" />
+              <path d="M17.997 5.125a4 4 0 0 1 2.526 5.77" />
+              <path d="M18 18a4 4 0 0 0 2-7.464" />
+              <path d="M19.967 17.483A4 4 0 1 1 12 18a4 4 0 1 1-7.967-.517" />
+              <path d="M6 18a4 4 0 0 1-2-7.464" />
+              <path d="M6.003 5.125a4 4 0 0 0-2.526 5.77" />
+            </svg>
+          </div>
+          <div>
+            <div class="text-white font-bold tracking-tight">AI Decision Lab</div>
+            <div class="text-slate-500 text-xs">Strategic Business Simulation</div>
+          </div>
+        </div>
+
+    
+
+        <div
+          class="flex flex-col md:flex-row items-center gap-4 text-slate-500 text-[10px] font-medium uppercase tracking-wider">
+          <div class="flex items-center gap-4">
+            <span>&copy; 2026 AI Decision Lab Global</span>
+            <div class="flex gap-4 border-l border-slate-800 pl-4">
+              <a href="/privacy" class="hover:text-white transition-colors">Privacy</a>
+              <a href="/AIDECISION_WHITEPAPER_AIgopoly.pdf" class="hover:text-white transition-colors">Whitepaper</a>
+              <a href="/legal" class="hover:text-white transition-colors">Disclaimer</a>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </footer>
+
+  <script src="/landing.min.js"></script>
+
+  <script>
+    // Lucide Icons
+    lucide.createIcons();
+
+    // Accordion Logic
+    function toggleAccordion(btn) {
+      const activeItem = document.querySelector('.accordion-item.active');
+      const currentItem = btn.parentElement;
+
+      if (activeItem && activeItem !== currentItem) {
+        activeItem.classList.remove('active');
+      }
+      currentItem.classList.toggle('active');
+    }
+
+    // Evolution of Trust Simulation Logic
+    const canvas_sim = document.getElementById('sim-canvas');
+    const ctx_sim = canvas_sim ? canvas_sim.getContext('2d') : null;
+    const chartCanvas_sim = document.getElementById('chart-canvas');
+    const cCtx_sim = chartCanvas_sim ? chartCanvas_sim.getContext('2d') : null;
+
+    let animationId_sim, isRunning_sim = false, generation_sim = 0;
+
+    const AGENT_COUNT_sim = 36;
+    const AGENT_SIZE_sim = 3;
+    let agents_sim = [];
+    let scoreHistory_sim = {
+      COOP: [],
+      DEF: [],
+      TFT: []
+    };
+    let totalScores_sim = {
+      COOP: 0,
+      DEF: 0,
+      TFT: 0
+    };
+
+    const STRATS_sim = {
+      COOP: 'COOP',
+      DEF: 'DEF',
+      TFT: 'TFT'
+    };
+    const COLORS_sim = {
+      COOP: '#10b981',
+      DEF: '#f43f5e',
+      TFT: '#3b82f6'
+    };
+
+    class AgentSim {
+      constructor(strategy, x, y) {
+        this.strategy = strategy;
+        this.x = x;
+        this.y = y;
+        this.vx = (Math.random() - 0.5) * 0.8;
+        this.vy = (Math.random() - 0.5) * 0.8;
+        this.score = 0;
+        this.lastOpponentMove = 'c';
+        this.cooldowns = new Map(); // Track interaction cooldowns
+      }
+
+      move() {
+        this.x += this.vx;
+        this.y += this.vy;
+        if (this.x < 0 || this.x > canvas_sim.width) this.vx *= -1;
+        if (this.y < 0 || this.y > canvas_sim.height) this.vy *= -1;
+      }
+
+      draw() {
+        if (!ctx_sim) return;
+        ctx_sim.beginPath();
+        ctx_sim.arc(this.x, this.y, AGENT_SIZE_sim, 0, Math.PI * 2);
+        ctx_sim.fillStyle = COLORS_sim[this.strategy];
+        ctx_sim.fill();
+      }
+
+      decide() {
+        if (this.strategy === STRATS_sim.COOP) return 'c';
+        if (this.strategy === STRATS_sim.DEF) return 'd';
+        return this.lastOpponentMove;
+      }
+    }
+
+    function initSim() {
+      if (!canvas_sim) return;
+      canvas_sim.width = canvas_sim.offsetWidth;
+      canvas_sim.height = canvas_sim.offsetHeight;
+      if (chartCanvas_sim) {
+        chartCanvas_sim.width = chartCanvas_sim.offsetWidth;
+        chartCanvas_sim.height = chartCanvas_sim.offsetHeight;
+      }
+
+      agents_sim = [];
+      scoreHistory_sim = {
+        COOP: [],
+        DEF: [],
+        TFT: []
+      };
+      totalScores_sim = {
+        COOP: 0,
+        DEF: 0,
+        TFT: 0
+      };
+      const types = [STRATS_sim.COOP, STRATS_sim.DEF, STRATS_sim.TFT];
+      for (let i = 0; i < AGENT_COUNT_sim; i++) {
+        agents_sim.push(new AgentSim(types[i % 3], Math.random() * canvas_sim.width, Math.random() * canvas_sim.height));
+      }
+    }
+
+    function drawChart() {
+      if (!cCtx_sim || !chartCanvas_sim) return;
+      cCtx_sim.clearRect(0, 0, chartCanvas_sim.width, chartCanvas_sim.height);
+      const maxPoints = 50;
+      const keys = ['COOP', 'DEF', 'TFT'];
+
+      let maxVal = 1;
+      keys.forEach(k => {
+        scoreHistory_sim[k].forEach(v => {
+          if (v > maxVal) maxVal = v;
+        });
+      });
+
+      keys.forEach(k => {
+        const data = scoreHistory_sim[k].slice(-maxPoints);
+        if (data.length < 2) return;
+
+        cCtx_sim.beginPath();
+        cCtx_sim.strokeStyle = COLORS_sim[k];
+        cCtx_sim.lineWidth = 2;
+        cCtx_sim.setLineDash([]);
+
+        data.forEach((val, i) => {
+          const x = (i / (maxPoints - 1)) * chartCanvas_sim.width;
+          const y = chartCanvas_sim.height - (val / maxVal) * chartCanvas_sim.height;
+          if (i === 0) cCtx_sim.moveTo(x, y);
+          else cCtx_sim.lineTo(x, y);
+        });
+        cCtx_sim.stroke();
+      });
+    }
+
+    function updateSimUI() {
+      const counts = {
+        COOP: 0,
+        DEF: 0,
+        TFT: 0
+      };
+      const scores = {
+        COOP: 0,
+        DEF: 0,
+        TFT: 0
+      };
+
+      agents_sim.forEach(a => {
+        counts[a.strategy]++;
+        scores[a.strategy] += a.score;
+      });
+
+      const total = agents_sim.length;
+      if (document.getElementById('bar-coop')) document.getElementById('bar-coop').style.width = (counts.COOP / total * 100) + '%';
+      if (document.getElementById('bar-def')) document.getElementById('bar-def').style.width = (counts.DEF / total * 100) + '%';
+      if (document.getElementById('bar-tft')) document.getElementById('bar-tft').style.width = (counts.TFT / total * 100) + '%';
+
+      const avgCoop = counts.COOP > 0 ? (scores.COOP / counts.COOP) : 0;
+      const avgDef = counts.DEF > 0 ? (scores.DEF / counts.DEF) : 0;
+      const avgTft = counts.TFT > 0 ? (scores.TFT / counts.TFT) : 0;
+
+      // Update total scores
+      totalScores_sim.COOP += scores.COOP;
+      totalScores_sim.DEF += scores.DEF;
+      totalScores_sim.TFT += scores.TFT;
+
+      if (document.getElementById('score-coop')) document.getElementById('score-coop').innerText = totalScores_sim.COOP.toLocaleString();
+      if (document.getElementById('score-def')) document.getElementById('score-def').innerText = totalScores_sim.DEF.toLocaleString();
+      if (document.getElementById('score-tft')) document.getElementById('score-tft').innerText = totalScores_sim.TFT.toLocaleString();
+      if (document.getElementById('gen-count')) document.getElementById('gen-count').innerText = generation_sim;
+
+      scoreHistory_sim.COOP.push(avgCoop);
+      scoreHistory_sim.DEF.push(avgDef);
+      scoreHistory_sim.TFT.push(avgTft);
+      drawChart();
+    }
+
+    function runSimStep() {
+      if (!ctx_sim || !canvas_sim) return;
+      generation_sim++;
+      ctx_sim.clearRect(0, 0, canvas_sim.width, canvas_sim.height);
+
+      for (let i = 0; i < agents_sim.length; i++) {
+        const a = agents_sim[i];
+        a.move();
+        a.draw();
+
+        for (let j = i + 1; j < agents_sim.length; j++) {
+          const b = agents_sim[j];
+          const d = Math.hypot(a.x - b.x, a.y - b.y);
+
+          // Check cooldown before allowing interaction
+          const cooldownA = a.cooldowns.get(b) || 0;
+          const cooldownB = b.cooldowns.get(a) || 0;
+
+          if (d < 30 && cooldownA === 0 && cooldownB === 0) {
+            const mA = a.decide(),
+              mB = b.decide();
+            // BUSINESS PAYOFF MATRIX:
+            // Both Premium (c,c): Healthy market with good margins = 5 pts each
+            // Aggressive undercuts Premium (d,c): Share gain vs margin retention = 4 vs 3
+            // Premium vs Aggressive (c,d): Loses some share but maintains brand = 3 vs 4
+            // Both Aggressive (d,d): Price war, commoditization = 2 pts each
+            if (mA === 'c' && mB === 'c') {
+              a.score += 5;
+              b.score += 5;
+            } else if (mA === 'd' && mB === 'c') {
+              a.score += 4;
+              b.score += 3;
+            } else if (mA === 'c' && mB === 'd') {
+              a.score += 3;
+              b.score += 4;
+            } else {
+              a.score += 2;
+              b.score += 2;
+            }
+            a.lastOpponentMove = mB;
+            b.lastOpponentMove = mA;
+
+            // Set cooldown (30 frames = ~0.5 seconds at 60fps)
+            a.cooldowns.set(b, 30);
+            b.cooldowns.set(a, 30);
+
+            ctx_sim.beginPath();
+            ctx_sim.moveTo(a.x, a.y);
+            ctx_sim.lineTo(b.x, b.y);
+            ctx_sim.strokeStyle = 'rgba(255,255,255,0.05)';
+            ctx_sim.stroke();
+          }
+
+          // Decrement cooldowns
+          if (cooldownA > 0) a.cooldowns.set(b, cooldownA - 1);
+          if (cooldownB > 0) b.cooldowns.set(a, cooldownB - 1);
+        }
+      }
+
+      if (generation_sim % 60 === 0) {
+        updateSimUI();
+      }
+
+      if (generation_sim % 120 === 0) {
+        agents_sim.sort((a, b) => a.score - b.score);
+        const losers = agents_sim.slice(0, 6);
+        const winners = agents_sim.slice(-6);
+        losers.forEach((l, idx) => {
+          l.strategy = winners[idx].strategy;
+        });
+        // Reset scores for everyone to start the new generation fresh
+        agents_sim.forEach(a => a.score = 0);
+      }
+
+      if (isRunning_sim) animationId_sim = requestAnimationFrame(runSimStep);
+    }
+
+    function toggleSim() {
+      isRunning_sim = !isRunning_sim;
+      const b = document.getElementById('sim-btn');
+      if (isRunning_sim) {
+        b.innerText = "Pause";
+        runSimStep();
+      } else {
+        b.innerText = "Start";
+        cancelAnimationFrame(animationId_sim);
+      }
+    }
+
+    function resetSim() {
+      generation_sim = 0;
+      initSim();
+      updateSimUI();
+      if (!isRunning_sim && ctx_sim && canvas_sim) {
+        ctx_sim.clearRect(0, 0, canvas_sim.width, canvas_sim.height);
+        agents_sim.forEach(a => a.draw());
+      }
+    }
+
+    function toggleSimInfo() {
+      const panel = document.getElementById('sim-info-panel');
+      if (panel) {
+        const isHidden = panel.style.display === 'none' || panel.classList.contains('hidden');
+        if (isHidden) {
+          panel.style.display = 'block';
+          panel.classList.remove('hidden');
+        } else {
+          panel.style.display = 'none';
+          panel.classList.add('hidden');
+        }
+      }
+    }
+
+    // Auto-initialize simulation
+    window.addEventListener('load', () => {
+      initSim();
+      updateSimUI();
+      if (agents_sim.length > 0) {
+        agents_sim.forEach(a => a.draw());
+        // Auto-start for better impact
+        toggleSim();
+      }
+    });
+
+    // Story Mode Transition Wrapper
+    (function () {
+      const originalSupernova = window.runSupernova;
+      window.runSupernova = function () {
+        // Enable story sections
+        document.body.classList.remove('story-mode-hidden');
+        // Trigger original transition
+        if (typeof originalSupernova === 'function') {
+          originalSupernova();
+        }
+      };
+    })();
+  </script>
+</body>
+
+</html>

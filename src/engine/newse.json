@@ -1,0 +1,500 @@
+{
+  "0": {
+    "id": 0,
+    "name": "Stable Market",
+    "description": "Normal market conditions - baseline for learning",
+    "hints": [
+      "📊 GLOBAL OUTLOOK: GDP chugging along at 2.4% YoY - services sector leading the charge",
+      "💰 PRICES & WAGES: Inflation anchored at 2.0%, energy markets flat, wage pressures cooling off",
+      "🏦 CENTRAL BANKS: Policy rates on hold across major economies; 'wait and see' mode continues",
+      "🏭 MANUFACTURING: PMI at 52.0 - modest expansion, inventories back to normal levels",
+      "📈 MARKET MOOD: Steady as she goes - no fireworks, no panic, just business as usual"
+    ],
+    "econBrief": {
+      "gdp": "2.4% YoY (steady)",
+      "inflation": "2.0% YoY (anchored)",
+      "rates": "Policy on hold; credit spreads tight",
+      "pmi": "52.0 (expansion)",
+      "currency": "USD stable vs basket"
+    },
+    "demandModifier": {
+      "us": 0,
+      "asia": 0,
+      "europe": 0
+    },
+    "priceElasticityModifier": 1,
+    "csrImportanceModifier": 1,
+    "marketingEffectModifier": 1,
+    "costInflation": 1,
+    "investmentCostMultiplier": 1,
+    "interestRateSpread": 0,
+    "taxRateDeltaByRegion": {
+      "us": 0,
+      "asia": 0,
+      "europe": 0
+    },
+    "workingCapitalDelta": {
+      "inventory": 0,
+      "receivable": 0,
+      "payable": 0
+    }
+  },
+  "1": {
+    "id": 1,
+    "name": "Asia Boom",
+    "description": "Strong economic growth in Asia drives demand surge",
+    "hints": [
+      "🚀 ASIA ON FIRE: Regional GDP roaring at 6.2% YoY - infrastructure boom meets services explosion!",
+      "📦 EXPORT SURGE: Asia exports up 9% YoY, PMI hits 54.5 - factories can't keep up with orders",
+      "🏙️ URBANIZATION WAVE: Middle class expanding rapidly in India, Vietnam, Indonesia - consumption soaring",
+      "💳 CONSUMER CONFIDENCE: Household spending accelerating, credit growth +8%, sentiment at 3-year high",
+      "🌏 SPILLOVER EFFECTS: US seeing modest tech/luxury demand bump (+3%) from wealthy Asian buyers",
+      "⚠️ EUROPE WATCH: Slight demand softness (-5%) as global capital flows East, Euro remains under pressure"
+    ],
+    "econBrief": {
+      "gdp": "Asia 6.2% YoY (accelerating)",
+      "inflation": "3.1% YoY (contained)",
+      "rates": "Mild easing; credit growth +8%",
+      "pmi": "54.5 (broad expansion)",
+      "currency": "CNY/INR stable; USD neutral"
+    },
+    "demandModifier": {
+      "us": 3,
+      "asia": 15,
+      "europe": -5
+    },
+    "priceElasticityModifier": 0.85,
+    "csrImportanceModifier": 0.8,
+    "marketingEffectModifier": 1.15,
+    "costInflation": 1.05,
+    "investmentCostMultiplier": 1.03,
+    "interestRateSpread": 0,
+    "taxRateDeltaByRegion": {
+      "us": 0,
+      "asia": 0,
+      "europe": 0
+    },
+    "workingCapitalDelta": {
+      "inventory": 0,
+      "receivable": 0,
+      "payable": 0
+    }
+  },
+  "2": {
+    "id": 2,
+    "name": "Green Wave",
+    "description": "Environmental concerns drive consumer preferences",
+    "hints": [
+      "🌱 CLIMATE PACT SIGNED: 47 nations commit to carbon neutrality - green subsidies flowing freely",
+      "📋 ESG CRACKDOWN: EU/UK tightening disclosure rules, carbon border taxes coming in 2027",
+      "💚 CONSUMER SHIFT: Major survey shows 62% willing to pay 10-15% premium for sustainable products",
+      "🏆 BRAND WINS: Companies with strong ESG scores seeing +18% brand loyalty vs. laggards",
+      "⚡ RENEWABLES BOOM: Solar/wind costs plummeting - green energy now cheaper than fossil in most markets",
+      "💸 PREMIUM PRICES STICK: Low elasticity - eco-conscious buyers less price-sensitive, more values-driven",
+      "🇪🇺 EUROPE LEADS: +10% demand surge for green products, US +5% following, Asia watching closely"
+    ],
+    "econBrief": {
+      "gdp": "1.8% YoY (moderate)",
+      "inflation": "2.6% YoY (energy easing)",
+      "rates": "Stable; green finance spreads tightening",
+      "pmi": "51.0 (mixed)",
+      "currency": "EUR firm; USD soft"
+    },
+    "demandModifier": {
+      "us": 5,
+      "asia": 0,
+      "europe": 10
+    },
+    "priceElasticityModifier": 0.85,
+    "csrImportanceModifier": 1.5,
+    "marketingEffectModifier": 1.05,
+    "costInflation": 1.04,
+    "investmentCostMultiplier": 1.05,
+    "interestRateSpread": 0,
+    "taxRateDeltaByRegion": {
+      "us": 0,
+      "asia": 0,
+      "europe": 0
+    },
+    "workingCapitalDelta": {
+      "inventory": 0,
+      "receivable": 0,
+      "payable": 0
+    }
+  },
+  "3": {
+    "id": 3,
+    "name": "Price War",
+    "description": "Economic slowdown makes consumers highly price-conscious",
+    "hints": [
+      "📉 GROWTH STALLS: Global GDP decelerates to 0.9% YoY - economists warn of 'soft patch' ahead",
+      "🏪 RETAIL BLOODBATH: Major chains launch aggressive discounts - 'Black Friday every day' mentality",
+      "💰 BARGAIN HUNTERS: Consumers trading down across categories - private label sales up 22%",
+      "📊 INVENTORY GLUT: Warehouses 15% above normal - retailers desperate to clear excess stock",
+      "😰 CONFIDENCE CRASH: Consumer sentiment indexes at 18-month lows across all regions",
+      "🌍 REGIONAL PAIN: Europe hit hardest (-15%), US struggling (-10%), even resilient Asia down -5%",
+      "🎯 PRICE WARS: Every dollar counts - elasticity surges 40% as shoppers become ruthlessly price-focused"
+    ],
+    "econBrief": {
+      "gdp": "0.9% YoY (soft patch)",
+      "inflation": "1.5% YoY (disinflation)",
+      "rates": "On hold; credit tightens",
+      "pmi": "48.5 (contraction)",
+      "currency": "USD stronger on risk-off"
+    },
+    "demandModifier": {
+      "us": -10,
+      "asia": -5,
+      "europe": -15
+    },
+    "priceElasticityModifier": 1.4,
+    "csrImportanceModifier": 0.6,
+    "marketingEffectModifier": 0.9,
+    "costInflation": 1.02,
+    "investmentCostMultiplier": 1.05,
+    "interestRateSpread": 0.01,
+    "taxRateDeltaByRegion": {
+      "us": 0,
+      "asia": 0,
+      "europe": 0
+    },
+    "workingCapitalDelta": {
+      "inventory": 0.01,
+      "receivable": 0.02,
+      "payable": -0.01
+    }
+  },
+  "4": {
+    "id": 4,
+    "name": "Recession",
+    "description": "Broad demand pullback as consumers delay purchases",
+    "hints": [
+      "🚨 RECESSION DECLARED: Global GDP contracts 1.1% YoY - first negative print since 2020",
+      "📈 UNEMPLOYMENT RISES: Jobless claims surge, hiring freezes widespread across industries",
+      "🏦 CREDIT CRUNCH: Banks tightening lending standards, consumer credit card defaults up 30%",
+      "🛒 SPENDING COLLAPSE: Discretionary purchases postponed - only essentials moving off shelves",
+      "📦 INVENTORY NIGHTMARE: Retailers stuck with 25% excess stock, markdowns accelerating",
+      "😱 SENTIMENT PLUNGE: Consumer confidence at decade lows - 'wait and see' mentality prevails",
+      "🌐 GLOBAL CONTAGION: Europe -15%, US -12%, Asia -8% - no safe haven markets",
+      "💸 DESPERATE BUYERS: Price sensitivity through the roof (+50%) - even loyal customers defecting for deals"
+    ],
+    "econBrief": {
+      "gdp": "-1.1% YoY (contraction)",
+      "inflation": "1.2% YoY (soft)",
+      "rates": "Easing; risk spreads wide",
+      "pmi": "46.8 (contraction)",
+      "currency": "USD stronger on risk-off"
+    },
+    "demandModifier": {
+      "us": -12,
+      "asia": -8,
+      "europe": -15
+    },
+    "priceElasticityModifier": 1.5,
+    "csrImportanceModifier": 0.7,
+    "marketingEffectModifier": 0.85,
+    "costInflation": 1.03,
+    "investmentCostMultiplier": 1.08,
+    "interestRateSpread": 0.015,
+    "taxRateDeltaByRegion": {
+      "us": 0,
+      "asia": 0,
+      "europe": 0
+    },
+    "workingCapitalDelta": {
+      "inventory": 0.02,
+      "receivable": 0.03,
+      "payable": -0.02
+    }
+  },
+  "5": {
+    "id": 5,
+    "name": "Trade War",
+    "description": "Tariffs and restrictions disrupt global supply chains",
+    "hints": [
+      "🛃 TARIFF SHOCK: New 12% duties on US-Asia trade, 6% on US-Europe routes - protectionism rising",
+      "📦 SUPPLY CHAOS: Cross-border shipping delays up 40%, customs backlogs at major ports",
+      "💵 COST PRESSURES: Procurement costs jump 7% on imported goods, margins under siege",
+      "🏭 RESHORING BUZZ: 'Buy local' sentiment surging - domestic manufacturing gets political boost",
+      "⚠️ RETALIATION FEARS: Markets volatile as countries threaten counter-tariffs - uncertainty paralyzing investment",
+      "📉 DEMAND HIT: Asia -10%, Europe -6%, US -5% as trade friction dampens global commerce",
+      "🌐 FRAGMENTATION: Supply chains fragmenting into regional blocs - globalization in reverse"
+    ],
+    "econBrief": {
+      "gdp": "1.4% YoY (slowing)",
+      "inflation": "3.0% YoY (tariff pass-through)",
+      "rates": "On hold; uncertainty elevated",
+      "pmi": "49.5 (soft)",
+      "currency": "USD volatile; trade FX swings"
+    },
+    "demandModifier": {
+      "us": -5,
+      "asia": -10,
+      "europe": -6
+    },
+    "priceElasticityModifier": 1.2,
+    "csrImportanceModifier": 0.9,
+    "logisticsTariff": {
+      "usToAsia": 0.12,
+      "usToEurope": 0.06,
+      "asiaToUs": 0.12,
+      "asiaToEurope": 0.06,
+      "europeToUs": 0.06,
+      "europeToAsia": 0.04,
+      "usDomestic": 0,
+      "asiaDomestic": 0,
+      "europeDomestic": 0
+    },
+    "marketingEffectModifier": 0.95,
+    "costInflation": 1.07,
+    "investmentCostMultiplier": 1.05,
+    "interestRateSpread": 0.005,
+    "taxRateDeltaByRegion": {
+      "us": 0,
+      "asia": 0,
+      "europe": 0
+    },
+    "workingCapitalDelta": {
+      "inventory": 0.02,
+      "receivable": 0.01,
+      "payable": -0.01
+    }
+  },
+  "6": {
+    "id": 6,
+    "name": "Pandemic Shock",
+    "description": "Demand weakens amid mobility and supply disruptions",
+    "hints": [
+      "🦠 OUTBREAK SPREADS: New variant triggers mobility restrictions in 30+ countries",
+      "🚫 LOCKDOWN LITE: Retail foot traffic down 45%, malls and stores operating at limited capacity",
+      "🚢 SUPPLY MELTDOWN: Port closures extend lead times by 3-4 weeks, freight costs up 60%",
+      "🏠 STAY-AT-HOME: Consumers shift spending to essentials, savings rates spike to 12%",
+      "💳 DISCRETIONARY FREEZE: Non-essential purchases postponed indefinitely - travel, dining, retail crushed",
+      "📉 GLOBAL SLOWDOWN: GDP -0.6% YoY, Asia hit hardest at -12%, US -8%, Europe -10%",
+      "🌡️ UNCERTAINTY PREMIUM: Businesses delay investment, consumers hoard cash 'just in case'",
+      "💰 PARADOX: High price sensitivity (+30%) despite low inflation - fear drives frugality"
+    ],
+    "econBrief": {
+      "gdp": "-0.6% YoY (fragile)",
+      "inflation": "2.8% YoY (logistics premium)",
+      "rates": "Cut; liquidity support",
+      "pmi": "47.9 (disrupted)",
+      "currency": "Safe-haven flows to USD"
+    },
+    "demandModifier": {
+      "us": -8,
+      "asia": -12,
+      "europe": -10
+    },
+    "priceElasticityModifier": 1.3,
+    "csrImportanceModifier": 1.2,
+    "marketingEffectModifier": 0.85,
+    "costInflation": 1.08,
+    "investmentCostMultiplier": 1.05,
+    "interestRateSpread": -0.01,
+    "taxRateDeltaByRegion": {
+      "us": 0,
+      "asia": 0,
+      "europe": 0
+    },
+    "workingCapitalDelta": {
+      "inventory": 0.03,
+      "receivable": 0.02,
+      "payable": -0.01
+    }
+  },
+  "7": {
+    "id": 7,
+    "name": "Regional Conflict",
+    "description": "Geopolitical shock hits Europe demand and logistics",
+    "hints": [
+      "⚔️ CONFLICT ERUPTS: Eastern European tensions escalate into military confrontation",
+      "⚡ ENERGY CRISIS: Natural gas prices triple, electricity costs surge across EU",
+      "😰 EUROPEAN PANIC: Consumer confidence collapses, GDP contracts 2.0% YoY - worst since 2009",
+      "🚢 SHIPPING CHAOS: Black Sea routes closed, Baltic traffic rerouted - delivery times +50%",
+      "💶 EURO WEAKNESS: Currency down 12% vs USD as capital flees to safety",
+      "🛡️ DEFENSE SPENDING: Government budgets shift to military - infrastructure projects delayed",
+      "🌍 SPILLOVER: US -4%, Asia -3% as European import demand evaporates (-20%)",
+      "📦 LOGISTICS PREMIUM: Tariff-like costs hit routes to Europe - 9% from Asia, 5% from US"
+    ],
+    "econBrief": {
+      "gdp": "EU -2.0% YoY (stress)",
+      "inflation": "3.4% YoY (energy)",
+      "rates": "Tight; inflation risks",
+      "pmi": "45.5 (contraction)",
+      "currency": "EUR weak; USD strong"
+    },
+    "demandModifier": {
+      "us": -4,
+      "asia": -3,
+      "europe": -20
+    },
+    "priceElasticityModifier": 1.15,
+    "csrImportanceModifier": 1,
+    "logisticsTariff": {
+      "usToEurope": 0.05,
+      "asiaToEurope": 0.09,
+      "europeToUs": 0.03,
+      "europeToAsia": 0.04,
+      "usToAsia": 0,
+      "asiaToUs": 0,
+      "usDomestic": 0,
+      "asiaDomestic": 0,
+      "europeDomestic": 0.02
+    },
+    "marketingEffectModifier": 0.9,
+    "costInflation": 1.06,
+    "investmentCostMultiplier": 1.04,
+    "interestRateSpread": 0.01,
+    "taxRateDeltaByRegion": {
+      "us": 0,
+      "asia": 0,
+      "europe": 0.02
+    },
+    "workingCapitalDelta": {
+      "inventory": 0.02,
+      "receivable": 0.01,
+      "payable": -0.01
+    }
+  },
+  "8": {
+    "id": 8,
+    "name": "AI Productivity Boom",
+    "description": "Automation lifts output and consumer purchasing power",
+    "hints": [
+      "🤖 AI REVOLUTION: Productivity gains accelerate to 4.2% annually - fastest since 1990s tech boom",
+      "💼 WAGE GROWTH: Real incomes up 3.8% as workers share in efficiency gains - purchasing power surges",
+      "🏭 COST COLLAPSE: Business operating costs down 3% as automation spreads - margins expanding",
+      "📈 CAPEX BOOM: Business investment up 12% YoY - companies racing to deploy AI infrastructure",
+      "🛍️ SPENDING SPREE: Discretionary demand expands across all regions - US +6%, Asia +8%, Europe +5%",
+      "💚 VALUES MATTER: Prosperous consumers increasingly focused on ethics, quality, sustainability (+10% CSR importance)",
+      "💰 PRICING POWER: Lower price sensitivity as rising incomes make consumers less deal-focused",
+      "🌐 VIRTUOUS CYCLE: Growth feeds growth - GDP at 3.2% YoY with inflation contained at 1.6%"
+    ],
+    "econBrief": {
+      "gdp": "3.2% YoY (expanding)",
+      "inflation": "1.6% YoY (productivity offsets)",
+      "rates": "Stable; growth supportive",
+      "pmi": "55.0 (expansion)",
+      "currency": "USD stable; risk-on"
+    },
+    "demandModifier": {
+      "us": 6,
+      "asia": 8,
+      "europe": 5
+    },
+    "priceElasticityModifier": 0.9,
+    "csrImportanceModifier": 1.1,
+    "marketingEffectModifier": 1.1,
+    "costInflation": 0.97,
+    "investmentCostMultiplier": 0.95,
+    "interestRateSpread": -0.005,
+    "taxRateDeltaByRegion": {
+      "us": 0,
+      "asia": 0,
+      "europe": 0
+    },
+    "workingCapitalDelta": {
+      "inventory": -0.01,
+      "receivable": -0.01,
+      "payable": 0
+    }
+  },
+  "9": {
+    "id": 9,
+    "name": "Energy Shock",
+    "description": "Energy costs surge, squeezing consumer budgets",
+    "hints": [
+      "⛽ OIL SPIKE: Crude prices jump to $125/barrel - geopolitical tensions choke supply",
+      "💡 UTILITY BILLS SOAR: Electricity and heating costs up 35%, gasoline +40% at the pump",
+      "📉 DISCRETIONARY CUTS: Households slash non-essential spending to cover energy bills",
+      "🏭 MARGIN SQUEEZE: Manufacturing costs surge 12% - freight, utilities, inputs all climbing",
+      "🚚 LOGISTICS PREMIUM: Shipping costs mirror oil price - effective 8% tariff on all trade routes",
+      "😰 CONSUMER STRESS: Real incomes falling as inflation hits 3.8% - budgets stretched thin",
+      "🌍 UNEQUAL IMPACT: Europe -8% (gas dependent), Asia -5%, US -4% (domestic energy helps)",
+      "💸 PRICE WARS: Elasticity spikes 25% as every purchase becomes a careful calculation"
+    ],
+    "econBrief": {
+      "gdp": "1.0% YoY (soft)",
+      "inflation": "3.8% YoY (energy-driven)",
+      "rates": "Hawkish tilt",
+      "pmi": "49.0 (soft patch)",
+      "currency": "Commodity FX stronger"
+    },
+    "demandModifier": {
+      "us": -4,
+      "asia": -5,
+      "europe": -8
+    },
+    "priceElasticityModifier": 1.25,
+    "csrImportanceModifier": 1.1,
+    "logisticsTariff": {
+      "usToAsia": 0.08,
+      "usToEurope": 0.08,
+      "asiaToUs": 0.08,
+      "asiaToEurope": 0.08,
+      "europeToUs": 0.08,
+      "europeToAsia": 0.08,
+      "usDomestic": 0.03,
+      "asiaDomestic": 0.04,
+      "europeDomestic": 0.05
+    },
+    "marketingEffectModifier": 0.9,
+    "costInflation": 1.12,
+    "investmentCostMultiplier": 1.08,
+    "interestRateSpread": 0.015,
+    "taxRateDeltaByRegion": {
+      "us": 0,
+      "asia": 0,
+      "europe": 0.01
+    },
+    "workingCapitalDelta": {
+      "inventory": 0.02,
+      "receivable": 0.02,
+      "payable": -0.01
+    }
+  },
+  "10": {
+    "id": 10,
+    "name": "Recovery Rally",
+    "description": "Broad-based rebound lifts demand across all regions",
+    "hints": [
+      "🎉 RECOVERY MODE: Global GDP accelerates to 3.0% YoY - synchronized expansion across continents",
+      "📈 CONFIDENCE RETURNS: Consumer sentiment indexes at 2-year highs - 'animal spirits' awakening",
+      "🚢 SUPPLY CHAINS HEAL: Lead times normalize, port congestion clears, freight rates stabilizing",
+      "💰 SPENDING UNLEASHED: Pent-up demand released - discretionary purchases surge across categories",
+      "🌍 BROAD-BASED: All regions participating - US +8%, Asia +10%, Europe +7% demand gains",
+      "🏦 POLICY SUPPORT: Central banks maintaining accommodative stance, governments offering tax relief (-1%)",
+      "💳 SMART SPENDING: Moderate price sensitivity as consumers feel secure but remain value-conscious",
+      "📊 GOLDILOCKS: PMI at 54.0 - strong but not overheating, inflation contained at 2.1%"
+    ],
+    "econBrief": {
+      "gdp": "3.0% YoY (rebound)",
+      "inflation": "2.1% YoY (stable)",
+      "rates": "Neutral; supportive stance",
+      "pmi": "54.0 (expansion)",
+      "currency": "USD steady; risk-on flows"
+    },
+    "demandModifier": {
+      "us": 8,
+      "asia": 10,
+      "europe": 7
+    },
+    "priceElasticityModifier": 0.9,
+    "csrImportanceModifier": 1,
+    "marketingEffectModifier": 1.1,
+    "costInflation": 1.02,
+    "investmentCostMultiplier": 1,
+    "interestRateSpread": -0.005,
+    "taxRateDeltaByRegion": {
+      "us": -0.01,
+      "asia": -0.01,
+      "europe": -0.01
+    },
+    "workingCapitalDelta": {
+      "inventory": 0,
+      "receivable": -0.01,
+      "payable": 0.01
+    }
+  }
+}

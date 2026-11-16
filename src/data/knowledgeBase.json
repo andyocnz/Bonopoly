@@ -1,0 +1,909 @@
+[
+  {
+    "id": "overview",
+    "title": "Game Overview",
+    "keywords": [
+      "overview",
+      "basics",
+      "how to play",
+      "rounds",
+      "decisions"
+    ],
+    "summary": "Each round you make decisions across production, logistics, R&D, marketing, HR, and finance. Results are calculated by the game engine.",
+    "bullets": [
+      "Rounds: Trial round is practice; Round 1 starts fresh from default state.",
+      "Inputs drive market share, unit sales, costs, and financial statements.",
+      "All calculations come from the game engine and game config."
+    ]
+  },
+  {
+    "id": "market-demand",
+    "title": "Market Demand",
+    "keywords": [
+      "demand",
+      "market size",
+      "growth",
+      "scenario",
+      "forecast"
+    ],
+    "summary": "Demand is based on base market size, growth, and scenario modifiers, then adjusted by average price elasticity.",
+    "bullets": [
+      "Scenario can raise/lower growth and elasticity.",
+      "Demand is computed per region (Americas, Asia, Europe).",
+      "Teams compete for market share based on attractiveness score."
+    ]
+  },
+  {
+    "id": "market-share",
+    "title": "Market Share",
+    "keywords": [
+      "market share",
+      "attractiveness",
+      "competition"
+    ],
+    "summary": "Market share is proportional to attractiveness score per region.",
+    "bullets": [
+      "Attractiveness uses price, quality, features, promotion, CSR, and brand.",
+      "Weights differ by region (EU values CSR more; Asia values price more).",
+      "Higher score yields higher share of regional demand."
+    ]
+  },
+  {
+    "id": "pricing",
+    "title": "Pricing Strategy",
+    "keywords": [
+      "price",
+      "elasticity",
+      "margin",
+      "revenue"
+    ],
+    "summary": "Lower prices can boost demand share but reduce margin. Price penalties apply if price is far above baseline.",
+    "bullets": [
+      "Demand shifts with price elasticity relative to the baseline price.",
+      "Price affects attractiveness and share, not just revenue.",
+      "Use regional baselines and elasticities from the config."
+    ]
+  },
+  {
+    "id": "promotion",
+    "title": "Promotion and Marketing",
+    "keywords": [
+      "promotion",
+      "marketing",
+      "budget",
+      "brand"
+    ],
+    "summary": "Promotion increases attractiveness; it is region weighted and can be modified by scenarios.",
+    "bullets": [
+      "Promotion % affects promotion score in attractiveness.",
+      "High promotion is powerful in EU and US; less in Asia.",
+      "Marketing cost is a % of revenue by region."
+    ]
+  },
+  {
+    "id": "features",
+    "title": "Feature Research",
+    "keywords": [
+      "features",
+      "rnd",
+      "research",
+      "innovation"
+    ],
+    "summary": "Research hours unlock features that increase attractiveness.",
+    "bullets": [
+      "Feature unlocks are cumulative across rounds (excluding trial).",
+      "More features increase demand share via features score.",
+      "Industry labels differ (e.g., Oil Refinery Level)."
+    ]
+  },
+  {
+    "id": "production",
+    "title": "Production Planning",
+    "keywords": [
+      "production",
+      "capacity",
+      "overtime",
+      "plants"
+    ],
+    "summary": "Production is limited by factory capacity plus overtime. Outsourcing adds capacity at a premium.",
+    "bullets": [
+      "Capacity per plant is industry-specific.",
+      "Overtime increases capacity but increases unit cost.",
+      "Total units sold are capped by production + inventory."
+    ]
+  },
+  {
+    "id": "outsourcing",
+    "title": "Outsourcing",
+    "keywords": [
+      "outsourcing",
+      "external",
+      "premium",
+      "capacity"
+    ],
+    "summary": "Outsourcing provides extra units at a premium cost and uses supplier multipliers.",
+    "bullets": [
+      "Outsourcing cost uses material + labor multiplied by supplier multiplier.",
+      "A premium is applied on top of outsourced unit costs.",
+      "Outsourcing can be used even if factories have spare capacity."
+    ]
+  },
+   {
+    "id": "CSR",
+    "title": "CSR (Corporate Social Responsibility)",
+    "keywords": [
+      "supplier",
+      "csr"
+    ],
+    "summary": "What is CSR(Corporate Social Responsibility)",
+    "bullets": [
+     
+      "CSR (Corporate Social Responsibility) measures your company's commitment to ethical and sustainable business practices - think environmental protection, fair labor, and responsible sourcing. ",
+      "In simple terms: Are you a green company that customers can feel good about supporting? High CSR means eco-friendly suppliers and ethical practices. Low CSR means cheaper materials but a worse brand reputation."
+    ]
+  },
+  {
+    "id": "suppliers",
+    "title": "Suppliers and CSR",
+    "keywords": [
+      "supplier",
+      "csr",
+      "esg",
+      "multiplier",
+      "quality"
+    ],
+    "summary": "Supplier choice changes unit costs and CSR rating, which affects demand share.",
+    "bullets": [
+      "Supplier multipliers increase material and labor costs.",
+      "CSR is weighted into attractiveness (EU highest, Asia lowest).",
+      "Higher CSR can improve share even with higher costs."
+    ]
+  },
+  {
+    "id": "inventory",
+    "title": "Inventory",
+    "keywords": [
+      "inventory",
+      "stock",
+      "carry",
+      "unsold"
+    ],
+    "summary": "Inventory carries over to next round; units sold are capped by production plus inventory.",
+    "bullets": [
+      "Ending inventory = starting inventory + production - units sold.",
+      "Inventory can buffer demand spikes or missed production.",
+      "Inventory value affects balance sheet."
+    ]
+  },
+  {
+    "id": "logistics",
+    "title": "Logistics",
+    "keywords": [
+      "logistics",
+      "shipping",
+      "tariff",
+      "priority"
+    ],
+    "summary": "Logistics costs depend on shipping routes and tariffs. Priority rules allocate supply.",
+    "bullets": [
+      "Local supply is cheapest; cross-region supply adds tariffs.",
+      "Priority order determines which regions get served first.",
+      "Logistics costs appear in COGS."
+    ]
+  },
+  {
+    "id": "hr",
+    "title": "Human Resources",
+    "keywords": [
+      "hr",
+      "staff",
+      "wage",
+      "training",
+      "efficiency"
+    ],
+    "summary": "HR inputs drive research hours and HR costs.",
+    "bullets": [
+      "Research staff and training increase R&D productivity.",
+      "Wages and training costs are operating expenses.",
+      "HR spending influences R&D cost directly."
+    ]
+  },
+  {
+    "id": "finance",
+    "title": "Finance",
+    "keywords": [
+      "finance",
+      "cash",
+      "debt",
+      "dividend",
+      "share"
+    ],
+    "summary": "Finance decisions affect cash, debt, share count, and TSR.",
+    "bullets": [
+      "Debt increases cash but adds interest expense.",
+      "Dividends reduce cash and affect TSR.",
+      "Share issuance and buybacks change shares outstanding."
+    ]
+  },
+  {
+    "id": "pnl",
+    "title": "Profit and Loss (P&L)",
+    "keywords": [
+      "pnl",
+      "income statement",
+      "revenue",
+      "profit"
+    ],
+    "summary": "P&L shows revenue, costs, EBITDA, and net profit by round.",
+    "bullets": [
+      "Revenue = units sold × price per region.",
+      "COGS includes materials, labor, logistics, outsourcing.",
+      "Operating expenses include R&D, marketing, admin."
+    ]
+  },
+  {
+    "id": "balance-sheet",
+    "title": "Balance Sheet",
+    "keywords": [
+      "balance sheet",
+      "assets",
+      "liabilities",
+      "equity"
+    ],
+    "summary": "Balance sheet tracks assets, liabilities, and equity.",
+    "bullets": [
+      "Inventory and receivables increase assets.",
+      "Debt and payables increase liabilities.",
+      "Equity grows with retained earnings."
+    ]
+  },
+  {
+    "id": "cashflow",
+    "title": "Cash Flow",
+    "keywords": [
+      "cash flow",
+      "operating",
+      "investing",
+      "financing"
+    ],
+    "summary": "Cash flow tracks how cash moves across operations, investing, and financing.",
+    "bullets": [
+      "Operating cash flow starts from EBITDA.",
+      "Investing includes plant builds and assets.",
+      "Financing includes debt and equity actions."
+    ]
+  },
+  {
+    "id": "tsr",
+    "title": "Total Shareholder Return (TSR)",
+    "keywords": [
+      "tsr",
+      "share price",
+      "dividend",
+      "return"
+    ],
+    "summary": "TSR measures shareholder return based on share price change and dividends.",
+    "bullets": [
+      "TSR per round uses previous round share price as base.",
+      "Dividends add to shareholder return.",
+      "Final leaderboard uses compounded TSR across completed rounds.",
+      "TSR = (Ending Share Price − Beginning Share Price + Dividends) / Beginning Share Price",
+      "Or in percentage:",
+      "TSR (%) = [(Ending Price + Dividends) / Beginning Price − 1] × 100"
+    ]
+  },
+  {
+    "id": "share-price",
+    "title": "Share Price",
+    "keywords": [
+      "share price",
+      "eps",
+      "pe",
+      "valuation"
+    ],
+    "summary": "Share price is derived from EPS and valuation rules in config.",
+    "bullets": [
+      "EPS = net profit / shares outstanding.",
+      "Share price = EPS × PE multiple (with bounds).",
+      "Price is bounded by floors/guards to avoid extreme swings."
+    ]
+  },
+  {
+    "id": "brand",
+    "title": "Brand Reputation",
+    "keywords": [
+      "brand",
+      "reputation",
+      "bonus"
+    ],
+    "summary": "Brand reputation affects attractiveness as a multiplier.",
+    "bullets": [
+      "Brand bonus scales the final attractiveness score.",
+      "Consistent performance improves brand over time.",
+      "Scenarios can influence brand effects."
+    ]
+  },
+  {
+    "id": "scenarios",
+    "title": "Scenarios",
+    "keywords": [
+      "scenario",
+      "events",
+      "economy",
+      "shock"
+    ],
+    "summary": "Scenarios modify market growth, elasticity, costs, and CSR importance.",
+    "bullets": [
+      "Scenario effects are applied per round.",
+      "Demand, costs, and marketing sensitivity can shift.",
+      "Admin view shows scenario impact on parameters."
+    ]
+  },
+  {
+    "id": "industry",
+    "title": "Industry Settings",
+    "keywords": [
+      "industry",
+      "oil",
+      "electronics",
+      "automotive"
+    ],
+    "summary": "Each industry has different base demand, prices, costs, and capacities.",
+    "bullets": [
+      "Oil uses lower prices and higher volumes.",
+      "Automotive uses higher prices and lower volumes.",
+      "Industry config is chosen at game creation."
+    ]
+  },
+  {
+    "id": "defaults",
+    "title": "Default State",
+    "keywords": [
+      "default",
+      "starting",
+      "round -1",
+      "assumptions"
+    ],
+    "summary": "The default state is used for Trial and Round 1 baselines.",
+    "bullets": [
+      "Trial round does not carry into Round 1.",
+      "Round 1 starts from default state (round -1).",
+      "Subsequent rounds use previous round results."
+    ]
+  },
+  {
+    "id": "cumulative-return",
+    "title": "Cumulative return",
+    "keywords": [
+      "cumulative return",
+      "cumulative",
+      "return"
+    ],
+    "summary": "Total gain/loss of an investment over time as percentage.",
+    "bullets": [
+      "Formula: (Current share price - Original share price) / Original share price × 100%",
+      "Shows overall performance regardless of time period.",
+      "Does not account for timing of cash flows."
+    ]
+  },
+  {
+    "id": "p-e",
+    "title": "P/E",
+    "keywords": [
+      "p/e"
+    ],
+    "summary": "Price-to-Earnings ratio – how much investors pay per dollar of earnings.",
+    "bullets": [
+      "Formula: P/E = Market Price per Share / Earnings per Share (EPS)",
+      "High P/E indicates expected future growth.",
+      "Low P/E may signal undervaluation or poor prospects."
+    ]
+  },
+  {
+    "id": "dividend-yield",
+    "title": "Dividend yield",
+    "keywords": [
+      "dividend yield",
+      "dividend",
+      "yield"
+    ],
+    "summary": "Annual dividend return relative to current share price.",
+    "bullets": [
+      "Formula: Dividend Yield = (Annual Dividends per Share / Current Share Price) × 100%",
+      "Measures income return for shareholders.",
+      "Higher yield attractive for income-focused investors."
+    ]
+  },
+  {
+    "id": "dividend",
+    "title": "Dividend",
+    "keywords": [
+      "dividend"
+    ],
+    "summary": "Portion of earnings distributed to shareholders.",
+    "bullets": [
+      "Usually quoted as dollars per share or as percentage of share price (yield).",
+      "Decided by board of directors.",
+      "Reduces retained earnings and company cash."
+    ]
+  },
+  {
+    "id": "shares-outstanding",
+    "title": "Shares outstanding",
+    "keywords": [
+      "shares outstanding",
+      "shares",
+      "outstanding"
+    ],
+    "summary": "Total shares currently held by all shareholders.",
+    "bullets": [
+      "Used to calculate market cap, EPS, etc.",
+      "Includes shares held by public and insiders.",
+      "Changes with issuances, buybacks, splits."
+    ]
+  },
+  {
+    "id": "market-capitalization",
+    "title": "Market capitalization",
+    "keywords": [
+      "market capitalization",
+      "market",
+      "capitalization"
+    ],
+    "summary": "Total market value of outstanding shares.",
+    "bullets": [
+      "Formula: Market Cap = Shares Outstanding × Current Share Price",
+      "Classifies company size (small/mid/large cap).",
+      "Fluctuates daily with share price."
+    ]
+  },
+  {
+    "id": "ebitda",
+    "title": "EBITDA",
+    "keywords": [
+      "ebitda"
+    ],
+    "summary": "Earnings Before Interest, Taxes, Depreciation, and Amortization.",
+    "bullets": [
+      "Formula: EBITDA = Net Income + Interest + Taxes + Depreciation + Amortization",
+      "Measures core operating performance.",
+      "Ignores financing and accounting decisions."
+    ]
+  },
+  {
+    "id": "ebit",
+    "title": "EBIT",
+    "keywords": [
+      "ebit"
+    ],
+    "summary": "Earnings Before Interest and Taxes – operating profit.",
+    "bullets": [
+      "Formula: EBIT = Net Income + Interest + Taxes",
+      "Focuses on operational profitability.",
+      "Useful for comparing companies with different capital structures."
+    ]
+  },
+  {
+    "id": "debt-equity",
+    "title": "Debt/Equity",
+    "keywords": [
+      "debt/equity"
+    ],
+    "summary": "Financial leverage ratio – debt vs equity financing.",
+    "bullets": [
+      "Formula: Debt/Equity = Total Liabilities / Shareholders' Equity",
+      "Higher ratio = greater financial risk.",
+      "Varies widely by industry."
+    ]
+  },
+  {
+    "id": "ros",
+    "title": "ROS",
+    "keywords": [
+      "ros"
+    ],
+    "summary": "Return on Sales – operating profit margin.",
+    "bullets": [
+      "Formula: ROS = (Operating Profit / Sales) × 100%",
+      "Shows profit efficiency per dollar of revenue.",
+      "Higher value indicates better cost management."
+    ]
+  },
+  {
+    "id": "gearing",
+    "title": "Gearing",
+    "keywords": [
+      "gearing"
+    ],
+    "summary": "Financial leverage – proportion of debt vs equity.",
+    "bullets": [
+      "Commonly expressed as Debt/Equity ratio.",
+      "High gearing = higher risk and potential returns.",
+      "Depends on industry and economic conditions."
+    ]
+  },
+  {
+    "id": "net-debt-to-equity",
+    "title": "Net debt to equity",
+    "keywords": [
+      "net debt to equity"
+    ],
+    "summary": "Leverage after subtracting cash from debt.",
+    "bullets": [
+      "Formula: Net Debt/Equity = (Total Debt - Cash & Equivalents) / Shareholders' Equity",
+      "More realistic leverage measure than gross ratio.",
+      "Can be negative if cash exceeds debt."
+    ]
+  },
+  {
+    "id": "roce",
+    "title": "ROCE",
+    "keywords": [
+      "roce"
+    ],
+    "summary": "Return on Capital Employed – capital efficiency.",
+    "bullets": [
+      "Formula: ROCE = EBIT / Capital Employed × 100%",
+      "Capital Employed = Equity + Interest-bearing Debt",
+      "Higher % = more effective use of capital."
+    ]
+  },
+  {
+    "id": "capital-employed",
+    "title": "Capital Employed",
+    "keywords": [
+      "capital employed"
+    ],
+    "summary": "Total capital used in business operations.",
+    "bullets": [
+      "Formula: Capital Employed = Total Assets - Current Liabilities",
+      "Also = Equity + Long-term Debt",
+      "Base for ROCE calculation."
+    ]
+  },
+  {
+    "id": "return-on-equity",
+    "title": "Return on Equity",
+    "keywords": [
+      "return on equity",
+      "roe"
+    ],
+    "summary": "Profitability from shareholders' investment.",
+    "bullets": [
+      "Formula: ROE = Net Income / Shareholders' Equity × 100%",
+      "High ROE attractive but can be inflated by debt.",
+      "DuPont formula breaks it into margin × turnover × leverage."
+    ]
+  },
+  {
+    "id": "eps",
+    "title": "EPS",
+    "keywords": [
+      "eps"
+    ],
+    "summary": "Earnings Per Share – profit per share.",
+    "bullets": [
+      "Formula: EPS = Net Profit / Shares Outstanding",
+      "Basic EPS uses weighted average shares.",
+      "Key metric for valuation and share price."
+    ]
+  },
+  {
+    "id": "pandl",
+    "title": "P&L",
+    "keywords": [
+      "p&l"
+    ],
+    "summary": "Profit and Loss statement (income statement).",
+    "bullets": [
+      "Shows revenue, expenses, and profit over a period.",
+      "Key line items: Revenue → COGS → Gross Profit → Operating Expenses → Net Profit.",
+      "Used to assess profitability."
+    ]
+  },
+  {
+    "id": "receivables",
+    "title": "Receivables",
+    "keywords": [
+      "receivables"
+    ],
+    "summary": "Amounts owed to the company by customers.",
+    "bullets": [
+      "Recorded as current assets on balance sheet.",
+      "Includes accounts receivable.",
+      "Turnover ratio measures collection efficiency."
+    ]
+  },
+  {
+    "id": "payables",
+    "title": "Payables",
+    "keywords": [
+      "payables"
+    ],
+    "summary": "Short-term debts owed to suppliers/creditors.",
+    "bullets": [
+      "Recorded as current liabilities.",
+      "Includes accounts payable.",
+      "High payables can improve cash flow."
+    ]
+  },
+  {
+    "id": "share-capital",
+    "title": "Share capital",
+    "keywords": [
+      "share capital"
+    ],
+    "summary": "Funds raised by issuing shares to investors.",
+    "bullets": [
+      "Appears in shareholders' equity.",
+      "Increases with new share issuances.",
+      "Decreases with buybacks."
+    ]
+  },
+  {
+    "id": "other-restricted-equity",
+    "title": "Other restricted equity",
+    "keywords": [
+      "other restricted equity"
+    ],
+    "summary": "Restricted shares issued to insiders/executives.",
+    "bullets": [
+      "Subject to vesting schedules.",
+      "Cannot be freely traded.",
+      "Often used for employee compensation."
+    ]
+  },
+  {
+    "id": "retained-earnings",
+    "title": "Retained earnings",
+    "keywords": [
+      "retained earnings"
+    ],
+    "summary": "Cumulative profits kept after dividends.",
+    "bullets": [
+      "Formula: Retained Earnings = Beginning RE + Net Income - Dividends",
+      "Part of shareholders' equity.",
+      "Funds internal growth or debt repayment."
+    ]
+  },
+  {
+    "id": "turnover",
+    "title": "Turnover",
+    "keywords": [
+      "turnover"
+    ],
+    "summary": "Rate at which employees leave and are replaced.",
+    "bullets": [
+      "High turnover increases recruitment and training costs.",
+      "Low turnover indicates good employee satisfaction.",
+      "Calculated as (Number of departures / Average number of employees) × 100%."
+    ]
+  },
+  {
+    "id": "efficiency-ratio",
+    "title": "Efficiency ratio",
+    "keywords": [
+      "efficiency ratio"
+    ],
+    "summary": "Measures how effectively a company uses its assets and liabilities.",
+    "bullets": [
+      "Includes asset turnover, receivables turnover, inventory turnover.",
+      "Higher ratios = better efficiency.",
+      "Varies by industry."
+    ]
+  },
+  {
+    "id": "depreciation",
+    "title": "Depreciation",
+    "keywords": [
+      "depreciation"
+    ],
+    "summary": "Allocation of tangible asset cost over its useful life.",
+    "bullets": [
+      "Reduces taxable income.",
+      "Common methods: straight-line, declining balance.",
+      "Non-cash expense."
+    ]
+  },
+  {
+    "id": "capacity-utilisation",
+    "title": "Capacity utilisation",
+    "keywords": [
+      "capacity utilisation"
+    ],
+    "summary": "Percentage of maximum productive capacity actually used.",
+    "bullets": [
+      "Formula: (Actual output / Potential output) × 100%",
+      "High utilisation = efficient use of resources.",
+      "Low utilisation may indicate overcapacity."
+    ]
+  },
+  {
+    "id": "cost-of-inventory",
+    "title": "Cost of inventory",
+    "keywords": [
+      "cost of inventory"
+    ],
+    "summary": "Holding/carrying cost of storing inventory.",
+    "bullets": [
+      "Includes storage, insurance, obsolescence.",
+      "Typically 20-30% of inventory value per year.",
+      "Influences optimal inventory levels."
+    ]
+  },
+  {
+    "id": "fifo",
+    "title": "FIFO",
+    "keywords": [
+      "fifo"
+    ],
+    "summary": "First In, First Out inventory method.",
+    "bullets": [
+      "Oldest inventory sold first.",
+      "Matches physical flow in most businesses.",
+      "Results in higher profits during inflation."
+    ]
+  },
+  {
+    "id": "lifo",
+    "title": "LIFO",
+    "keywords": [
+      "lifo"
+    ],
+    "summary": "Last In, First Out inventory method.",
+    "bullets": [
+      "Newest inventory sold first.",
+      "Lower profits during inflation (tax benefit).",
+      "Not allowed under IFRS."
+    ]
+  },
+  {
+    "id": "transfer-price",
+    "title": "Transfer price",
+    "keywords": [
+      "transfer price"
+    ],
+    "summary": "Price charged for transactions between divisions of the same company.",
+    "bullets": [
+      "Used for internal performance evaluation.",
+      "Can affect tax liabilities.",
+      "Must comply with arm's length principle."
+    ]
+  },
+  {
+    "id": "assets",
+    "title": "Assets",
+    "keywords": [
+      "assets"
+    ],
+    "summary": "Resources owned by the company.",
+    "bullets": [
+      "Current assets convertible to cash within one year.",
+      "Non-current assets used long-term.",
+      "Listed on balance sheet."
+    ]
+  },
+  {
+    "id": "liability",
+    "title": "Liability",
+    "keywords": [
+      "liability"
+    ],
+    "summary": "Legal debts or obligations owed by the company.",
+    "bullets": [
+      "Current liabilities due within one year.",
+      "Long-term liabilities due after one year.",
+      "Listed on balance sheet."
+    ]
+  },
+  {
+    "id": "income-taxes",
+    "title": "Income taxes",
+    "keywords": [
+      "income taxes"
+    ],
+    "summary": "Taxes levied on income/profits.",
+    "bullets": [
+      "Calculated on taxable income.",
+      "Deferred taxes arise from timing differences.",
+      "Effective tax rate varies by jurisdiction."
+    ]
+  },
+  {
+    "id": "administration-costs",
+    "title": "Administration costs",
+    "keywords": [
+      "administration costs"
+    ],
+    "summary": "Overhead/fixed costs not directly tied to production.",
+    "bullets": [
+      "Includes office expenses, salaries, utilities.",
+      "Part of operating expenses.",
+      "Usually fixed in nature."
+    ]
+  },
+  {
+    "id": "loss-carry-forward",
+    "title": "Loss carry forward",
+    "keywords": [
+      "loss carry forward"
+    ],
+    "summary": "Previous losses offset future taxable income.",
+    "bullets": [
+      "Reduces future tax liability.",
+      "Subject to time limits in many jurisdictions.",
+      "Valuable for companies with fluctuating profits."
+    ]
+  },
+  {
+    "id": "variable-administration-cost",
+    "title": "Variable administration cost",
+    "keywords": [
+      "variable administration cost"
+    ],
+    "summary": "Admin costs that vary with activity level.",
+    "bullets": [
+      "Example: costs tied to number of plants.",
+      "Increases with scale.",
+      "Differs from fixed admin costs."
+    ]
+  },
+  {
+    "id": "csr",
+    "title": "CSR",
+    "keywords": [
+      "csr"
+    ],
+    "summary": "Corporate Social Responsibility – company's impact on society and environment.",
+    "bullets": [
+      "Includes sustainability, ethics, community engagement.",
+      "Can improve brand reputation.",
+      "Increasingly important for investors."
+    ]
+  },
+  {
+    "id": "cash-and-cash-equivalents---cce",
+    "title": "Cash And Cash Equivalents - CCE",
+    "keywords": [
+      "cash and cash equivalents"
+    ],
+    "summary": "Highly liquid assets convertible to cash immediately.",
+    "bullets": [
+      "Includes cash, bank balances, short-term investments.",
+      "Key component of liquidity.",
+      "Used in current ratio calculation."
+    ]
+  },
+  {
+    "id": "decision-science",
+    "title": "Decision Science Foundations",
+    "keywords": [
+      "theory",
+      "academic",
+      "scientific",
+      "decision science"
+    ],
+    "summary": "AIDL uses a normative approach to decision science, combining mathematical modeling with behavioral insights.",
+    "bullets": [
+      "Deterministic Modeling: Outcomes are calculated via precise economic formulas, not random chance.",
+      "Multi-Variable Optimization: Players must balance conflicting KPIs (e.g., Quality vs. Cost).",
+      "Longitudinal Study: The simulation tracks decision patterns over multiple fiscal periods."
+    ]
+  },
+  {
+    "id": "aidl-algorithms",
+    "title": "AIDL Proprietary Algorithms",
+    "keywords": [
+      "ai",
+      "algorithms",
+      "logic",
+      "market share"
+    ],
+    "summary": "The Lab engine runs on three core AI sub-systems to maintain market realism.",
+    "bullets": [
+      "Attractiveness Scorer: A weighted non-linear function determining consumer preference.",
+      "Valuation Engine: A smoothed P/E multiplier system that prevents speculative bubbles.",
+      "Reactive AI Rivals: Competitor logic based on game theory primitives (e.g., Trigger Strategies)."
+    ]
+  }
+]

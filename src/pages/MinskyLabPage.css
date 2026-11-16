@@ -1,0 +1,870 @@
+/* ── Minsky Lab Page Styles ── */
+
+/* CSS Variables */
+.minsky-lab {
+  --minsky-bg: #0d1117;
+  --minsky-surface: #161b22;
+  --minsky-surface-2: #1c2333;
+  --minsky-border: #30363d;
+  --minsky-text: #e6edf3;
+  --minsky-text-dim: #8b949e;
+  --minsky-accent: #2563eb;
+  --minsky-accent-hover: #3b82f6;
+  --minsky-success: #16a34a;
+  --minsky-danger: #dc2626;
+  --minsky-warning: #f59e0b;
+  --minsky-grid: #21262d;
+  --minsky-axis: #8b949e;
+  --minsky-wire: #4a9eff;
+  --minsky-tooltip-bg: #1c2333;
+  --minsky-bg-dots: #21262d;
+  --minsky-controls-bg: #161b22;
+  --minsky-minimap-bg: #0d1117;
+
+  display: flex;
+  flex-direction: column;
+  height: 100vh;
+  background: var(--minsky-bg);
+  color: var(--minsky-text);
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+  overflow: hidden;
+}
+
+/* ── Header ── */
+.minsky-lab-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 8px 16px;
+  background: var(--minsky-surface);
+  border-bottom: 1px solid var(--minsky-border);
+}
+
+.minsky-lab-title-section {
+  display: flex;
+  align-items: baseline;
+  gap: 12px;
+}
+
+.minsky-lab-title {
+  font-size: 16px;
+  font-weight: 700;
+  margin: 0;
+  color: var(--minsky-text);
+}
+
+.minsky-lab-model-name {
+  font-size: 12px;
+  color: var(--minsky-text-dim);
+  padding: 2px 8px;
+  background: var(--minsky-surface-2);
+  border-radius: 4px;
+}
+
+.minsky-lab-actions {
+  display: flex;
+  gap: 8px;
+}
+
+.minsky-action-btn {
+  padding: 4px 12px;
+  font-size: 12px;
+  background: rgba(99, 102, 241, 0.15);
+  color: rgb(165, 180, 252);
+  border: 1px solid rgba(99, 102, 241, 0.4);
+  border-radius: 4px;
+  cursor: pointer;
+  transition: all 0.15s;
+  font-weight: 500;
+}
+
+.minsky-action-btn:hover {
+  background: rgba(99, 102, 241, 0.25);
+  border-color: rgba(99, 102, 241, 0.6);
+  color: rgb(199, 210, 254);
+}
+
+/* ── Controls Bar ── */
+.minsky-lab-controls-bar {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  padding: 8px 16px;
+  background: var(--minsky-surface);
+  border-bottom: 1px solid var(--minsky-border);
+  overflow-x: auto;
+}
+
+/* ── Main Content ── */
+.minsky-lab-main {
+  display: flex;
+  flex: 1;
+  min-height: 0;
+  overflow: hidden;
+}
+
+.minsky-lab-left {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  border-right: 1px solid var(--minsky-border);
+  min-width: 0;
+}
+
+.minsky-lab-right {
+  width: 420px;
+  flex-shrink: 0;
+  overflow-y: auto;
+  padding: 8px;
+  background: var(--minsky-surface);
+}
+
+/* ── View Tabs ── */
+.minsky-lab-view-tabs {
+  display: flex;
+  gap: 0;
+  border-bottom: 1px solid var(--minsky-border);
+  background: var(--minsky-surface);
+}
+
+.minsky-view-tab {
+  padding: 6px 16px;
+  font-size: 12px;
+  font-weight: 600;
+  background: transparent;
+  color: rgb(156, 163, 175);
+  border: none;
+  border-bottom: 2px solid transparent;
+  cursor: pointer;
+  transition: all 0.15s;
+}
+
+.minsky-view-tab:hover {
+  color: rgb(209, 213, 219);
+  background: rgba(55, 65, 81, 0.5);
+}
+
+.minsky-view-tab.active {
+  color: rgb(165, 180, 252);
+  border-bottom-color: rgb(99, 102, 241);
+}
+
+/* ── Wiring Canvas ── */
+.minsky-wiring-canvas {
+  flex: 1;
+  min-height: 300px;
+}
+
+.minsky-wiring-canvas .react-flow__background {
+  background: var(--minsky-bg) !important;
+}
+
+/* ── ReactFlow Node Styles ── */
+.minsky-node {
+  padding: 6px 10px;
+  border-radius: 6px;
+  background: var(--minsky-surface-2);
+  border: 1px solid var(--minsky-border);
+  font-size: 11px;
+  min-width: 80px;
+  text-align: center;
+}
+
+.minsky-variable-node {
+  border-radius: 8px;
+}
+
+.minsky-node-label {
+  font-weight: 600;
+  font-size: 10px;
+  margin-bottom: 2px;
+}
+
+.minsky-node-value {
+  font-family: 'SF Mono', 'Fira Code', monospace;
+  font-size: 11px;
+  color: var(--minsky-text);
+}
+
+.minsky-node-unit {
+  font-size: 9px;
+  color: var(--minsky-text-dim);
+}
+
+.minsky-operation-node {
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0;
+  min-width: 40px;
+  border-color: var(--minsky-accent);
+}
+
+.minsky-op-symbol {
+  font-size: 18px;
+  font-weight: 700;
+  color: var(--minsky-accent);
+}
+
+.minsky-godley-node {
+  border-color: #8b5cf6;
+  min-width: 120px;
+}
+
+.minsky-godley-node-title {
+  font-weight: 700;
+  font-size: 11px;
+  color: #8b5cf6;
+  margin-bottom: 4px;
+}
+
+.minsky-godley-node-cols {
+  display: flex;
+  gap: 4px;
+  flex-wrap: wrap;
+}
+
+.minsky-godley-node-col {
+  font-size: 8px;
+  padding: 1px 4px;
+  background: rgba(139, 92, 246, 0.15);
+  border-radius: 2px;
+  color: var(--minsky-text-dim);
+}
+
+.minsky-handle {
+  width: 8px !important;
+  height: 8px !important;
+  background: var(--minsky-accent) !important;
+  border: 1px solid var(--minsky-surface) !important;
+}
+
+/* ── Godley Tables ── */
+.minsky-lab-tables {
+  flex: 1;
+  overflow-y: auto;
+  padding: 12px;
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.minsky-godley-table {
+  background: var(--minsky-surface);
+  border: 1px solid var(--minsky-border);
+  border-radius: 8px;
+  overflow: hidden;
+}
+
+.minsky-godley-header {
+  padding: 8px 12px;
+  background: var(--minsky-surface-2);
+  border-bottom: 1px solid var(--minsky-border);
+}
+
+.minsky-godley-title {
+  margin: 0;
+  font-size: 14px;
+  font-weight: 700;
+  font-style: italic;
+}
+
+.minsky-godley-asset-classes {
+  display: flex;
+  padding: 4px 0;
+  border-bottom: 1px solid var(--minsky-border);
+}
+
+.minsky-godley-corner {
+  width: 140px;
+  flex-shrink: 0;
+}
+
+.minsky-godley-asset-badge {
+  flex: 1;
+  text-align: center;
+  font-size: 10px;
+  font-weight: 700;
+  text-transform: uppercase;
+  padding: 2px 4px;
+}
+
+.minsky-godley-ale-header {
+  width: 70px;
+  flex-shrink: 0;
+  text-align: center;
+  font-size: 10px;
+  font-weight: 700;
+  color: var(--minsky-text-dim);
+  padding: 2px 4px;
+}
+
+.minsky-godley-grid {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 12px;
+}
+
+.minsky-godley-grid th,
+.minsky-godley-grid td {
+  padding: 4px 8px;
+  border: 1px solid var(--minsky-border);
+  text-align: center;
+}
+
+.minsky-godley-grid th {
+  background: var(--minsky-surface-2);
+  font-weight: 600;
+  font-size: 11px;
+}
+
+.minsky-godley-label-col {
+  width: 140px;
+  text-align: left !important;
+}
+
+.minsky-godley-col-header {
+  border-bottom-width: 3px !important;
+}
+
+.minsky-godley-col-name {
+  display: block;
+  font-weight: 700;
+}
+
+.minsky-godley-col-value {
+  display: block;
+  font-family: 'SF Mono', 'Fira Code', monospace;
+  font-size: 10px;
+  color: var(--minsky-text-dim);
+}
+
+.minsky-godley-row-label {
+  text-align: left !important;
+  font-weight: 500;
+  position: relative;
+}
+
+.minsky-godley-label-input {
+  width: 100%;
+  background: transparent;
+  border: none;
+  color: var(--minsky-text);
+  font-size: 12px;
+  padding: 0;
+  outline: none;
+}
+
+.minsky-godley-label-input:focus {
+  background: var(--minsky-surface-2);
+  border-radius: 2px;
+}
+
+.minsky-godley-row-remove {
+  position: absolute;
+  right: 2px;
+  top: 50%;
+  transform: translateY(-50%);
+  background: transparent;
+  border: none;
+  color: var(--minsky-danger);
+  font-size: 10px;
+  cursor: pointer;
+  opacity: 0;
+  transition: opacity 0.15s;
+  padding: 2px 4px;
+}
+
+.minsky-godley-row-label:hover .minsky-godley-row-remove {
+  opacity: 1;
+}
+
+.minsky-godley-cell {
+  cursor: pointer;
+  font-family: 'SF Mono', 'Fira Code', monospace;
+  font-size: 11px;
+  transition: background 0.1s;
+}
+
+.minsky-godley-cell:hover {
+  background: var(--minsky-surface-2);
+}
+
+.minsky-godley-cell-input {
+  width: 100%;
+  background: var(--minsky-bg);
+  border: 1px solid var(--minsky-accent);
+  color: var(--minsky-text);
+  font-family: 'SF Mono', 'Fira Code', monospace;
+  font-size: 11px;
+  text-align: center;
+  padding: 2px;
+  border-radius: 2px;
+  outline: none;
+}
+
+.minsky-negative {
+  color: var(--minsky-danger);
+}
+
+.minsky-godley-init-row td {
+  background: rgba(37, 99, 235, 0.08);
+  font-weight: 600;
+}
+
+.minsky-godley-sum-col {
+  width: 70px;
+}
+
+.minsky-godley-sum {
+  font-family: 'SF Mono', 'Fira Code', monospace;
+  font-size: 10px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 4px;
+}
+
+.minsky-godley-sum.valid {
+  color: var(--minsky-success);
+}
+
+.minsky-godley-sum.invalid {
+  color: var(--minsky-danger);
+}
+
+.minsky-godley-check {
+  font-size: 12px;
+}
+
+.minsky-godley-add-row {
+  width: 100%;
+  padding: 6px;
+  background: transparent;
+  border: none;
+  border-top: 1px dashed var(--minsky-border);
+  color: var(--minsky-accent);
+  font-size: 11px;
+  cursor: pointer;
+  transition: background 0.15s;
+}
+
+.minsky-godley-add-row:hover {
+  background: var(--minsky-surface-2);
+}
+
+/* ── Parameter Panel ── */
+.minsky-param-panel {
+  display: flex;
+  gap: 12px;
+  flex-wrap: wrap;
+  flex: 1;
+}
+
+.minsky-param-item {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  min-width: 130px;
+}
+
+.minsky-param-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.minsky-param-label {
+  font-size: 10px;
+  font-weight: 600;
+  color: var(--minsky-text-dim);
+  text-transform: uppercase;
+  letter-spacing: 0.3px;
+}
+
+.minsky-param-value {
+  font-family: 'SF Mono', 'Fira Code', monospace;
+  font-size: 11px;
+  color: var(--minsky-warning);
+  font-weight: 600;
+}
+
+.minsky-param-controls {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+}
+
+.minsky-param-btn {
+  width: 20px;
+  height: 20px;
+  border-radius: 4px;
+  border: 1px solid var(--minsky-border);
+  background: var(--minsky-surface-2);
+  color: var(--minsky-text);
+  font-size: 12px;
+  font-weight: 700;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0;
+  transition: background 0.15s;
+}
+
+.minsky-param-btn:hover {
+  background: var(--minsky-accent);
+}
+
+.minsky-param-slider {
+  flex: 1;
+  height: 4px;
+  -webkit-appearance: none;
+  appearance: none;
+  background: var(--minsky-border);
+  border-radius: 2px;
+  outline: none;
+}
+
+.minsky-param-slider::-webkit-slider-thumb {
+  -webkit-appearance: none;
+  width: 12px;
+  height: 12px;
+  border-radius: 50%;
+  background: var(--minsky-accent);
+  cursor: pointer;
+}
+
+.minsky-param-reset {
+  background: transparent;
+  border: none;
+  color: var(--minsky-text-dim);
+  font-size: 14px;
+  cursor: pointer;
+  padding: 0 2px;
+}
+
+.minsky-param-reset:hover {
+  color: var(--minsky-accent);
+}
+
+/* ── Simulation Controls ── */
+.minsky-sim-controls {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  flex-shrink: 0;
+}
+
+.minsky-sim-buttons {
+  display: flex;
+  gap: 4px;
+}
+
+.minsky-sim-btn {
+  padding: 4px 10px;
+  font-size: 11px;
+  font-weight: 600;
+  border-radius: 4px;
+  border: 1px solid var(--minsky-border);
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  transition: all 0.15s;
+}
+
+.minsky-btn-icon {
+  font-size: 10px;
+}
+
+.minsky-btn-play {
+  background: var(--minsky-success);
+  color: white;
+  border-color: var(--minsky-success);
+}
+
+.minsky-btn-play:hover {
+  filter: brightness(1.15);
+}
+
+.minsky-btn-pause {
+  background: var(--minsky-warning);
+  color: #000;
+  border-color: var(--minsky-warning);
+}
+
+.minsky-btn-step {
+  background: var(--minsky-surface-2);
+  color: var(--minsky-text);
+}
+
+.minsky-btn-step:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+.minsky-btn-reset {
+  background: var(--minsky-surface-2);
+  color: var(--minsky-danger);
+  border-color: var(--minsky-danger);
+}
+
+.minsky-sim-speed {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  font-size: 10px;
+  color: var(--minsky-text-dim);
+}
+
+.minsky-speed-label {
+  font-weight: 600;
+  text-transform: uppercase;
+}
+
+.minsky-speed-slider {
+  width: 60px;
+  height: 3px;
+  -webkit-appearance: none;
+  appearance: none;
+  background: var(--minsky-border);
+  border-radius: 2px;
+  outline: none;
+}
+
+.minsky-speed-slider::-webkit-slider-thumb {
+  -webkit-appearance: none;
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  background: var(--minsky-accent);
+  cursor: pointer;
+}
+
+.minsky-speed-value {
+  font-family: 'SF Mono', 'Fira Code', monospace;
+  font-size: 10px;
+  color: var(--minsky-accent);
+  min-width: 22px;
+}
+
+.minsky-sim-time {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  font-size: 11px;
+  padding: 3px 8px;
+  background: var(--minsky-bg);
+  border-radius: 4px;
+  border: 1px solid var(--minsky-border);
+}
+
+.minsky-time-label {
+  color: var(--minsky-text-dim);
+  font-style: italic;
+}
+
+.minsky-time-value {
+  font-family: 'SF Mono', 'Fira Code', monospace;
+  font-weight: 700;
+  color: var(--minsky-text);
+  min-width: 40px;
+}
+
+.minsky-time-unit {
+  font-size: 9px;
+  color: var(--minsky-text-dim);
+}
+
+/* ── Charts Grid ── */
+.minsky-charts-grid {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 8px;
+}
+
+.minsky-chart-panel {
+  background: var(--minsky-surface-2);
+  border: 1px solid var(--minsky-border);
+  border-radius: 6px;
+  padding: 8px;
+}
+
+.minsky-chart-title {
+  margin: 0 0 4px 0;
+  font-size: 12px;
+  font-weight: 700;
+  color: var(--minsky-text);
+  text-align: center;
+}
+
+.minsky-charts-empty {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 200px;
+  color: var(--minsky-text-dim);
+  font-size: 13px;
+}
+
+/* ── Validation Panel ── */
+.minsky-validation-panel {
+  background: var(--minsky-surface);
+  border: 1px solid var(--minsky-border);
+  border-radius: 8px;
+  overflow: hidden;
+}
+
+.minsky-validation-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 8px 12px;
+  background: var(--minsky-surface-2);
+  border-bottom: 1px solid var(--minsky-border);
+}
+
+.minsky-validation-title {
+  margin: 0;
+  font-size: 14px;
+  font-weight: 700;
+}
+
+.minsky-validation-badge {
+  font-size: 11px;
+  font-weight: 700;
+  padding: 2px 8px;
+  border-radius: 10px;
+}
+
+.minsky-validation-badge.pass {
+  background: rgba(22, 163, 74, 0.2);
+  color: var(--minsky-success);
+}
+
+.minsky-validation-badge.warn {
+  background: rgba(220, 38, 38, 0.2);
+  color: var(--minsky-danger);
+}
+
+.minsky-validation-checks {
+  padding: 8px;
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  max-height: 600px;
+  overflow-y: auto;
+  overflow-x: hidden;
+}
+
+.minsky-validation-checks::-webkit-scrollbar {
+  width: 8px;
+}
+
+.minsky-validation-checks::-webkit-scrollbar-track {
+  background: var(--minsky-surface);
+}
+
+.minsky-validation-checks::-webkit-scrollbar-thumb {
+  background: var(--minsky-border);
+  border-radius: 4px;
+}
+
+.minsky-validation-checks::-webkit-scrollbar-thumb:hover {
+  background: rgba(99, 102, 241, 0.5);
+}
+
+.minsky-check {
+  padding: 8px 10px;
+  border-radius: 6px;
+  border-left: 3px solid;
+}
+
+.minsky-check.pass {
+  background: rgba(22, 163, 74, 0.05);
+  border-left-color: var(--minsky-success);
+}
+
+.minsky-check.fail {
+  background: rgba(220, 38, 38, 0.08);
+  border-left-color: var(--minsky-danger);
+}
+
+.minsky-check-header {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  margin-bottom: 4px;
+}
+
+.minsky-check-icon {
+  font-size: 14px;
+  font-weight: 700;
+}
+
+.minsky-check.pass .minsky-check-icon {
+  color: var(--minsky-success);
+}
+
+.minsky-check.fail .minsky-check-icon {
+  color: var(--minsky-danger);
+}
+
+.minsky-check-label {
+  font-size: 12px;
+  font-weight: 600;
+  color: var(--minsky-text);
+}
+
+.minsky-check-detail {
+  margin-left: 20px;
+  font-family: 'SF Mono', 'Fira Code', monospace;
+  font-size: 10px;
+  color: var(--minsky-text-dim);
+  line-height: 1.5;
+}
+
+.minsky-check-key {
+  font-weight: 600;
+  color: var(--minsky-text);
+  margin-right: 4px;
+}
+
+.minsky-check-explanation {
+  margin-left: 20px;
+  margin-top: 3px;
+  font-size: 10px;
+  color: var(--minsky-text-dim);
+  font-style: italic;
+}
+
+/* ── Footer ── */
+.minsky-lab-footer {
+  display: flex;
+  justify-content: space-between;
+  padding: 4px 16px;
+  font-size: 10px;
+  color: var(--minsky-text-dim);
+  background: var(--minsky-surface);
+  border-top: 1px solid var(--minsky-border);
+}
+
+/* ── Responsive ── */
+@media (max-width: 900px) {
+  .minsky-lab-main {
+    flex-direction: column;
+  }
+
+  .minsky-lab-right {
+    width: 100%;
+    max-height: 40vh;
+  }
+
+  .minsky-charts-grid {
+    grid-template-columns: 1fr 1fr;
+  }
+}

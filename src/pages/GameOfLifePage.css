@@ -1,0 +1,1072 @@
+/* ─── Game of Life — Styles ──────────────────────────────────────────────── */
+
+/* Light mode defaults */
+.gol-game,
+.gol-result {
+  --gol-bg: #f8fafc;
+  --gol-surface: #ffffff;
+  --gol-surface-2: #f1f5f9;
+  --gol-border: rgba(0,0,0,0.09);
+  --gol-text: #0f172a;
+  --gol-muted: #64748b;
+  --gol-accent: #0ea5e9;
+  --gol-green: #16a34a;
+  --gol-amber: #d97706;
+  --gol-red: #dc2626;
+  --gol-purple: #7c3aed;
+}
+
+/* Dark mode overrides */
+[data-theme='dark'] .gol-game,
+[data-theme='dark'] .gol-result {
+  --gol-bg: #020617;
+  --gol-surface: #0f172a;
+  --gol-surface-2: #1e293b;
+  --gol-border: rgba(255,255,255,0.08);
+  --gol-text: #f1f5f9;
+  --gol-muted: #94a3b8;
+  --gol-accent: #38bdf8;
+  --gol-green: #34d399;
+  --gol-amber: #fbbf24;
+  --gol-red: #f87171;
+  --gol-purple: #a78bfa;
+}
+
+/* ── Layout ── */
+
+.gol-game {
+  min-height: 100vh;
+  background: var(--gol-bg);
+  color: var(--gol-text);
+  font-family: inherit;
+  display: flex;
+  flex-direction: column;
+}
+
+.gol-layout {
+  display: grid;
+  grid-template-columns: 1fr 320px;
+  gap: 0;
+  flex: 1;
+  max-width: 1200px;
+  margin: 0 auto;
+  width: 100%;
+  padding: 1.5rem;
+  gap: 1.5rem;
+  align-items: start;
+}
+
+@media (max-width: 900px) {
+  .gol-layout {
+    grid-template-columns: 1fr;
+  }
+}
+
+/* ── Header ── */
+
+.gol-header {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  padding: 0.75rem 1.5rem;
+  background: var(--gol-surface);
+  border-bottom: 1px solid var(--gol-border);
+  position: sticky;
+  top: 0;
+  z-index: 50;
+}
+
+.gol-header-left {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  flex-shrink: 0;
+}
+
+.gol-age-badge {
+  background: var(--gol-accent);
+  color: #0f172a;
+  font-weight: 800;
+  font-size: 0.8rem;
+  padding: 0.25rem 0.75rem;
+  border-radius: 999px;
+  letter-spacing: 0.02em;
+}
+
+.gol-stage-badge,
+.gol-years-badge {
+  background: var(--gol-border);
+  color: var(--gol-muted);
+  font-size: 0.7rem;
+  font-weight: 600;
+  padding: 0.2rem 0.6rem;
+  border-radius: 999px;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+}
+
+.gol-header-center {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.25rem;
+}
+
+.gol-progress-track {
+  width: 100%;
+  max-width: 400px;
+  height: 4px;
+  background: var(--gol-border);
+  border-radius: 999px;
+  overflow: hidden;
+}
+
+.gol-progress-fill {
+  height: 100%;
+  background: linear-gradient(to right, var(--gol-accent), var(--gol-green));
+  border-radius: 999px;
+  transition: width 0.5s ease;
+}
+
+.gol-progress-label {
+  font-size: 0.65rem;
+  color: var(--gol-muted);
+  font-weight: 600;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+}
+
+.gol-header-right {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  flex-shrink: 0;
+}
+
+.gol-leave-btn {
+  background: none;
+  border: 1px solid var(--gol-border);
+  color: var(--gol-muted);
+  padding: 0.25rem 0.6rem;
+  border-radius: 6px;
+  cursor: pointer;
+  font-size: 0.75rem;
+  font-weight: 600;
+}
+
+.gol-leave-btn:hover {
+  color: var(--gol-text);
+  border-color: var(--gol-accent);
+}
+
+/* In-header theme toggle (student/public mode) */
+.gol-theme-toggle {
+  background: none;
+  border: 1px solid var(--gol-border);
+  color: var(--gol-text);
+  width: 34px;
+  height: 34px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  font-size: 0.9rem;
+  transition: all 0.2s;
+  padding: 0;
+  flex-shrink: 0;
+}
+
+.gol-theme-toggle:hover {
+  background: var(--gol-border);
+  border-color: var(--gol-accent);
+  transform: translateY(-1px);
+}
+
+/* Floating theme toggle in result screen (student/public mode) */
+.gol-theme-toggle-float {
+  position: fixed;
+  top: 1rem;
+  right: 1rem;
+  z-index: 100;
+  background: var(--gol-surface);
+  border: 1px solid var(--gol-border);
+  color: var(--gol-text);
+  width: 36px;
+  height: 36px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  font-size: 1rem;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.15);
+  transition: all 0.2s;
+  padding: 0;
+}
+
+.gol-theme-toggle-float:hover {
+  transform: translateY(-1px);
+  box-shadow: 0 4px 12px rgba(0,0,0,0.2);
+}
+
+.gol-sidebar-toggle {
+  background: none;
+  border: 1px solid var(--gol-border);
+  color: var(--gol-text);
+  width: 36px;
+  height: 36px;
+  border-radius: 8px;
+  cursor: pointer;
+  font-size: 1rem;
+  display: none;
+}
+
+@media (max-width: 900px) {
+  .gol-sidebar-toggle { display: flex; align-items: center; justify-content: center; }
+}
+
+/* ── Scenario Card ── */
+
+.gol-scenario-card,
+.gol-consequence-card {
+  background: var(--gol-surface);
+  border: 1px solid var(--gol-border);
+  border-radius: 1.25rem;
+  padding: 2rem;
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+}
+
+/* ── Scenario Illustration ── */
+
+.gol-illustration {
+  margin: -2rem -2rem 0;
+  padding: 1.25rem 2rem;
+  background: var(--gol-surface-2);
+  border-bottom: 1px solid var(--gol-border);
+  border-radius: 1.25rem 1.25rem 0 0;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 130px;
+  overflow: hidden;
+}
+
+.gol-scenario-meta {
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+}
+
+.gol-category-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4rem;
+  background: rgba(56,189,248,0.1);
+  color: var(--gol-accent);
+  border: 1px solid rgba(56,189,248,0.2);
+  font-size: 0.7rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  padding: 0.3rem 0.75rem;
+  border-radius: 999px;
+  width: fit-content;
+}
+
+.gol-nz-stat {
+  background: rgba(251,191,36,0.08);
+  border: 1px solid rgba(251,191,36,0.15);
+  border-radius: 0.75rem;
+  padding: 0.75rem 1rem;
+  font-size: 0.8rem;
+  color: var(--gol-amber);
+  line-height: 1.5;
+}
+
+.gol-scenario-title {
+  font-size: 1.6rem;
+  font-weight: 800;
+  color: var(--gol-text);
+  line-height: 1.2;
+  font-family: inherit;
+  margin: 0;
+}
+
+.gol-scenario-story {
+  font-size: 0.95rem;
+  line-height: 1.8;
+  color: #94a3b8;
+  white-space: pre-line;
+}
+
+/* ── Choices ── */
+
+.gol-choices {
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+}
+
+.gol-choice {
+  text-align: left;
+  background: var(--gol-surface-2);
+  border: 2px solid var(--gol-border);
+  border-radius: 1rem;
+  padding: 1rem 1.25rem;
+  cursor: pointer;
+  transition: all 0.2s;
+  display: flex;
+  flex-direction: column;
+  gap: 0.25rem;
+}
+
+.gol-choice:hover {
+  border-color: rgba(0,0,0,0.18);
+  background: rgba(0,0,0,0.04);
+}
+
+[data-theme='dark'] .gol-choice:hover {
+  border-color: rgba(255,255,255,0.2);
+  background: rgba(255,255,255,0.05);
+}
+
+.gol-choice--selected {
+  border-color: var(--gol-accent) !important;
+  background: rgba(56,189,248,0.07) !important;
+}
+
+.gol-choice--good:hover,
+.gol-choice--good.gol-choice--selected {
+  border-color: var(--gol-green);
+  background: rgba(52,211,153,0.07);
+}
+
+.gol-choice--risky:hover,
+.gol-choice--risky.gol-choice--selected {
+  border-color: var(--gol-red);
+  background: rgba(248,113,113,0.07);
+}
+
+.gol-choice-label {
+  font-weight: 700;
+  font-size: 0.95rem;
+  color: var(--gol-text);
+}
+
+.gol-choice-sublabel {
+  font-size: 0.78rem;
+  color: var(--gol-muted);
+}
+
+.gol-confirm-btn {
+  background: var(--gol-accent);
+  color: #0f172a;
+  font-weight: 800;
+  font-size: 0.95rem;
+  border: none;
+  border-radius: 0.75rem;
+  padding: 0.9rem 1.5rem;
+  cursor: pointer;
+  transition: all 0.2s;
+  align-self: flex-start;
+}
+
+.gol-confirm-btn:hover {
+  filter: brightness(1.1);
+  transform: translateY(-1px);
+}
+
+/* ── Consequence Card ── */
+
+.gol-consequence-header {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+}
+
+.gol-consequence-age {
+  background: var(--gol-green);
+  color: #0f172a;
+  font-weight: 800;
+  font-size: 0.8rem;
+  padding: 0.25rem 0.75rem;
+  border-radius: 999px;
+}
+
+.gol-consequence-title {
+  font-size: 0.8rem;
+  font-weight: 600;
+  color: var(--gol-muted);
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+}
+
+.gol-consequence-choice {
+  font-size: 0.9rem;
+  color: var(--gol-muted);
+  border-left: 3px solid var(--gol-accent);
+  padding-left: 0.75rem;
+}
+
+.gol-consequence-story {
+  font-size: 0.95rem;
+  line-height: 1.8;
+  color: #94a3b8;
+  white-space: pre-line;
+}
+
+.gol-insight-box {
+  background: rgba(56,189,248,0.07);
+  border: 1px solid rgba(56,189,248,0.15);
+  border-radius: 1rem;
+  padding: 1.25rem;
+}
+
+.gol-insight-header {
+  font-weight: 700;
+  font-size: 0.85rem;
+  color: var(--gol-accent);
+  margin-bottom: 0.5rem;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+}
+
+.gol-insight-text {
+  font-size: 0.88rem;
+  color: #94a3b8;
+  line-height: 1.7;
+}
+
+.gol-delta-row {
+  display: flex;
+  gap: 1rem;
+  flex-wrap: wrap;
+}
+
+.gol-delta-item {
+  flex: 1;
+  min-width: 120px;
+  background: var(--gol-surface-2);
+  border: 1px solid var(--gol-border);
+  border-radius: 0.75rem;
+  padding: 0.75rem 1rem;
+}
+
+.gol-delta-label {
+  font-size: 0.7rem;
+  color: var(--gol-muted);
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  margin-bottom: 0.3rem;
+}
+
+.gol-delta-value {
+  font-size: 1.5rem;
+  font-weight: 800;
+}
+
+.gol-stat-changes {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+}
+
+.gol-stat-change {
+  display: flex;
+  align-items: center;
+  gap: 0.4rem;
+  background: var(--gol-surface-2);
+  border: 1px solid var(--gol-border);
+  border-radius: 999px;
+  padding: 0.3rem 0.75rem;
+  font-size: 0.78rem;
+}
+
+.gol-stat-change-icon { font-size: 0.9rem; }
+.gol-stat-change-label { color: var(--gol-muted); }
+.gol-stat-change-delta { font-weight: 700; }
+
+.gol-next-btn {
+  background: var(--gol-green);
+  color: #0f172a;
+  font-weight: 800;
+  font-size: 0.95rem;
+  border: none;
+  border-radius: 0.75rem;
+  padding: 0.9rem 1.5rem;
+  cursor: pointer;
+  transition: all 0.2s;
+  align-self: flex-start;
+}
+
+.gol-next-btn:hover {
+  filter: brightness(1.1);
+  transform: translateY(-1px);
+}
+
+/* ── Sidebar ── */
+
+.gol-sidebar {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+  position: sticky;
+  top: calc(60px + 1.5rem);
+  max-height: calc(100vh - 80px);
+  overflow-y: auto;
+}
+
+@media (max-width: 900px) {
+  .gol-sidebar {
+    display: none;
+    position: fixed;
+    top: 60px;
+    right: 0;
+    bottom: 0;
+    width: 300px;
+    z-index: 100;
+    background: var(--gol-surface);
+    border-left: 1px solid var(--gol-border);
+    padding: 1rem;
+    overflow-y: auto;
+  }
+  .gol-sidebar--open {
+    display: flex;
+  }
+}
+
+.gol-sidebar-section {
+  background: var(--gol-surface);
+  border: 1px solid var(--gol-border);
+  border-radius: 1rem;
+  padding: 1.25rem;
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+}
+
+.gol-sidebar-title {
+  font-size: 0.7rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  color: var(--gol-muted);
+  margin-bottom: 0.25rem;
+}
+
+/* ── Stat Bar ── */
+
+.gol-stat {
+  display: flex;
+  flex-direction: column;
+  gap: 0.35rem;
+}
+
+.gol-stat-header {
+  display: flex;
+  align-items: center;
+  gap: 0.4rem;
+  font-size: 0.8rem;
+}
+
+.gol-stat-icon { font-size: 0.85rem; }
+.gol-stat-label { flex: 1; color: var(--gol-muted); font-weight: 500; }
+.gol-stat-value { font-weight: 700; font-size: 0.85rem; }
+
+.gol-stat-track {
+  height: 4px;
+  background: var(--gol-border);
+  border-radius: 999px;
+  overflow: hidden;
+}
+
+.gol-stat-fill {
+  height: 100%;
+  border-radius: 999px;
+  transition: width 0.5s cubic-bezier(0.34, 1.56, 0.64, 1);
+}
+
+/* ── Finance rows ── */
+
+.gol-finance-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  font-size: 0.82rem;
+  padding: 0.35rem 0;
+  border-bottom: 1px solid var(--gol-border);
+}
+
+.gol-finance-row span:first-child { color: var(--gol-muted); }
+.gol-finance-row span:last-child { font-weight: 700; }
+
+/* ── Sidebar chart ── */
+
+.gol-sidebar-chart {
+  height: 80px;
+}
+
+.gol-chart-canvas {
+  display: block;
+}
+
+/* ── Recent choices ── */
+
+.gol-recent-choices {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+.gol-recent-choice {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  font-size: 0.75rem;
+  flex-wrap: wrap;
+}
+
+.gol-recent-age {
+  color: var(--gol-accent);
+  font-weight: 700;
+  flex-shrink: 0;
+}
+
+.gol-recent-quality {
+  font-size: 0.65rem;
+  font-weight: 700;
+  padding: 0.15rem 0.5rem;
+  border-radius: 999px;
+  text-transform: uppercase;
+  flex-shrink: 0;
+}
+
+.gol-recent-quality--good     { background: rgba(52,211,153,0.15); color: var(--gol-green); }
+.gol-recent-quality--moderate { background: rgba(251,191,36,0.15);  color: var(--gol-amber); }
+.gol-recent-quality--risky    { background: rgba(248,113,113,0.15); color: var(--gol-red); }
+
+.gol-recent-label {
+  color: var(--gol-muted);
+  font-size: 0.75rem;
+}
+
+/* ── Intro ── */
+
+.gol-intro {
+  min-height: 100vh;
+  background: var(--gol-bg);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 2rem;
+}
+
+.gol-intro-inner {
+  max-width: 700px;
+  width: 100%;
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 2rem;
+}
+
+.gol-intro-badge {
+  background: rgba(56,189,248,0.1);
+  color: var(--gol-accent);
+  border: 1px solid rgba(56,189,248,0.2);
+  font-size: 0.75rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.12em;
+  padding: 0.4rem 1rem;
+  border-radius: 999px;
+}
+
+.gol-intro-title {
+  font-family: inherit;
+  font-size: 4rem;
+  font-weight: 900;
+  margin: 0;
+  background: linear-gradient(135deg, #f1f5f9, var(--gol-accent));
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  line-height: 1.1;
+}
+
+.gol-intro-sub {
+  font-size: 1.1rem;
+  color: #94a3b8;
+  line-height: 1.7;
+  max-width: 560px;
+  margin: 0;
+}
+
+.gol-intro-stages {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 0.75rem;
+  width: 100%;
+}
+
+@media (max-width: 600px) {
+  .gol-intro-stages { grid-template-columns: repeat(2, 1fr); }
+}
+
+.gol-stage-card {
+  background: var(--gol-surface);
+  border: 1px solid var(--gol-border);
+  border-radius: 1rem;
+  padding: 1.25rem 0.75rem;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.4rem;
+  text-align: center;
+}
+
+.gol-stage-emoji { font-size: 1.8rem; }
+
+.gol-stage-label {
+  font-weight: 700;
+  font-size: 0.9rem;
+  color: var(--gol-text);
+}
+
+.gol-stage-years {
+  font-size: 0.75rem;
+  color: var(--gol-accent);
+  font-weight: 600;
+}
+
+.gol-stage-desc {
+  font-size: 0.7rem;
+  color: var(--gol-muted);
+}
+
+.gol-intro-stats-preview {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+  justify-content: center;
+}
+
+.gol-intro-stat-chip {
+  background: var(--gol-surface);
+  border: 1px solid var(--gol-border);
+  border-radius: 999px;
+  padding: 0.4rem 0.9rem;
+  font-size: 0.82rem;
+  color: var(--gol-muted);
+  font-weight: 600;
+}
+
+.gol-intro-note {
+  font-size: 0.8rem;
+  color: var(--gol-muted);
+  margin: 0;
+}
+
+.gol-start-btn {
+  background: var(--gol-accent);
+  color: #0f172a;
+  font-weight: 800;
+  font-size: 1.1rem;
+  border: none;
+  border-radius: 1rem;
+  padding: 1rem 2.5rem;
+  cursor: pointer;
+  transition: all 0.2s;
+  letter-spacing: 0.02em;
+}
+
+.gol-start-btn:hover {
+  filter: brightness(1.1);
+  transform: translateY(-2px);
+  box-shadow: 0 8px 24px rgba(56,189,248,0.3);
+}
+
+/* ── Result Screen ── */
+
+.gol-result {
+  min-height: 100vh;
+  background: var(--gol-bg);
+  padding: 2rem;
+  max-width: 800px;
+  margin: 0 auto;
+  display: flex;
+  flex-direction: column;
+  gap: 2rem;
+}
+
+.gol-result-archetype {
+  text-align: center;
+  padding: 3rem 2rem;
+  background: var(--gol-surface);
+  border: 1px solid var(--gol-border);
+  border-radius: 1.5rem;
+}
+
+.gol-result-emoji {
+  font-size: 4rem;
+  margin-bottom: 1rem;
+}
+
+.gol-result-title {
+  font-family: inherit;
+  font-size: 2.5rem;
+  font-weight: 900;
+  margin: 0 0 1rem;
+  color: var(--gol-text);
+}
+
+.gol-result-desc {
+  font-size: 1.05rem;
+  color: #94a3b8;
+  line-height: 1.7;
+  max-width: 540px;
+  margin: 0 auto;
+}
+
+.gol-result-numbers {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 1rem;
+}
+
+@media (max-width: 600px) {
+  .gol-result-numbers { grid-template-columns: repeat(2, 1fr); }
+}
+
+.gol-result-number {
+  background: var(--gol-surface);
+  border: 1px solid var(--gol-border);
+  border-radius: 1rem;
+  padding: 1.25rem;
+  text-align: center;
+}
+
+.gol-result-number-label {
+  font-size: 0.7rem;
+  color: var(--gol-muted);
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  margin-bottom: 0.5rem;
+}
+
+.gol-result-number-value {
+  font-size: 1.6rem;
+  font-weight: 800;
+}
+
+.gol-result-stats {
+  background: var(--gol-surface);
+  border: 1px solid var(--gol-border);
+  border-radius: 1rem;
+  padding: 1.5rem;
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+}
+
+.gol-result-chart-wrap {
+  background: var(--gol-surface);
+  border: 1px solid var(--gol-border);
+  border-radius: 1rem;
+  padding: 1.5rem;
+}
+
+.gol-result-chart-title {
+  font-size: 0.75rem;
+  font-weight: 700;
+  color: var(--gol-muted);
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  margin-bottom: 1rem;
+}
+
+.gol-result-chart {
+  height: 160px;
+}
+
+.gol-result-reflection {
+  background: rgba(56,189,248,0.05);
+  border: 1px solid rgba(56,189,248,0.15);
+  border-radius: 1rem;
+  padding: 1.5rem;
+}
+
+.gol-result-reflection-title {
+  font-weight: 700;
+  font-size: 0.85rem;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  color: var(--gol-accent);
+  margin-bottom: 0.75rem;
+}
+
+.gol-result-reflection p {
+  font-size: 0.92rem;
+  color: #94a3b8;
+  line-height: 1.8;
+  margin: 0;
+}
+
+/* ── Road Not Taken ── */
+
+.gol-road-not-taken {
+  background: var(--gol-surface);
+  border: 1px solid var(--gol-border);
+  border-radius: 1rem;
+  overflow: hidden;
+}
+
+.gol-road-toggle {
+  width: 100%;
+  background: none;
+  border: none;
+  color: var(--gol-text);
+  font-size: 0.9rem;
+  font-weight: 700;
+  padding: 1.25rem 1.5rem;
+  cursor: pointer;
+  text-align: left;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.gol-road-items {
+  display: flex;
+  flex-direction: column;
+  gap: 0;
+  border-top: 1px solid var(--gol-border);
+}
+
+.gol-road-item {
+  padding: 1.25rem 1.5rem;
+  border-bottom: 1px solid var(--gol-border);
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+.gol-road-item-header {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+}
+
+.gol-road-age {
+  background: var(--gol-accent);
+  color: #0f172a;
+  font-size: 0.7rem;
+  font-weight: 800;
+  padding: 0.2rem 0.6rem;
+  border-radius: 999px;
+}
+
+.gol-road-title {
+  font-weight: 700;
+  font-size: 0.9rem;
+}
+
+.gol-road-you {
+  font-size: 0.82rem;
+  color: var(--gol-muted);
+}
+
+.gol-road-you-label { font-weight: 700; color: var(--gol-text); }
+
+.gol-road-alt {
+  background: rgba(52,211,153,0.06);
+  border: 1px solid rgba(52,211,153,0.15);
+  border-radius: 0.75rem;
+  padding: 0.75rem 1rem;
+  font-size: 0.82rem;
+  display: flex;
+  flex-direction: column;
+  gap: 0.4rem;
+}
+
+.gol-road-alt-label { font-weight: 700; color: var(--gol-green); }
+
+.gol-road-alt-insight {
+  color: #94a3b8;
+  font-size: 0.8rem;
+  line-height: 1.6;
+}
+
+/* ── Decision Log ── */
+
+.gol-decision-log {
+  background: var(--gol-surface);
+  border: 1px solid var(--gol-border);
+  border-radius: 1rem;
+  padding: 1.5rem;
+}
+
+.gol-log-title {
+  font-size: 0.75rem;
+  font-weight: 700;
+  color: var(--gol-muted);
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  margin-bottom: 1rem;
+}
+
+.gol-log-items {
+  display: flex;
+  flex-direction: column;
+  gap: 0;
+}
+
+.gol-log-item {
+  display: grid;
+  grid-template-columns: 60px 1fr 1fr 80px;
+  gap: 0.75rem;
+  align-items: center;
+  padding: 0.6rem 0;
+  border-bottom: 1px solid var(--gol-border);
+  font-size: 0.78rem;
+}
+
+@media (max-width: 500px) {
+  .gol-log-item { grid-template-columns: 50px 1fr 80px; }
+  .gol-log-scenario { display: none; }
+}
+
+.gol-log-age { color: var(--gol-accent); font-weight: 700; }
+.gol-log-scenario { color: var(--gol-muted); }
+.gol-log-choice { font-weight: 600; }
+
+.gol-log-choice--good     { color: var(--gol-green); }
+.gol-log-choice--moderate { color: var(--gol-amber); }
+.gol-log-choice--risky    { color: var(--gol-red); }
+
+.gol-log-delta { text-align: right; font-weight: 700; font-size: 0.75rem; }
+
+.gol-restart-btn {
+  background: var(--gol-surface-2);
+  color: var(--gol-text);
+  border: 1px solid var(--gol-border);
+  font-weight: 700;
+  font-size: 0.95rem;
+  border-radius: 0.75rem;
+  padding: 0.9rem 1.5rem;
+  cursor: pointer;
+  transition: all 0.2s;
+  align-self: center;
+}
+
+.gol-restart-btn:hover {
+  border-color: var(--gol-accent);
+  color: var(--gol-accent);
+}

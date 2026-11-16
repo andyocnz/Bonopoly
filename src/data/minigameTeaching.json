@@ -1,0 +1,1748 @@
+[
+  {
+    "slug": "principal-agent",
+    "title": "Principal-Agent",
+    "subtitle": "Moral Hazard & Incentive Contracts",
+    "concept": "The Principal-Agent problem arises when one party (the agent) acts on behalf of another (the principal), but the principal cannot directly observe the agent's actions. Because effort is hidden, the agent may under-perform — this is called moral hazard. The principal's challenge is to design a contract that aligns the agent's self-interest with the principal's goals.",
+    "setup": "You are the agent (employee). The principal (employer) offers you a fixed wage plus a bonus if the outcome is successful. Each round you secretly choose: High Effort (higher success probability, but costs you something) or Low Effort (lower success probability, but free). The principal only sees whether the outcome was a success or failure — not which effort level you chose.",
+    "keyInsight": "A well-designed incentive contract can align the agent's private interests with the principal's goals — making high effort the rational choice. But because effort is unobservable, some agents will still shirk, and that is exactly the moral hazard the contract is designed to prevent.",
+    "lessons": [
+      "Without a bonus, agents would always choose Low Effort — it gives the same wage with no cost. Fixed wages alone cannot solve moral hazard.",
+      "The success bonus is calibrated so that High Effort yields a higher expected payoff than Low Effort. This is called an incentive-compatible contract — it makes doing the right thing personally rational.",
+      "Even with the right contract, some agents still choose Low Effort, hoping to get lucky. This is moral hazard in action — you can see it in the class results.",
+      "The principal can never be sure whether a bad outcome was bad luck or low effort. This ambiguity is the fundamental challenge of hidden-action problems."
+    ],
+    "strategies": [
+      {
+        "name": "Always High Effort",
+        "outcome": "Maximises your expected payoff over the game. With default config: $10 wage + $50×0.8 bonus − $20 cost = $30 expected per round vs. $10 + $50×0.3 − $0 = $25 for Low. High effort earns $5 more per round on average — about $25 extra over 5 rounds.",
+        "insight": "This is what the contract was designed to induce. You are behaving as the principal intended, and you are rewarded for it in expectation."
+      },
+      {
+        "name": "Always Low Effort",
+        "outcome": "Saves the effort cost every round but earns less on average. You score $25 expected instead of $30 — a $5/round shortfall. Over 5 rounds you fall roughly $25 behind High Effort players.",
+        "insight": "This is moral hazard: exploiting the fact that the principal cannot observe your effort. Rational in the very short run, self-defeating over the full game."
+      },
+      {
+        "name": "Mixed / Opportunistic",
+        "outcome": "Unpredictable results. Some rounds you benefit from saving the cost; others you lose big on low-probability outcomes. Your score is unlikely to beat a consistent High Effort strategy.",
+        "insight": "Illustrates why employers in the real world use monitoring, probationary periods, vesting schedules, and repeated relationships — to sustain effort over time."
+      }
+    ],
+    "classroomObservations": "Watch the round-by-round results panel: you will almost always see a mix of High and Low effort choices, even though High dominates in expectation. This is the point — even with a well-designed contract, moral hazard persists. Ask students: if they chose Low Effort, why? If the class was told effort would be revealed at the end, would choices change? That thought experiment isolates the role of observability.",
+    "realWorld": "CEO performance bonuses are calibrated to make high effort rational. Insurance deductibles make risky behaviour costly for the insured. Sales commissions align rep effort with firm revenue. Doctor fee-for-service models (pay per procedure) can create the opposite problem — incentivising over-treatment. The structure of the contract determines everything.",
+    "tip": "The expected payoff formula is: wage + bonus × success_probability − effort_cost. Plug in both effort levels and compare — High Effort should come out ahead with the default config. If it doesn't, the contract is broken.",
+    "furtherReading": "Jensen & Meckling (1976) — Theory of the Firm: Managerial Behaviour, Agency Costs and Ownership Structure; Holmstrom (1979) — Moral Hazard and Observability; Mirrlees (1999) — The Theory of Moral Hazard and Unobservable Behaviour",
+    "numericalExample": "With default config (wage=$10, bonus=$50, pH=0.8, pL=0.3, effort cost=$20): High Effort expected payoff = $10 + $50×0.8 − $20 = $30 per round. Low Effort = $10 + $50×0.3 − $0 = $25 per round. Over 5 rounds, always-High earns ~$150 expected vs ~$125 for always-Low — a $25 gap. But because outcomes are probabilistic, a Low-effort player who gets lucky can outscore a High-effort player in any single round.",
+    "tables": [
+      {
+        "title": "Expected Payoff by Effort Level (default config)",
+        "headers": ["Effort", "Success %", "Wage", "Exp. Bonus", "Effort Cost", "Exp. Payoff"],
+        "rows": [
+          ["High", "80%", "$10", "$50 × 0.8 = $40", "$20", "$10 + $40 − $20 = $30"],
+          ["Low", "30%", "$10", "$50 × 0.3 = $15", "$0", "$10 + $15 − $0 = $25"]
+        ]
+      },
+      {
+        "title": "Cumulative Expected Score over 5 Rounds",
+        "headers": ["Strategy", "Per-Round Expected", "5-Round Expected", "vs. Always-High"],
+        "rows": [
+          ["Always High Effort", "$30", "$150", "—"],
+          ["Always Low Effort", "$25", "$125", "−$25"],
+          ["Mixed 50/50", "$27.50", "$137.50", "−$12.50"]
+        ]
+      }
+    ]
+  },
+  {
+    "slug": "signaling-game",
+    "title": "Signaling Game",
+    "subtitle": "Spence Education Signaling",
+    "concept": "Workers know their own productivity (their 'type') but employers do not. This information asymmetry means employers cannot pay workers their true marginal product. Education can solve this — not because it necessarily makes workers more productive, but because it is cheaper for high-productivity workers to acquire. This cost difference is what makes education a credible signal.",
+    "setup": "You are randomly assigned a worker type — High or Low — which you know but your employer does not. Each round you choose an education level (0, 1, or 2). The employer pays a wage based only on your education choice. Your payoff is the wage minus the cost of education, which depends on your type. High types have a lower cost per education level than Low types.",
+    "keyInsight": "In a separating equilibrium, High types choose full education (edu=2) and Low types choose no education (edu=0). The signal is credible precisely because Low types find it too expensive to imitate. Education separates types not because it teaches skills, but because of its differential cost.",
+    "lessons": [
+      "The key condition for a separating equilibrium: the wage premium for high education must exceed the signalling cost for High types, but NOT for Low types. If this holds, only High types will signal.",
+      "Education can have pure signalling value even if it adds zero productive skill. Spence's model is deliberately extreme — but it captures something real about credentials and positional competition.",
+      "If the wage premium is too small, or costs are too similar across types, a pooling equilibrium emerges: everyone chooses the same education level and types are indistinguishable. The market fails to sort.",
+      "Watch whether the class separates over multiple rounds. If High types consistently choose edu=2 and Low types choose edu=0, a separating equilibrium has emerged from decentralised decisions."
+    ],
+    "strategies": [
+      {
+        "name": "High-type: choose edu=2 (Full)",
+        "outcome": "Earns the high wage ($100) with cost $20 (2 levels × $10), netting $80. If Low types don't follow, this credibly identifies you as High type. The equilibrium strategy.",
+        "insight": "The signal works because Low types face cost $80 (2 × $40) for edu=2, netting only $20 — not worth it. High types can afford to signal; Low types cannot."
+      },
+      {
+        "name": "Low-type: choose edu=0 (None)",
+        "outcome": "Earns the baseline wage ($50) with zero cost — net $50. Trying to mimic (edu=2) would cost $80 and yield $100 − $80 = $20. Worse than staying at edu=0.",
+        "insight": "Self-selection at work: the cost structure makes honest revelation personally optimal. No enforcement needed — the signal is self-sorting."
+      },
+      {
+        "name": "Everyone pools at edu=0",
+        "outcome": "All earn the pooling wage (average of High and Low types). High types are underpaid; Low types are overpaid. No information is conveyed. This is the outcome with no signalling.",
+        "insight": "Pooling equilibria are also valid game-theoretic outcomes. Whether separation or pooling emerges depends on the wage schedule and cost parameters — change them in the host settings to explore."
+      }
+    ],
+    "classroomObservations": "Does separation emerge? In the first round, players often experiment. By round 3-4, High types typically converge on edu=2 and Low types on edu=0 — the separating equilibrium appears spontaneously without coordination. Ask students: does this mean education is 'just' signalling? That is the debate that has raged since Spence (1973).",
+    "realWorld": "University degrees, professional certifications (CFA, bar exams), unpaid internships, military service, and even luxury goods can function as Spence signals. The question to ask is always: is this qualification making you more productive, or is it just separating you from people who wouldn't do it?",
+    "tip": "Your type is shown in the info bar during the game. Use it to calculate your net payoff for each education level before choosing. The table in the 'How It Works' card updates with the current round's wage schedule.",
+    "furtherReading": "Spence (1973) — Job Market Signaling (Nobel Prize 2001); Riley (2001) — Silver Signals: Twenty-Five Years of Screening and Signaling; Weiss (1995) — Human Capital vs. Signalling Explanations of Wages",
+    "numericalExample": "Default config: High-type cost=$10/level, Low-type cost=$40/level. Wages: edu=0->$50, edu=1->$50, edu=2->$100. High type at edu=2 nets $100-20=$80. Low type mimicking edu=2 nets $100-80=$20, far worse than staying at edu=0 for $50. That $30 gap is what makes the signal self-enforcing.",
+    "tables": [
+      {
+        "title": "Net Payoff by Worker Type and Education Level (default config)",
+        "headers": ["Education", "Wage", "High-type Cost", "High-type Net", "Low-type Cost", "Low-type Net"],
+        "rows": [
+          ["0 - None", "$50", "$0", "$50", "$0", "$50"],
+          ["1 - Some", "$50", "$10", "$40", "$40", "$10"],
+          ["2 - Full", "$100", "$20", "$80 (best!)", "$80", "$20 (worst!)"]
+        ]
+      },
+      {
+        "title": "Why Neither Type Wants to Deviate from Equilibrium",
+        "headers": ["Type", "Equilibrium Choice", "Net Payoff", "Alternative Choice", "Alternative Net", "Gain from Deviation?"],
+        "rows": [
+          ["High-type", "edu=2", "$80", "edu=0", "$50", "No (-$30)"],
+          ["Low-type", "edu=0", "$50", "edu=2", "$20", "No (-$30)"]
+        ]
+      }
+    ]
+  },
+  {
+    "slug": "adverse-selection",
+    "title": "Adverse Selection",
+    "subtitle": "Market for Lemons & Information Asymmetry",
+    "concept": "When buyers and sellers have different information about quality, markets can break down. Sellers know the quality of what they are selling; buyers do not. Buyers therefore only pay the average price — which drives out high-quality sellers, who can't get a fair price. This lowers average quality, which lowers prices further, which drives out more high-quality sellers. The market unravels.",
+    "setup": "Players act as buyers and sellers in a market with hidden quality. Sellers know whether their goods are high or low quality; buyers only learn the average quality the market produces. The equilibrium price reflects average quality — which changes as sellers enter and exit. Watch whether high-quality goods disappear over time.",
+    "keyInsight": "Information asymmetry can destroy markets entirely, even when trades would be mutually beneficial. The market does not just produce wrong prices — it may cease to exist. This is Akerlof's 'lemons problem': bad products drive good products out of the market.",
+    "lessons": [
+      "The root cause is unverifiable quality: buyers cannot tell a lemon from a peach before buying. If they could, high-quality sellers would get fair prices and the market would function normally.",
+      "The unravelling process is a cascade: fewer good products → lower average quality → lower average price → even fewer good products. Each step is individually rational; the collective result is market failure.",
+      "Institutions that solve adverse selection work by making quality observable: warranties (signal quality), inspections (verify quality), reputation systems (track quality history), and third-party certification (vouch for quality).",
+      "Adverse selection in insurance is especially important: sicker people buy more coverage, so insurers face a pool that is sicker than the general population, which raises premiums, which drives out the healthiest, which raises premiums further."
+    ],
+    "strategies": [
+      {
+        "name": "Sell high-quality goods at pooling price",
+        "outcome": "You are underpaid — you receive the average price when your goods are worth more. Rational to exit the market if the price falls far enough below your goods' value.",
+        "insight": "This is the mechanism: high-quality sellers exit when they can't get a fair price, which worsens average quality for buyers."
+      },
+      {
+        "name": "Sell low-quality goods at pooling price",
+        "outcome": "You are overpaid — you receive the average price when your goods are worth less. You profit from the information asymmetry.",
+        "insight": "The perverse result: bad sellers benefit while good sellers are harmed. The market rewards dishonesty in the absence of verification."
+      },
+      {
+        "name": "Offer a warranty",
+        "outcome": "Signals high quality credibly. Expensive for low-quality sellers to offer (they'd face many claims), cheap for high-quality sellers. Buyers accept the warranty as proof of quality and pay a premium.",
+        "insight": "Warranties are a separating signal — the same logic as Spence's education model but in a product market."
+      }
+    ],
+    "classroomObservations": "Track the average quality traded across rounds — you should see it decline as high-quality sellers exit. Point out to students that this is not fraud: everyone is acting rationally. The market failure arises from the structure of information, not from dishonesty.",
+    "realWorld": "Used-car markets (the original Akerlof example), health insurance before the ACA mandate, mortgage-backed securities in 2007 (investors couldn't assess underlying loan quality), and labour markets (employers can't observe worker quality at hiring) all exhibit adverse selection. Carfax, MOT certificates, and Trustpilot reviews are market solutions.",
+    "tip": "The solution to adverse selection always involves making hidden information visible — either by the informed party signalling quality or the uninformed party screening for it.",
+    "furtherReading": "Akerlof (1970) — The Market for Lemons (Nobel Prize 2001); Rothschild & Stiglitz (1976) — Equilibrium in Competitive Insurance Markets; Stiglitz (2002) — Information and the Change in the Paradigm in Economics",
+    "numericalExample": "Example: cars are worth $10,000 (high quality) or $2,000 (low quality), equally split. Buyers pay the average = $6,000. High-quality owners (who value them at $10,000) won't sell at $6,000 and exit. Now only low-quality remain. Buyers learn this and pay $2,000. Market shrinks from 100% of cars traded to 50%, destroying $4,000 of value per high-quality car that goes untraded.",
+    "tables": [
+      {
+        "title": "Adverse Selection Unravelling: Step-by-Step",
+        "headers": ["Step", "High-Quality Sellers", "Low-Quality Sellers", "Avg. Quality in Market", "Buyer's Offer", "High-Q Seller Response"],
+        "rows": [
+          ["Initial", "50%", "50%", "$6,000", "$6,000", "Exit (worth $10k to them)"],
+          ["After exit", "0%", "100%", "$2,000", "$2,000", "Already gone"],
+          ["Result", "—", "Only lemons", "$2,000", "$2,000", "Market = lemons only"]
+        ]
+      },
+      {
+        "title": "Solutions to Adverse Selection and How They Work",
+        "headers": ["Solution", "Mechanism", "Real-World Example", "Who Provides It"],
+        "rows": [
+          ["Warranty", "Seller signals quality; costly for low-quality sellers who'd face many claims", "12-month car warranty", "Seller"],
+          ["Third-party inspection", "Independent verification makes quality observable", "Carfax, MOT certificate", "Third party"],
+          ["Reputation/reviews", "Track record of past quality reduces uncertainty", "Trustpilot, eBay feedback", "Market platform"],
+          ["Mandatory disclosure", "Seller must reveal known defects", "Property disclosure laws", "Government regulation"]
+        ]
+      }
+    ]
+  },
+  {
+    "slug": "prisoners-dilemma",
+    "title": "Prisoner's Dilemma",
+    "subtitle": "Cooperation vs. Defection",
+    "concept": "Two players each choose to cooperate or defect. Mutual cooperation produces the best collective outcome, but each player has a dominant strategy to defect — regardless of what the other does. The result is mutual defection, which is worse for everyone. This is the central paradox of non-cooperative game theory.",
+    "setup": "Each round you and your opponent simultaneously choose Cooperate or Defect. If both cooperate, you both earn a medium-high payoff. If both defect, you both earn a low payoff. If one cooperates and the other defects, the defector earns the highest payoff and the cooperator earns the lowest. You cannot communicate before choosing.",
+    "keyInsight": "Individually rational choices produce collectively irrational outcomes. Defection is dominant — always better for you regardless of your opponent's choice — yet mutual defection is worse for both players than mutual cooperation. This gap between individual and collective rationality is the core tension in economics, politics, and everyday life.",
+    "lessons": [
+      "Defection is a dominant strategy: it pays better whether your opponent cooperates or defects. Knowing this, both players defect — and both are worse off than if they had both cooperated. This is the Nash equilibrium.",
+      "In a one-shot game, there is no rational basis for cooperation. The prisoner's dilemma is 'solved' only by changing the game: repeated interaction, communication, binding commitments, or punishment mechanisms.",
+      "In repeated games (multiple rounds), cooperation can emerge through reciprocal strategies. Tit-for-Tat — cooperate first, then copy your opponent's last move — won Axelrod's famous tournament. It is nice, retaliatory, forgiving, and clear.",
+      "Real-world cooperation often works through reputation: if everyone knows you defected yesterday, they'll defect against you today. This converts the one-shot game into a repeated game with long-run consequences."
+    ],
+    "strategies": [
+      {
+        "name": "Always Defect",
+        "outcome": "The Nash equilibrium of the one-shot game. You can never do worse by defecting than by cooperating, given what your opponent plays. But mutual defection gives both players the bad outcome.",
+        "insight": "Dominance and collective optimality point in opposite directions. This is the dilemma."
+      },
+      {
+        "name": "Always Cooperate",
+        "outcome": "Achieves the best collective outcome if both players cooperate. Completely exploitable — a permanent defector beats you every round.",
+        "insight": "Cooperation requires trust and reciprocity. Without enforcement or reputation, unconditional cooperation is strategically naive."
+      },
+      {
+        "name": "Tit-for-Tat",
+        "outcome": "Cooperate in round 1. From round 2 onwards, copy what your opponent did last round. Sustains mutual cooperation with cooperative opponents; punishes defectors immediately; forgives after one retaliatory defection.",
+        "insight": "The most robust strategy in repeated prisoner's dilemma experiments. Its success shows that cooperation is evolutionarily stable when interactions repeat."
+      }
+    ],
+    "classroomObservations": "Cooperation rates typically start around 40-60% and decline over rounds as players learn defection is safe. Point this out — it mirrors real-world trust erosion. Then ask: what would change cooperation rates? Shorter game length? Anonymous play? Public commitment? These variations illuminate the mechanisms behind cooperation.",
+    "realWorld": "Price wars between oligopolists, arms races between nations, carbon emission agreements, competing firms choosing whether to advertise, and even two cafes deciding whether to stay open on Sundays all have prisoner's dilemma structure. OPEC struggles to sustain cooperation because members have incentives to over-produce.",
+    "tip": "In the last round, there's no future to protect — rational players defect. Work backwards: if you'll defect in the last round, your opponent expects that and defects in round n-1, and so on. This 'backward induction' unravels cooperation in finite games.",
+    "furtherReading": "Nash (1950) — Equilibrium Points in N-Person Games; Axelrod (1984) — The Evolution of Cooperation; Fudenberg & Maskin (1986) — The Folk Theorem in Repeated Games",
+    "numericalExample": "Typical payoffs: Mutual cooperate = (3,3), Mutual defect = (1,1), One defects/one cooperates = (5,0). Defecting earns 5 vs 3 when opponent cooperates, and 1 vs 0 when opponent defects — defecting is always better by 2 points regardless of what the opponent does. Yet both players defecting (1,1) is worse than both cooperating (3,3) for everyone.",
+    "tables": [
+      {
+        "title": "Payoff Matrix (Your Payoff, Opponent's Payoff)",
+        "headers": ["", "Opponent: Cooperate", "Opponent: Defect"],
+        "rows": [
+          ["You: Cooperate", "(3, 3) — Good for both", "(0, 5) — You are exploited"],
+          ["You: Defect", "(5, 0) — You exploit them", "(1, 1) — Both lose"]
+        ]
+      },
+      {
+        "title": "Strategy Comparison over 10 Rounds (vs. a Tit-for-Tat Player)",
+        "headers": ["Your Strategy", "Round 1 Payoff", "Rounds 2-10 Pattern", "Total Expected"],
+        "rows": [
+          ["Always Cooperate", "3", "C,C,C... — 3 per round", "~30"],
+          ["Always Defect", "5", "D,D,D... — 1 per round (opponent retaliates)", "~14"],
+          ["Tit-for-Tat", "3", "C,C,C... — sustained cooperation", "~30"],
+          ["Defect then cooperate", "5", "D,C,C... — partner forgives after 1 round", "~28"]
+        ]
+      }
+    ]
+  },
+  {
+    "slug": "public-goods",
+    "title": "Public Goods",
+    "subtitle": "Free Rider Problem & Collective Action",
+    "concept": "Public goods are non-excludable (you can't stop people benefiting) and non-rival (one person's consumption doesn't reduce others'). These properties create the free-rider problem: each individual has an incentive to let others pay and enjoy the good for free. Private markets systematically under-provide public goods.",
+    "setup": "Each round every player decides how much of their budget to contribute to a shared pool. Contributions are multiplied by a factor greater than 1 (reflecting the social return to public goods) and divided equally among all players, regardless of who contributed. Players who contribute nothing receive the same share of the pool as those who gave everything.",
+    "keyInsight": "The Nash equilibrium is zero contribution — every player's best response is to free-ride. But if everyone free-rides, the public good is not provided and everyone is worse off. The socially optimal outcome (full contribution) requires either coercion (taxation) or norms that override individual incentives.",
+    "lessons": [
+      "The free-rider problem is not a failure of morality — it is a logical consequence of non-excludability. Even people who want the public good to exist have an incentive to let others pay for it.",
+      "Contributions typically start around 40-60% of endowment and decline over rounds as players realise they are being free-ridden. This 'contribution decay' is one of the most replicated findings in experimental economics.",
+      "Conditional cooperation is the dominant behaviour: people contribute if others do, but punish free-riders by reducing their own contributions. This explains why public goods provision is fragile — it only takes a few free-riders to collapse cooperation.",
+      "Solutions: taxation (compulsory contribution), privatisation (excludable goods), Ostrom-style community governance (peer monitoring and sanctions), and social norms (shame and reciprocity)."
+    ],
+    "strategies": [
+      {
+        "name": "Contribute zero (full free-ride)",
+        "outcome": "The dominant strategy in a one-shot game. You pocket your full endowment and collect a share of everyone else's contributions. But if everyone does this, the pool is empty and everyone earns nothing from the public good.",
+        "insight": "Individually rational, collectively disastrous. The tragedy of the public goods game."
+      },
+      {
+        "name": "Contribute fully",
+        "outcome": "Socially efficient if everyone cooperates — total payoff is maximised. You are heavily exploited if others free-ride, since you contribute everything and receive back only 1/n of the total.",
+        "insight": "Altruistic or socially minded players contribute more, but their contributions are undermined by free-riders. This drives the contribution decay seen in experiments."
+      },
+      {
+        "name": "Contribute conditionally",
+        "outcome": "Match the average contribution of the group. Sustains cooperation when most players cooperate, collapses quickly when free-riders appear. The most commonly observed behaviour.",
+        "insight": "Conditional cooperation explains both why public goods are sometimes provided (when groups are cooperative) and why they often fail (when free-riders undermine trust)."
+      }
+    ],
+    "classroomObservations": "Watch contributions over rounds — the decay pattern is reliable. In the debrief, show the total group payoff under full cooperation vs. the Nash equilibrium. The gap is the cost of the free-rider problem. Ask: what would change behaviour? Adding a punishment option (where players can pay to reduce free-riders' payoffs) dramatically raises contribution rates in experiments.",
+    "realWorld": "National defence, clean air and water, open-source software, basic scientific research, herd immunity from vaccination, and street lighting are all public goods. Governments solve the free-rider problem through mandatory taxation — you cannot opt out of paying for national defence even if you don't value it.",
+    "tip": "The social multiplier (how much contributions are multiplied before redistribution) determines whether full cooperation beats full free-riding. If the multiplier divided by the number of players exceeds 1, cooperation is socially optimal — but free-riding is still individually rational.",
+    "furtherReading": "Samuelson (1954) — The Pure Theory of Public Expenditure; Ostrom (1990) — Governing the Commons (Nobel Prize 2009); Fehr & Gächter (2000) — Cooperation and Punishment in Public Goods Experiments",
+    "numericalExample": "4 players, $10 endowment each, multiplier=1.6, equal split. If all 4 contribute $10: pool=$40, x1.6=$64, each gets $16. Net gain: +$6 each. If you free-ride ($0) while others give $10: pool=$30, x1.6=$48, split 4 ways=$12 to you + keep $10 = $22 total. Others get $12. So free-riding earns $22 vs $16 — a $6 personal gain but $4 less for everyone else.",
+    "tables": [
+      {
+        "title": "Payoff Scenarios: 4 Players, $10 Endowment, 1.6x Multiplier",
+        "headers": ["Scenario", "Your Contribution", "Others' Total", "Pool", "After Multiplier", "Your Share", "Your Total", "Social Total"],
+        "rows": [
+          ["Everyone cooperates", "$10", "$30", "$40", "$64", "$16", "$16", "$64"],
+          ["You free-ride, others give", "$0", "$30", "$30", "$48", "$12", "$22 (keep $10)", "$54"],
+          ["Everyone free-rides", "$0", "$0", "$0", "$0", "$0", "$10", "$40"]
+        ]
+      },
+      {
+        "title": "Typical Contribution Rates Observed in Lab Experiments",
+        "headers": ["Round", "Avg. Contribution (% of endowment)", "Interpretation"],
+        "rows": [
+          ["Round 1", "40-60%", "Initial goodwill / cooperation norms"],
+          ["Round 3", "30-45%", "Free-riding detected, trust eroding"],
+          ["Round 5", "20-35%", "Significant decline — conditional cooperation collapsing"],
+          ["Round 10", "10-20%", "Near Nash equilibrium — widespread free-riding"]
+        ]
+      }
+    ]
+  },
+  {
+    "slug": "trust-game",
+    "title": "Trust Game",
+    "subtitle": "Trust, Reciprocity & Social Preferences",
+    "concept": "The trust game tests whether people trust strangers and whether that trust is reciprocated. Standard economic theory predicts no trust — the receiver has no incentive to return anything, so the sender sends nothing. In reality, significant amounts are sent and returned, revealing that people have social preferences (caring about fairness and reciprocity) that standard models miss.",
+    "setup": "The sender receives a sum of money and decides how much (if any) to send to the receiver. Whatever is sent is multiplied (reflecting the gains from cooperation). The receiver then decides how much to send back. The sender's payoff depends on their own return and what they kept. The receiver's payoff is what they receive minus what they return.",
+    "keyInsight": "People are not purely self-interested. The subgame-perfect Nash equilibrium — send nothing, return nothing — is wrong as a description of human behaviour. Most senders send substantial amounts, and most receivers return more than the minimum. This tells us that fairness, reciprocity, and social norms are real economic forces.",
+    "lessons": [
+      "Backward induction predicts the sender sends nothing: the receiver has no incentive to return anything (any return reduces their payoff), so the sender anticipates this and keeps everything. This is the standard prediction — and it is consistently violated.",
+      "In practice, senders send 40-60% of their endowment on average, and receivers return about 30-50% of what they receive (often enough to leave the sender slightly ahead). Trust earns positive returns.",
+      "The multiplier is the key: it means total surplus is always higher when the sender trusts. Trust is socially efficient. The question is whether the receiver's reciprocity makes it individually rational too.",
+      "Repeated interactions sustain higher trust: reputation, relationships, and the shadow of the future all raise return rates. One-shot interactions with strangers show lower trust and lower returns."
+    ],
+    "strategies": [
+      {
+        "name": "Sender: send everything",
+        "outcome": "Maximises the total surplus available (due to the multiplier). Requires trusting the receiver to return at least as much as you sent. Risky in theory, often successful in practice because receivers reciprocate.",
+        "insight": "High trust, high risk. But the data show that receivers are more reciprocal than rational self-interest predicts — so this strategy often pays off."
+      },
+      {
+        "name": "Sender: send nothing",
+        "outcome": "Safe — you keep your endowment and guarantee your minimum payoff. But you forgo the gains from cooperation. The subgame-perfect equilibrium that nobody follows.",
+        "insight": "The 'rational' prediction fails because it ignores social preferences. In practice, sending nothing signals distrust and leaves value on the table."
+      },
+      {
+        "name": "Receiver: return a fair share (≈50%)",
+        "outcome": "Sustains the sender's trust, enables high total payoffs for both, and is the modal behaviour in experiments. Driven by reciprocity — the receiver matches the sender's generosity.",
+        "insight": "Reciprocity norms are powerful. Receivers who receive more tend to return more — not because they rationally calculate, but because unfairness feels costly."
+      }
+    ],
+    "classroomObservations": "Compare the average amount sent and returned to the game-theoretic predictions. The gap is striking. Ask students: why did you trust? Why did you return? The answers reveal social preferences that standard models ignore. Try varying whether the interaction is anonymous — trust typically falls with anonymity, showing that reputation and observability matter.",
+    "realWorld": "Business contracts rely on trust — legal enforcement is a substitute when trust is low but a complement when it is high. Financial markets, employment relationships, supply chains, and even casual transactions (giving a tip before the service is delivered) are trust games. Countries with higher social trust have lower transaction costs and higher long-run growth.",
+    "tip": "The optimal strategy depends on your beliefs about the receiver's reciprocity. In a one-shot game with a stranger, the standard theory says send nothing — but the data say send something. The expected return on trust is positive in most populations.",
+    "furtherReading": "Berg, Dickhaut & McCabe (1995) — Trust, Reciprocity, and Social History; Fehr & Gächter (2000) — Fairness and Retaliation; Guiso, Sapienza & Zingales (2006) — Does Culture Affect Economic Outcomes?",
+    "numericalExample": "Sender has $10, multiplier=3x. If sender sends $10: receiver gets $30. If receiver returns $15 (50%), sender ends with $15 — better than the $10 they kept. Both gain: sender +$5, receiver +$15. If receiver keeps everything, sender gets $0 (loses $10). Nash prediction: send $0. Experimental average: send ~$5, return ~$3-4 — trust generates positive expected return.",
+    "tables": [
+      {
+        "title": "Trust Game Payoffs: Sender Has $10, Multiplier = 3x",
+        "headers": ["Sender Sends", "Receiver Gets", "If Receiver Returns 50%", "Sender Earns", "Receiver Earns", "Total Value Created"],
+        "rows": [
+          ["$0", "$0", "—", "$10 (kept)", "$0", "$10 (no gain)"],
+          ["$5", "$15", "Returns $7.50", "$12.50", "$7.50", "$20"],
+          ["$10", "$30", "Returns $15", "$15", "$15", "$30 (maximum)"]
+        ]
+      },
+      {
+        "title": "Experimental Findings vs. Nash Prediction",
+        "headers": ["Measure", "Nash Prediction", "Lab Average (Berg et al. 1995)", "Implication"],
+        "rows": [
+          ["Amount sent by sender", "$0", "~$5 (50% of endowment)", "People trust strangers"],
+          ["Amount returned by receiver", "$0", "~$4.66 (avg return ratio ~37%)", "Reciprocity is real"],
+          ["Sender's net gain from trusting", "$0 or negative", "Positive on average", "Trust pays off"]
+        ]
+      }
+    ]
+  },
+  {
+    "slug": "ultimatum",
+    "title": "Ultimatum Game",
+    "subtitle": "Fairness, Bargaining & Costly Punishment",
+    "concept": "The proposer offers a split of a fixed sum; the responder can accept or reject. If rejected, both get nothing. Standard theory predicts the proposer offers the minimum and the responder accepts (something is better than nothing). In reality, low offers are frequently rejected — people pay a real cost to punish unfairness.",
+    "setup": "You are randomly assigned as proposer or responder. The proposer decides how to divide a fixed sum between themselves and the responder. The responder sees the offer and decides to accept or reject. If accepted, both receive the offered amounts. If rejected, both receive zero.",
+    "keyInsight": "People have fairness preferences that override pure self-interest. Offers below roughly 30% of the total are rejected about half the time — responders sacrifice their own payoff to punish proposers they perceive as unfair. This 'costly punishment' is not predicted by standard models but is remarkably consistent across cultures and contexts.",
+    "lessons": [
+      "Backward induction predicts: proposer offers $0.01, responder accepts (getting 1 cent is better than nothing). This prediction is wrong. Offers below 30% are typically rejected, and the modal offer is 40-50%.",
+      "Responders are not being irrational — they are expressing a preference for fairness. Rejecting an unfair offer is a credible punishment signal that disciplines future proposers. It can be rational in a population where others share the same preference.",
+      "Proposers know this: they offer more than self-interest would dictate because they anticipate rejection. The proposer is not being generous — they are being strategic about responder psychology.",
+      "Cultural variation exists but is bounded: rejection rates for low offers are high in all studied populations, but 'fairness thresholds' vary. Higher-income, more market-integrated societies tend to offer more equitable splits."
+    ],
+    "strategies": [
+      {
+        "name": "Proposer: offer 50/50",
+        "outcome": "Almost never rejected. Leaves money on the table relative to the self-interest optimum, but is the safest strategy. Many proposers use this as a 'fairness anchor'.",
+        "insight": "Equal splits are powerful norms. The 50/50 heuristic is cognitively simple and socially safe."
+      },
+      {
+        "name": "Proposer: offer 20-30%",
+        "outcome": "Rejected roughly 40-60% of the time in experiments. Expected value may actually be lower than a 40% offer, depending on the group's rejection threshold.",
+        "insight": "Greedy offers backfire. The proposer should model the responder's rejection probability as a function of offer size — the optimal offer is typically around 40-45%."
+      },
+      {
+        "name": "Responder: reject anything below 40%",
+        "outcome": "You earn nothing when you reject, but you signal that exploitation has costs. In repeated settings, this disciplines proposers and raises the average offer you receive.",
+        "insight": "Costly punishment is a commitment device. If proposers believe you will reject low offers, they offer more — your toughness benefits you over multiple interactions."
+      }
+    ],
+    "classroomObservations": "Show the distribution of offers and rejection rates. Ask students who rejected: was it worth it? Economically, the answer depends on whether there are future interactions. Ask proposers who offered high amounts: were you being fair or strategic? Most will say both — which is the interesting finding.",
+    "realWorld": "Labour negotiations, merger terms, divorce settlements, international trade deals, and tax policy all involve ultimatum-like bargaining. The finding that 'power without fairness invites costly resistance' is one of the most policy-relevant results in behavioural economics.",
+    "tip": "If you are the proposer, think about what the responder considers 'fair'. The 50/50 offer is a Schelling point — both parties know it is fair, so it is a natural focal point for agreement.",
+    "furtherReading": "Güth, Schmittberger & Schwarze (1982) — An Experimental Analysis of Ultimatum Bargaining; Thaler (1988) — The Ultimatum Game; Henrich et al. (2001) — In Search of Homo Economicus — cross-cultural ultimatum game evidence",
+    "numericalExample": "Total pie = $10. Nash prediction: propose $0.01, accept (beats $0). Actual experimental results: modal offer = $4-5 (40-50%). Offers below $3 (30%) are rejected ~50% of the time. If proposer offers $2 and it gets rejected 50% of the time, expected payoff = 0.5 x $8 + 0.5 x $0 = $4. Compare to offering $4 (always accepted) = $6. The greedy proposer earns less in expectation.",
+    "tables": [
+      {
+        "title": "Proposer's Expected Payoff at Different Offer Levels (Pie = $10)",
+        "headers": ["Offer to Responder", "Proposer Keeps", "Typical Rejection Rate", "Proposer's Expected Payoff"],
+        "rows": [
+          ["$1 (10%)", "$9", "~70%", "$9 x 0.30 = $2.70"],
+          ["$2 (20%)", "$8", "~50%", "$8 x 0.50 = $4.00"],
+          ["$3 (30%)", "$7", "~30%", "$7 x 0.70 = $4.90"],
+          ["$4 (40%)", "$6", "~10%", "$6 x 0.90 = $5.40 (near optimal)"],
+          ["$5 (50%)", "$5", "~2%",  "$5 x 0.98 = $4.90"],
+          ["$6+ (60%+)", "$4 or less", "~0%", "$4.00 or less"]
+        ]
+      },
+      {
+        "title": "Experimental Findings: Ultimatum Game (Cross-Cultural Summary)",
+        "headers": ["Population", "Modal Offer", "Rejection Rate Below 20%", "Observation"],
+        "rows": [
+          ["US/Europe (students)", "45-50%", "~50%", "Strong fairness norms"],
+          ["Machiguenga (Peru)", "~26%", "Very low (<5%)", "Less market integration = less fairness norm"],
+          ["Lamalera (Indonesia)", ">50% sometimes", "Rare", "Prestige from generosity"],
+          ["Average across 15 societies", "~40%", "Varies widely", "Fairness norms exist everywhere but vary"]
+        ]
+      }
+    ]
+  },
+  {
+    "slug": "beauty-contest",
+    "title": "Keynesian Beauty Contest",
+    "subtitle": "Higher-Order Beliefs & Level-k Thinking",
+    "concept": "Players guess a number between 0 and 100. The winner is whoever is closest to 2/3 of the average guess. The Nash equilibrium is 0 (if everyone reasons perfectly and knows everyone else does too). But real players use only a few levels of reasoning, and the winning guess depends on correctly modelling how deeply others think.",
+    "setup": "Everyone simultaneously submits a number from 0 to 100. After all guesses are in, the average is calculated and multiplied by 2/3. The player closest to this target wins. There is no individual best strategy — your optimal guess depends on what you think others will guess, which depends on what they think you'll guess, and so on.",
+    "keyInsight": "Rational play in strategic situations depends not on what you think is right, but on what you think others think. Keynes compared stock markets to a beauty contest where you win by picking the face others will pick — not the most beautiful face. This 'reflexive' structure means prices and markets are driven by higher-order beliefs, not just fundamentals.",
+    "lessons": [
+      "Level-0 thinking: ignore strategy and guess randomly around 50. Level-1: assume others guess 50 and best-respond with 33. Level-2: assume others are Level-1 and guess 22. Level-k: iterate further down. Nash equilibrium (infinite levels) is 0.",
+      "Most first-time players submit guesses between 20 and 35, suggesting they use 1-2 levels of reasoning. This is one of the most stable findings in experimental economics.",
+      "The winning strategy is not the Nash equilibrium — it is one level above the average sophistication of your opponents. Guessing 0 loses to a class that mostly guesses 30.",
+      "Repeat the game immediately after revealing results. Guesses drop dramatically in round 2 as players update their beliefs about others' sophistication. By round 3, many classes converge close to 0."
+    ],
+    "strategies": [
+      {
+        "name": "Guess 33 (Level-1)",
+        "outcome": "Best response to a group of Level-0 players (who average 50). Often wins in the first round of a class that hasn't played before.",
+        "insight": "One level of strategic reasoning is enough to beat naive players — but loses to Level-2 thinkers."
+      },
+      {
+        "name": "Guess 22 (Level-2)",
+        "outcome": "Best response to a group of Level-1 players. Wins when the class has learned from previous rounds. The most common 'sophisticated' first-round guess among economics students.",
+        "insight": "Two levels of reasoning is approximately where real humans top out. Deeper reasoning has diminishing returns in populations that don't also reason deeply."
+      },
+      {
+        "name": "Guess 0 (Nash)",
+        "outcome": "Theoretically correct but practically poor: you win only if everyone else also guesses 0. In any real group, the average will be well above 0 and you will lose by a large margin.",
+        "insight": "This is the core insight: the Nash equilibrium is only correct when all players are rational AND all players know all players are rational AND everyone knows this. In reality, none of these hold."
+      }
+    ],
+    "classroomObservations": "Reveal the average after round 1 and calculate 2/3 of it. Show the histogram of guesses. Ask students to explain their reasoning: most will describe 1-2 levels of thinking. Run round 2 immediately — the dramatic drop in guesses illustrates learning and updating. In round 3, ask: if everyone in this room is now guessing near 0, what should you guess?",
+    "realWorld": "Stock prices are beauty contests — investors buy what they think others will buy tomorrow, not what they think is fundamentally valuable. This explains momentum effects, herding, and bubbles. Currency crises, viral content, and fashion trends all have this reflexive structure. Soros called this 'reflexivity'.",
+    "tip": "Before guessing, think: what does the average person in this room think the average person will guess? Then take 2/3 of that. One level of reasoning above the room is usually enough to win.",
+    "furtherReading": "Keynes (1936) — The General Theory of Employment, Interest and Money (Ch. 12); Nagel (1995) — Unraveling in Guessing Games: An Experimental Study; Ho, Camerer & Weigelt (1998) — Iterated Dominance and Iterated Best Response",
+    "numericalExample": "Target = 2/3 of average. If average guess = 50, target = 33. If average = 33 (Level-1 room), target = 22. If average = 22, target = 15. Nash equilibrium = 0. In first-round experiments with general public, winning guesses are typically 22-28. With economics PhD students, winning guesses are 7-12. The class's sophistication determines the right answer.",
+    "tables": [
+      {
+        "title": "Level-k Reasoning: What to Guess at Each Level",
+        "headers": ["Reasoning Level", "Assumption About Others", "Optimal Guess", "Beats Levels..."],
+        "rows": [
+          ["Level-0 (naive)", "No strategic thinking", "~50 (random)", "No one"],
+          ["Level-1", "Others guess ~50", "50 x 2/3 = 33", "Level-0"],
+          ["Level-2", "Others guess ~33", "33 x 2/3 = 22", "Level-0, Level-1"],
+          ["Level-3", "Others guess ~22", "22 x 2/3 = 15", "Level-0 through 2"],
+          ["Nash (infinite)", "All perfectly rational", "0", "Only if everyone else also plays 0"]
+        ]
+      },
+      {
+        "title": "Typical Results by Player Group (First Round)",
+        "headers": ["Player Group", "Typical Winning Guess", "Implied Average Level", "Notes"],
+        "rows": [
+          ["General public", "25-35", "Level 1-2", "Most common result"],
+          ["Undergraduate economics students", "20-28", "Level 2", "Some strategic sophistication"],
+          ["Economics PhD students", "7-15", "Level 3-4", "Deep strategic reasoning"],
+          ["Game theory specialists", "1-5", "Level 4+", "But still not 0 — avoiding Nash"]
+        ]
+      }
+    ]
+  },
+  {
+    "slug": "matching-pennies",
+    "title": "Matching Pennies",
+    "subtitle": "Zero-Sum Games & Mixed Strategy Nash Equilibria",
+    "concept": "Each player simultaneously chooses Heads or Tails. One player wins if the choices match; the other wins if they differ. There is no pure-strategy Nash equilibrium — any predictable strategy can be exploited. Both players must randomise to prevent the other from reading their strategy.",
+    "setup": "Each round you and your opponent simultaneously choose Heads or Tails. If you are the 'matcher', you win when choices are identical. If you are the 'mismatche', you win when choices differ. Payoffs are equal and opposite — this is a zero-sum game. Your goal is to be unpredictable while predicting your opponent.",
+    "keyInsight": "In zero-sum games with no pure-strategy equilibrium, the only rational play is to randomise equiprobably. Any detectable pattern — even a preference for Heads, or alternating too often — can be exploited by an observant opponent. True randomisation is the only unexploitable strategy.",
+    "lessons": [
+      "There is no 'correct' pure strategy. Whatever you play, your opponent can exploit it. The Nash equilibrium is a mixed strategy: play each option with equal probability. In this equilibrium, your opponent gains nothing from knowing your strategy.",
+      "Humans are bad at generating random sequences. We tend to alternate too much (after H, we play T) and avoid long runs (three H in a row feels 'too lucky' to be random). This predictability can be exploited.",
+      "The minimax theorem: in zero-sum games, the optimal strategy minimises the maximum payoff your opponent can guarantee. This minimax and maximin coincide at the mixed strategy Nash equilibrium.",
+      "Mixed strategies are not the same as confused or random strategies. Mixing 50/50 in matching pennies is precisely optimal — not a sign of indecision. The randomness is strategic."
+    ],
+    "strategies": [
+      {
+        "name": "Always Heads",
+        "outcome": "Immediately exploitable. Once your opponent notices you always play H, they can guarantee themselves a win every round by responding appropriately.",
+        "insight": "Pure strategies in matching pennies are dominated by any mixture — even a 51/49 mix beats a pure strategy against an opponent who can detect it."
+      },
+      {
+        "name": "True 50/50 random mix",
+        "outcome": "The Nash equilibrium. Your opponent cannot do better than 50% against you, regardless of their strategy. You cannot do better than 50% yourself. Both players earn zero in expectation.",
+        "insight": "The equilibrium gives each player a guaranteed minimum expected payoff. Deviating from 50/50 never helps and can only hurt if the opponent exploits the deviation."
+      },
+      {
+        "name": "Exploit opponent's pattern",
+        "outcome": "If your opponent alternates too much, play the opposite of their last choice. If they avoid long runs, play the same as their last choice after seeing two identical choices. Pattern exploitation earns above 50%.",
+        "insight": "This is how professional poker and competitive sports players gain edges. If your opponent is not truly random, you can profit from their predictability."
+      }
+    ],
+    "classroomObservations": "After the game, show the sequence of each player's choices and test for randomness (e.g., run test, autocorrelation). Students are almost always non-random — they alternate too regularly or avoid long runs. Ask: how would you generate a truly random sequence? The practical answer is a coin or a random number generator — human intuition fails.",
+    "realWorld": "Penalty kicks in football (keeper and kicker play a matching pennies game), military deception operations, competitive poker (bluffing must be unpredictable), and randomised drug testing (if testing is predictable, athletes use substances on non-test days) all require mixed strategies.",
+    "tip": "To win consistently, you need to either be more random than your opponent or detect and exploit their non-randomness. A coin flip is theoretically optimal. But watching for patterns and exploiting them is how real competitive advantages are built.",
+    "furtherReading": "Von Neumann & Morgenstern (1944) — Theory of Games and Economic Behavior; Walker & Wooders (2001) — Minimax Play at Wimbledon; Chiappori, Levitt & Groseclose (2002) — Testing Mixed-Strategy Equilibria When Players Are Heterogeneous: The Case of Penalty Kicks in Soccer",
+    "numericalExample": "Payoff: win = +1, lose = -1. If you always play Heads, opponent learns and always plays their winning response — you earn -1 every round. If you play 50/50 randomly, opponent earns 0 in expectation regardless of their strategy. If opponent alternates H,T,H,T... and you notice, play T,H,T,H... and earn +1 every round. Pattern detection is the key skill.",
+    "tables": [
+      {
+        "title": "Payoff Matrix: Matching Pennies (Matcher's payoff, Mismatcher's payoff)",
+        "headers": ["", "Opponent Plays: Heads", "Opponent Plays: Tails"],
+        "rows": [
+          ["You Play: Heads", "(+1, -1) — Matcher wins", "(-1, +1) — Mismatcher wins"],
+          ["You Play: Tails", "(-1, +1) — Mismatcher wins", "(+1, -1) — Matcher wins"]
+        ]
+      },
+      {
+        "title": "Human Non-Randomness: Common Patterns to Exploit",
+        "headers": ["Human Bias", "Pattern Observed", "How to Exploit It"],
+        "rows": [
+          ["Alternation bias", "After H, plays T too often (60%+)", "After H, play the 'mismatch' of T"],
+          ["Avoid long runs", "After HHH, switches to T", "After three H's, play H (they'll switch)"],
+          ["Gambler's fallacy", "Thinks streaks 'must' end", "Ride their expectation of reversal"],
+          ["Win-stay, lose-switch", "Repeats winning choice, switches after loss", "After you lose, copy their last choice"]
+        ]
+      }
+    ]
+  },
+  {
+    "slug": "cournot",
+    "title": "Cournot Competition",
+    "subtitle": "Quantity Competition in Oligopoly",
+    "concept": "Firms simultaneously choose quantities to produce. Each firm's profit depends on the market price, which is determined by total industry output. More output drives the price down for everyone. The Cournot Nash equilibrium sits between the monopoly outcome (restricted output, high price) and the competitive outcome (high output, low price).",
+    "setup": "You are a firm competing with rivals in a market. You simultaneously choose how much to produce. The market price is determined by the total output of all firms — more total output means a lower price. Your profit is (price − cost) × your quantity. You don't see rivals' choices before committing.",
+    "keyInsight": "More competitors → lower prices and higher total output. With two firms, profits are significantly above zero but below monopoly levels. As the number of firms grows, the Cournot equilibrium converges toward the competitive (zero-profit) outcome. Market concentration is directly linked to market power.",
+    "lessons": [
+      "The best-response function: given what you think rivals will produce, your optimal quantity is one that equates your marginal revenue to marginal cost. The Cournot equilibrium is where all firms are on their best-response curves simultaneously.",
+      "The Cournot equilibrium produces more output than monopoly (better for consumers) but less than perfect competition (still some deadweight loss). It is a middle ground — market power persists with a small number of firms.",
+      "Collusion is profitable: if both firms restrict output to the joint-monopoly level, both earn more than the Cournot equilibrium. But each firm has a private incentive to produce more than its agreed quota — this is why cartels are unstable.",
+      "Market concentration and social welfare: the fewer firms there are, the higher prices are, the greater the deadweight loss, and the more antitrust enforcement matters."
+    ],
+    "strategies": [
+      {
+        "name": "Play the Cournot best-response quantity",
+        "outcome": "The Nash equilibrium — no firm can increase profit by unilaterally changing quantity. Stable but inefficient (deadweight loss relative to competitive outcome).",
+        "insight": "The best-response rule: produce half of (max market quantity − rivals' quantity). This means rivals' output crowds out your optimal production — reacting to rivals is the key skill."
+      },
+      {
+        "name": "Collude (produce monopoly quantity / n)",
+        "outcome": "Everyone earns more than the Cournot equilibrium — total industry profit is maximised. But each individual firm profits by producing slightly more. Without enforcement, collusion unravels.",
+        "insight": "Collusion is the prisoner's dilemma of markets. It is individually unstable even though it is collectively optimal. This is why antitrust law exists — and why cartels so often collapse."
+      },
+      {
+        "name": "Overproduce (quantity war)",
+        "outcome": "Drives the market price down toward marginal cost. Industry profits collapse. Rivals either match or are forced to exit. Long-run outcome is closer to competitive equilibrium.",
+        "insight": "Quantity wars are the Cournot equivalent of price wars. Aggressive expansion hurts everyone, including the aggressor. The outcome approaches Bertrand (price = cost) as firms keep expanding."
+      }
+    ],
+    "classroomObservations": "Compare the actual average quantities chosen to the theoretical Cournot equilibrium and to the collusive optimum. Ask: why don't firms collude? What would it take to sustain collusion? (Communication, monitoring, enforcement.) This connects directly to OPEC, airline alliances, and cartel prosecutions.",
+    "realWorld": "OPEC member quotas, duopoly airline routes, pharmaceutical markets after generic entry, telecommunications infrastructure sharing, and supermarket price coordination all exhibit Cournot-like dynamics. The number of competitors is the key variable — it determines how far from monopoly pricing the market sits.",
+    "tip": "The Cournot best-response formula is: q* = (a − c − Q_rivals) / 2, where a is market demand intercept, c is marginal cost, and Q_rivals is total rival production. If you think rivals will produce more, you produce less — and vice versa.",
+    "furtherReading": "Cournot (1838) — Researches into the Mathematical Principles of the Theory of Wealth; Tirole (1988) — The Theory of Industrial Organization (Ch. 5); Bresnahan (1989) — Empirical Studies of Industries with Market Power",
+    "numericalExample": "Market demand: P = 100 - Q_total. Marginal cost = 10. Monopoly: Q=45, P=$55, profit=$2,025. Cournot duopoly: each firm produces 30, total Q=60, P=$40, each profit=$900 (total $1,800). Perfect competition: Q=90, P=$10, profit=$0. Adding one competitor cuts price by $15 and total profit by $225.",
+    "tables": [
+      {
+        "title": "Market Outcomes by Number of Firms (Demand: P=100-Q, MC=10)",
+        "headers": ["Market Structure", "Firms", "Each Firm Produces", "Total Q", "Price", "Each Profit", "Industry Profit", "Deadweight Loss"],
+        "rows": [
+          ["Monopoly", "1", "45", "45", "$55", "$2,025", "$2,025", "$1,012"],
+          ["Cournot Duopoly", "2", "30", "60", "$40", "$900", "$1,800", "$450"],
+          ["Cournot Triopoly", "3", "22.5", "67.5", "$32.50", "$506", "$1,519", "$253"],
+          ["Cournot (n firms)", "n", "90/(n+1)", "90n/(n+1)", "—", "—", "Declining", "Declining"],
+          ["Perfect Competition", "infinite", "—", "90", "$10", "$0", "$0", "$0"]
+        ]
+      },
+      {
+        "title": "Cournot Best-Response: What to Produce Given Rival's Output (MC=10, a=100)",
+        "headers": ["Rival Produces", "Your Best Response: q* = (90 - Q_rival)/2", "Total Market Q", "Market Price"],
+        "rows": [
+          ["0 (monopoly)", "45", "45", "$55"],
+          ["20", "35", "55", "$45"],
+          ["30 (Nash)", "30", "60", "$40"],
+          ["45", "22.5", "67.5", "$32.50"],
+          ["90 (competitive)", "0", "90", "$10"]
+        ]
+      }
+    ]
+  },
+  {
+    "slug": "bertrand",
+    "title": "Bertrand Competition",
+    "subtitle": "Price Competition & the Bertrand Paradox",
+    "concept": "Firms simultaneously set prices for identical products. Any firm that prices above marginal cost loses all customers to the cheapest rival (since goods are identical and customers buy from the lowest-price seller). The Bertrand Nash equilibrium is price = marginal cost — even with only two firms. This is the Bertrand Paradox.",
+    "setup": "You are a firm selling an identical product to rivals. Customers always buy from the cheapest seller. You and rivals simultaneously set prices. If you match the lowest price, you share the market equally. If you undercut, you capture the whole market. If you price higher, you sell nothing. Your profit is (price − cost) × your sales volume.",
+    "keyInsight": "Two firms are sufficient for competitive pricing. In Cournot competition, two firms earn significant profits. In Bertrand competition with identical goods, two firms earn zero. The reason: any price above cost invites undercutting. The equilibrium is price = marginal cost, regardless of how few firms there are.",
+    "lessons": [
+      "The Bertrand Paradox: the market structure (duopoly vs. competitive market) doesn't matter for pricing when goods are identical. Two firms are enough to eliminate market power. This is economically surprising — concentration usually predicts pricing power.",
+      "The paradox is resolved in practice by: product differentiation (goods aren't actually identical), capacity constraints (can't serve all customers even at the right price), switching costs, and repeated interaction (tacit collusion).",
+      "Price competition is much fiercer than quantity competition. Bertrand markets look like competitive markets; Cournot markets look like oligopolies. The mode of competition (price vs. quantity) matters enormously.",
+      "Undercutting is the dominant strategy in the short run but triggers retaliation. The only stable point is p = MC, where no further undercutting is profitable."
+    ],
+    "strategies": [
+      {
+        "name": "Price at marginal cost",
+        "outcome": "The Nash equilibrium. Zero economic profit but no incentive for rivals to undercut further. The market clears efficiently — all consumers who value the good above cost buy it.",
+        "insight": "The most competitive outcome possible. If every firm prices here, the market is identical to perfect competition — even with just two firms."
+      },
+      {
+        "name": "Price above marginal cost",
+        "outcome": "You earn positive margin per unit but lose all customers to any rival who undercuts by even one cent. Only sustainable if rivals also price high — which requires collusion or differentiation.",
+        "insight": "This is the core Bertrand result: any price above cost is unstable. Competition always drives prices to cost in homogeneous-goods markets."
+      },
+      {
+        "name": "Undercut rivals repeatedly",
+        "outcome": "Triggers a price war that ends at p = MC. You capture the whole market briefly, but rivals match you immediately. Total industry profit collapses to zero.",
+        "insight": "Price wars are mutually destructive. Both firms end up at zero profit. The lesson for real businesses: avoid Bertrand competition by differentiating your product."
+      }
+    ],
+    "classroomObservations": "Show how quickly prices converge to marginal cost — even in a duopoly. This shocks students who expect two firms to have market power. Ask: what would have to change for these firms to earn profits? This leads naturally to the real-world strategies firms use to escape Bertrand: branding, patents, loyalty programmes, switching costs.",
+    "realWorld": "Commodity markets (wheat, oil), e-commerce price comparison (Amazon vs. rivals for identical products), generic pharmaceutical entry, and airline route pricing with identical service all exhibit Bertrand pressure. Companies invest heavily in branding and differentiation precisely to escape the zero-profit Bertrand outcome.",
+    "tip": "Bertrand competition only leads to zero profits with truly homogeneous goods and unlimited capacity. Add differentiation (different brands, locations, quality), capacity limits, or search costs — and market power returns immediately.",
+    "furtherReading": "Bertrand (1883) — Book review of Cournot's work; Edgeworth (1897) — La Teoria Pura del Monopolio; Tirole (1988) — The Theory of Industrial Organization (Ch. 5-6)",
+    "numericalExample": "Two firms, MC=$10. If Firm A prices $20 and Firm B prices $19, all customers go to B. Firm B earns ($19-$10) x total demand. A earns $0. A then prices $18 — all customers switch back. This continues until both price at $10 = MC, earning $0 profit. Two firms are enough to replicate perfect competition — the Bertrand paradox.",
+    "tables": [
+      {
+        "title": "Bertrand vs. Cournot vs. Monopoly (Same Market: P=100-Q, MC=10)",
+        "headers": ["Market Type", "Competition Mode", "Price", "Total Quantity", "Industry Profit", "Consumer Surplus", "Deadweight Loss"],
+        "rows": [
+          ["Monopoly", "None", "$55", "45 units", "$2,025", "$1,012", "$1,012"],
+          ["Cournot duopoly", "Quantity", "$40", "60 units", "$1,800", "$1,800", "$450"],
+          ["Bertrand duopoly", "Price", "$10 (=MC)", "90 units", "$0", "$4,050", "$0"]
+        ]
+      },
+      {
+        "title": "Why Bertrand Price = MC: The Undercutting Cascade",
+        "headers": ["Round", "Firm A Price", "Firm B Price", "Who Sells", "Firm A Profit", "Firm B Profit"],
+        "rows": [
+          ["1", "$20", "$20", "Split equally", "$450", "$450"],
+          ["2", "$20", "$19", "All to B", "$0", "$810"],
+          ["3", "$18", "$19", "All to A", "$720", "$0"],
+          ["4", "$18", "$17", "All to B", "$0", "$630"],
+          ["...", "...", "...", "Continues...", "...", "..."],
+          ["Nash", "$10 (MC)", "$10 (MC)", "Split", "$0", "$0"]
+        ]
+      }
+    ]
+  },
+  {
+    "slug": "monopoly-pricing",
+    "title": "Monopoly Pricing",
+    "subtitle": "Market Power, Deadweight Loss & Consumer Welfare",
+    "concept": "A monopolist faces no competition and so can set price above marginal cost. It maximises profit by choosing output where marginal revenue equals marginal cost — which implies a price higher than the competitive level. The welfare cost of this is deadweight loss: profitable trades that don't happen because the price is too high.",
+    "setup": "You are the only seller in a market. You choose a price (or quantity), and demand determines how many units you sell. Higher prices mean fewer sales. Your goal is to maximise profit: revenue minus cost. The efficient outcome (price = marginal cost) gives you zero profit. The monopoly optimum gives you maximum profit at the cost of some consumers being priced out of the market.",
+    "keyInsight": "Monopoly pricing is privately rational but socially inefficient. The gap between price and marginal cost is the Lerner Index — a measure of market power. The deadweight loss triangle represents the value of trades that would benefit both buyer and seller but do not occur because the monopolist restricts output.",
+    "lessons": [
+      "The profit-maximising rule is MR = MC. For a linear demand curve, the monopoly quantity is exactly half the competitive quantity — so the monopolist produces half as much as a competitive market and charges the maximum price that would clear that quantity.",
+      "Deadweight loss is the social cost of monopoly power. It represents consumer and producer surplus that is destroyed — value that nobody gets. It grows with the elasticity of demand and the size of the price-cost margin.",
+      "Price discrimination can eliminate deadweight loss: if the monopolist charges each consumer their exact willingness to pay, output is maximised and no surplus is destroyed. But this requires the monopolist to extract all consumer surplus.",
+      "Regulation responses: price-cap regulation (set p = MC or p = AC), public ownership, or breaking up the monopoly. Each has trade-offs between efficiency, access, and investment incentives."
+    ],
+    "strategies": [
+      {
+        "name": "Price at the monopoly optimum (MR = MC)",
+        "outcome": "Maximises your profit. A fraction of potential customers are priced out of the market. Deadweight loss is created — value that could exist doesn't.",
+        "insight": "The privately optimal choice is socially inefficient. This is the core market failure that motivates antitrust and regulation."
+      },
+      {
+        "name": "Price too high",
+        "outcome": "Fewer units sold than optimal. Revenue and profit both fall. You have less market power than you think — high prices reduce both volume and total profit.",
+        "insight": "There is such a thing as pricing too high for a monopolist: the revenue loss from fewer sales outweighs the margin gain. The MR = MC rule is the sweet spot."
+      },
+      {
+        "name": "Price at marginal cost",
+        "outcome": "Zero economic profit for you — but socially efficient. Maximum consumer surplus. This is what regulation tries to achieve but struggles to sustain because the firm needs to cover fixed costs.",
+        "insight": "P = MC is the social optimum but gives the firm no profit. This is why natural monopolies (like utilities) are regulated at average cost (P = AC), which allows cost recovery while limiting market power."
+      }
+    ],
+    "classroomObservations": "Show the demand curve, the MR curve, and the MC line. Draw the deadweight loss triangle. Ask students: how large would the deadweight loss have to be before regulation is worthwhile? This brings in the cost of regulation vs. the cost of monopoly. Compare monopoly output to competitive output — the factor-of-2 relationship is a clean, memorable result.",
+    "realWorld": "Pharmaceutical patents create temporary monopolies to incentivise R&D — the trade-off between static efficiency (low prices now) and dynamic efficiency (innovation). Platform monopolies (Google Search, OS markets), utility companies, and copyright holders all exercise monopoly pricing power with varying welfare consequences.",
+    "tip": "Lerner Index = (P − MC) / P = 1 / |price elasticity of demand|. A monopolist with perfectly inelastic demand (elasticity = 0) charges an infinite markup — this never happens in practice because there are always substitutes.",
+    "furtherReading": "Lerner (1934) — The Concept of Monopoly and the Measurement of Monopoly Power; Baumol & Bradford (1970) — Optimal Departures from Marginal Cost Pricing; Shapiro & Varian (1999) — Information Rules",
+    "numericalExample": "Demand: P=100-Q, MC=10. Monopoly: MR=100-2Q=10, so Q*=45, P*=$55. Profit = (55-10)x45 = $2,025. Competitive: P=MC=$10, Q=90. Deadweight loss = 0.5 x (55-10) x (90-45) = $1,012.50. The monopolist destroys $1,012 of value that could exist — value that benefits no one.",
+    "tables": [
+      {
+        "title": "Monopoly vs. Competitive Outcome (Demand: P=100-Q, MC=10)",
+        "headers": ["Outcome", "Price", "Quantity", "Revenue", "Total Cost", "Profit", "Consumer Surplus", "Deadweight Loss"],
+        "rows": [
+          ["Monopoly (MR=MC)", "$55", "45", "$2,475", "$450", "$2,025", "$1,012", "$1,012"],
+          ["Perfect Competition (P=MC)", "$10", "90", "$900", "$900", "$0", "$4,050", "$0"],
+          ["Monopoly DWL cost", "+$45", "-45 units", "—", "—", "+$2,025", "-$3,038", "+$1,012"]
+        ]
+      },
+      {
+        "title": "Price-Cost Margin (Lerner Index) for Real Industries",
+        "headers": ["Industry", "Approx. Lerner Index (P-MC)/P", "Price Elasticity of Demand", "Market Power Level"],
+        "rows": [
+          ["Branded pharmaceuticals (patent)", "0.70-0.90", "0.1-0.4", "Very high"],
+          ["Supermarkets (grocery)", "0.02-0.05", "5-10", "Very low"],
+          ["Airlines (route monopoly)", "0.20-0.40", "1-3", "Moderate"],
+          ["Cable internet (local monopoly)", "0.40-0.60", "0.5-1.5", "High"],
+          ["Commodity wheat", "~0.00", "Very high", "None"]
+        ]
+      }
+    ]
+  },
+  {
+    "slug": "english-auction",
+    "title": "English Auction",
+    "subtitle": "Ascending Bid Auctions & Revenue Equivalence",
+    "concept": "In an English auction, bidders raise bids openly until only one remains willing to bid. The winner pays just above the second-highest bidder's value. With independent private values (each bidder knows their own value, not others'), the dominant strategy is to continue bidding up to your true value — no more, no less.",
+    "setup": "An item is auctioned. You know your own private value for it (how much it is worth to you). Bids increase in open increments. When the price exceeds your value, you drop out. The last remaining bidder wins and pays the current bid price. Your profit is your value minus what you pay — or zero if you don't win.",
+    "keyInsight": "Truthful bidding (bidding up to your value) is a dominant strategy. You win every auction where you are the highest-value bidder, and you never overpay because you only beat the second-highest value by the minimum increment. This makes the English auction efficient: the highest-value bidder always wins.",
+    "lessons": [
+      "Bidding above your value is always irrational: even if you win, you pay more than the item is worth to you — a loss. Bidding below your value is also costly: you may lose auctions where winning would have been profitable.",
+      "Revenue equivalence theorem: under standard conditions, the expected revenue to the seller is the same in English auctions, sealed-bid second-price auctions, first-price auctions, and Dutch auctions. The format changes strategy but not expected revenue.",
+      "The winner's curse applies to common-value auctions (where all bidders would assign the same value to the item if they had full information — e.g. oil field rights, company acquisitions). In this game with private values, there is no winner's curse — but students should understand when to apply caution.",
+      "Ascending price formats tend to be more efficient in private-value settings because dropping out reveals information that helps remaining bidders calibrate their strategies."
+    ],
+    "strategies": [
+      {
+        "name": "Bid up to your true value",
+        "outcome": "The dominant strategy. You win when it is profitable and don't win when it is not. Your surplus is (your value − final price). You cannot improve on this by bidding differently.",
+        "insight": "Dominant strategy: it is best regardless of what others do. This makes English auctions easy to play optimally — just be honest about your maximum willingness to pay."
+      },
+      {
+        "name": "Stop early (bid below your value)",
+        "outcome": "You may lose auctions you could have won profitably. You see others are still bidding — the current price is below your value. Leaving money on the table by dropping out early.",
+        "insight": "Shading your bid costs you profitable wins. Unlike in sealed-bid first-price auctions, there is no reason to shade in an ascending auction because you only pay just above the second-highest bid."
+      },
+      {
+        "name": "Bid above your value",
+        "outcome": "You might win, but if you pay more than your value, you make a loss on the transaction. The 'winner's curse' — but in a private-value setting you have no excuse for this error.",
+        "insight": "Overbidding happens when bidders get caught up in the excitement of bidding wars. Set a firm maximum before bidding starts."
+      }
+    ],
+    "classroomObservations": "Check whether the highest-value bidder won. They should in a well-designed English auction with rational bidders. Show the distribution of private values and the final price. Ask: what is the seller's revenue? Is it close to the second-highest value? The gap is the auctioneer's format choice between revenue maximisation and efficiency.",
+    "realWorld": "Sotheby's and Christie's art auctions, eBay (timed ascending bid format), Google's initial public offering (Dutch auction variant), FCC spectrum auctions, and estate sales all use variants of the English auction. Treasury bonds use a uniform-price sealed-bid auction — similar in structure.",
+    "tip": "Before the auction, write down the maximum you are willing to pay and do not exceed it. In the heat of bidding, psychological pressure pushes bids above rational limits — the 'bidding frenzy' is a real bias that costs real money.",
+    "furtherReading": "Vickrey (1961) — Counterspeculation, Auctions, and Competitive Sealed Tenders (Nobel Prize 1996); Klemperer (2004) — Auctions: Theory and Practice; Milgrom & Weber (1982) — A Theory of Auctions and Competitive Bidding",
+    "numericalExample": "3 bidders with private values $80, $60, $40. Dominant strategy: bid your true value. Bidder 1 wins, pays $60 (second-highest value) + minimum increment. Bidder 1's surplus = $80-$60 = $20. Bidder 2 earns $0. If Bidder 1 had bid $100 (overbid), they still win and still pay $60 — no benefit. If they bid $50 (underbid), they lose to Bidder 2 and miss $20 of surplus.",
+    "tables": [
+      {
+        "title": "English Auction Example: 3 Bidders, Values $80/$60/$40",
+        "headers": ["Bidder", "True Value", "Strategy", "Wins?", "Price Paid", "Surplus Earned"],
+        "rows": [
+          ["Bidder 1", "$80", "Bid up to $80", "Yes", "$60 + $1 = $61", "$80 - $61 = $19"],
+          ["Bidder 2", "$60", "Bid up to $60", "No (drops at $60)", "—", "$0"],
+          ["Bidder 3", "$40", "Bid up to $40", "No (drops at $40)", "—", "$0"]
+        ]
+      },
+      {
+        "title": "Why Overbidding or Underbidding Hurts You",
+        "headers": ["Strategy", "Scenario", "Outcome", "vs. Truthful Bidding"],
+        "rows": [
+          ["Overbid: bid $100 (value=$80)", "Second-highest is $60", "Win, pay $61", "Same result — no benefit"],
+          ["Overbid: bid $100 (value=$80)", "Second-highest is $90", "Win, pay $91", "Loss of $11 — pay above value!"],
+          ["Underbid: bid $50 (value=$80)", "Second-highest is $70", "Lose!", "Miss $80-$71=$9 of surplus"]
+        ]
+      }
+    ]
+  },
+  {
+    "slug": "ad-auction",
+    "title": "Ad Auction",
+    "subtitle": "Sponsored Search & Generalised Second-Price Auctions",
+    "concept": "Advertisers bid for ranked positions in search results. Each position receives a different number of clicks. Advertisers pay per click, and the price they pay is determined by the bid of the advertiser ranked just below them — a generalised second-price (GSP) auction. Higher bids win higher positions but may not always be worth the premium.",
+    "setup": "You are an advertiser bidding for a slot on a search results page. Higher-ranked slots get more clicks. You know how much each click is worth to you (your per-click value). You submit a bid. Slots are assigned highest-bid-first. You pay the bid of the advertiser just below you per click received.",
+    "keyInsight": "The GSP auction is not perfectly incentive-compatible — unlike the Vickrey-Clarke-Groves mechanism, truthful bidding is not always optimal for every position. But it approximately encourages honest bidding, and its simplicity is why it dominates real-world advertising markets.",
+    "lessons": [
+      "The top slot gets the most clicks but costs the most per click (you pay just above the second bidder). It is only worth the premium if your per-click value is high enough that the extra clicks more than offset the higher price.",
+      "The key question is: is the marginal click from a higher position worth the marginal cost? This depends on click-through rate differences between positions, your conversion rate, and your profit per conversion.",
+      "Unlike a standard Vickrey auction, optimal bidding in GSP can involve strategic shading — bidding slightly below your true value to win a lower position at a lower price per click. But the gains from sophisticated play are usually small.",
+      "Quality scores matter: in Google's real auction, your bid is multiplied by your Quality Score (historical click-through rate, relevance score). A highly relevant ad can outrank a higher bid by being more likely to be clicked."
+    ],
+    "strategies": [
+      {
+        "name": "Bid your true per-click value",
+        "outcome": "Simple and approximately optimal. You win the highest position where your value exceeds your cost per click. Prevents you from winning positions at a loss.",
+        "insight": "Truthful bidding is a reasonable heuristic even though it is not perfectly optimal in GSP. The gains from sophisticated strategic play rarely justify the complexity."
+      },
+      {
+        "name": "Overbid for top position",
+        "outcome": "Wins the top slot but pays more per click than it generates in revenue. Profitable only if your conversion rate or revenue per conversion is high enough to justify the premium.",
+        "insight": "Brand advertisers often pay for top position even when the cost-per-click economics are marginal — because visibility itself has value. Performance advertisers should only pay for clicks that convert."
+      },
+      {
+        "name": "Underbid for a lower-cost position",
+        "outcome": "Pays a lower price per click. Only rational if click quality is similar across positions or if the volume reduction is offset by cost savings.",
+        "insight": "Lower positions can be better value for advertisers with high conversion rates, since the traffic they receive is smaller but cheaper. Position 2 or 3 can outperform position 1 on a cost-per-acquisition basis."
+      }
+    ],
+    "classroomObservations": "Show the slot assignment, click volumes, prices paid, and profit earned for each bidder. Ask: who won the most money — the highest bidder or the most efficient bidder? This reveals that winning the top slot is not always the optimal strategy. Discuss how Google's Quality Score system changes incentives — it aligns advertiser relevance with user experience.",
+    "realWorld": "Google Ads, Meta Ads, Amazon sponsored listings, and LinkedIn ads all use GSP-style auctions. Digital advertising is a $600 billion industry that runs almost entirely on these mechanisms. The economic insight — that well-designed auctions align private incentives with efficient allocation — is one of the most impactful applications of auction theory.",
+    "tip": "Calculate your expected profit per position before bidding: (your per-click value − price per click) × clicks received. Bid up to the value where expected profit goes to zero. Don't pay for clicks that cost more than they earn.",
+    "furtherReading": "Edelman, Ostrovsky & Schwarz (2007) — Internet Advertising and the Generalised Second-Price Auction; Varian (2007) — Position Auctions; Myerson (1981) — Optimal Auction Design (Nobel Prize 2007)",
+    "numericalExample": "3 ad slots: Slot 1=1,000 clicks/day, Slot 2=600 clicks/day, Slot 3=300 clicks/day. Your value-per-click=$0.50. Slot 1 costs $0.40/click (bid of #2 advertiser): profit = (0.50-0.40)x1,000 = $100/day. Slot 2 costs $0.30/click: profit = (0.50-0.30)x600 = $120/day. Slot 2 is more profitable than Slot 1 despite fewer clicks — the cost savings outweigh the volume loss.",
+    "tables": [
+      {
+        "title": "Ad Slot Profit Analysis: Which Position Should You Target?",
+        "headers": ["Slot", "Clicks/Day", "Price/Click (next bidder's bid)", "Your Value/Click", "Profit/Click", "Daily Profit"],
+        "rows": [
+          ["Slot 1 (Top)", "1,000", "$0.40", "$0.50", "$0.10", "$100/day"],
+          ["Slot 2", "600", "$0.30", "$0.50", "$0.20", "$120/day (BEST!)"],
+          ["Slot 3", "300", "$0.15", "$0.50", "$0.35", "$105/day"],
+          ["No slot", "0", "—", "$0.50", "—", "$0/day"]
+        ]
+      },
+      {
+        "title": "How Google's Quality Score Changes the Effective Bid",
+        "headers": ["Advertiser", "Max Bid", "Quality Score (1-10)", "Effective Bid (Bid x QS)", "Slot Won"],
+        "rows": [
+          ["Advertiser A", "$2.00", "5", "$10.00", "Slot 2"],
+          ["Advertiser B", "$3.00", "3", "$9.00", "Slot 3"],
+          ["Advertiser C", "$1.50", "8", "$12.00", "Slot 1 (wins with lower bid!)"],
+          ["Insight", "—", "—", "High-quality ads beat high bids", "Relevance matters more than $"]
+        ]
+      }
+    ]
+  },
+  {
+    "slug": "double-auction",
+    "title": "Double Auction",
+    "subtitle": "Market Price Discovery & Competitive Equilibrium",
+    "concept": "Both buyers and sellers submit offers simultaneously. A buyer's bid states the maximum they'll pay; a seller's ask states the minimum they'll accept. Trades occur when a bid meets or exceeds an ask. The double auction is remarkably efficient at discovering the competitive equilibrium price — even with very few traders and without any central coordination.",
+    "setup": "Buyers know their private value for the good (maximum willingness to pay); sellers know their private cost (minimum acceptable price). All buyers and sellers simultaneously submit bids and asks. Trades are executed whenever bid ≥ ask. Your profit as a buyer is (your value − price paid); as a seller, it is (price received − your cost).",
+    "keyInsight": "Markets aggregate dispersed private information through prices — without any individual knowing the full picture. This is Hayek's insight. Even with self-interested traders who know only their own values and costs, the double auction consistently converges to the competitive equilibrium price within a few trading rounds.",
+    "lessons": [
+      "Smith's (1962) experiments shocked economists: with just a handful of traders, double auctions converged reliably to the competitive equilibrium price. Markets 'work' even without many traders, perfect information, or a central auctioneer.",
+      "The competitive equilibrium is efficient: all trades that are mutually beneficial occur. Buyers with values above the equilibrium price buy; sellers with costs below the equilibrium price sell. No profitable trade is missed.",
+      "Strategic shading is rational but limited in impact. Buyers want to bid below their value to buy cheap; sellers want to ask above their cost to sell high. But bid too low (or ask too high) and you don't trade at all.",
+      "Price discovery is the process by which the equilibrium price emerges from decentralised trading. It works best with many traders, low search costs, and standardised goods — the conditions of financial markets."
+    ],
+    "strategies": [
+      {
+        "name": "Buyers: bid close to your value",
+        "outcome": "You trade when it is profitable and don't trade when it isn't. Bidding too low means missing out on profitable trades. The cost of shading is failing to execute.",
+        "insight": "In thin markets (few traders), shading is more valuable — you have more pricing power. In deep markets, competition forces bids close to values."
+      },
+      {
+        "name": "Sellers: ask close to your cost",
+        "outcome": "You trade when it is profitable. Asking too high means no trade; asking too low leaves surplus on the table. The market price (determined by competitive bids) sets your upper bound.",
+        "insight": "Sellers with costs well below equilibrium price can ask well above cost and still trade. Sellers near the margin have little pricing power."
+      },
+      {
+        "name": "Strategic manipulation (thin market)",
+        "outcome": "With few traders, submitting extreme bids or asks can move the market price in your favour. This is market power — it is more profitable but reduces overall market efficiency.",
+        "insight": "Market power and market efficiency are inversely related. This is why competition authorities are more concerned about thin markets with few participants."
+      }
+    ],
+    "classroomObservations": "Plot bid prices and ask prices on a supply/demand diagram. Show the competitive equilibrium. Show where actual trades occurred relative to the equilibrium price. In a well-functioning double auction, trades cluster around the equilibrium. Ask: what prevented some trades from occurring? Discuss the role of information asymmetry, search costs, and market thickness.",
+    "realWorld": "Stock exchanges (NYSE, NASDAQ, LSE), commodity futures markets (Chicago Mercantile Exchange), foreign exchange markets, and electricity markets all use continuous double-auction mechanisms. High-frequency trading firms earn profits by exploiting tiny inefficiencies in the price discovery process.",
+    "tip": "Your optimal strategy depends on your private value or cost relative to the expected equilibrium price. If your value is well above equilibrium, bid aggressively — you can pay close to your value and still profit. If your value is near the margin, bid carefully — you have little room for error.",
+    "furtherReading": "Smith (1962) — An Experimental Study of Competitive Market Behavior (Nobel Prize 2002); Hayek (1945) — The Use of Knowledge in Society; Gode & Sunder (1993) — Allocative Efficiency of Markets with Zero-Intelligence Traders",
+    "numericalExample": "5 buyers (values $90,$80,$70,$60,$50), 5 sellers (costs $30,$40,$50,$60,$70). Equilibrium P=$60, 4 trades. Total surplus = $30+$20+$10+$0 = $60. Smith found this equilibrium is reached within 2-3 rounds in the lab — even with no information sharing between traders. The price mechanism aggregates dispersed private information automatically.",
+    "tables": [
+      {
+        "title": "Who Trades at Equilibrium Price $60? (Buyers: Values, Sellers: Costs)",
+        "headers": ["Trader", "Value/Cost", "Trades?", "Surplus"],
+        "rows": [
+          ["Buyer 1", "$90 value", "Yes", "+$30"],
+          ["Buyer 2", "$80 value", "Yes", "+$20"],
+          ["Buyer 3", "$70 value", "Yes", "+$10"],
+          ["Buyer 4", "$60 value", "Marginal", "$0"],
+          ["Buyer 5", "$50 value", "No", "$0"],
+          ["Seller 1", "$30 cost", "Yes", "+$30"],
+          ["Seller 2", "$40 cost", "Yes", "+$20"],
+          ["Seller 3", "$50 cost", "Yes", "+$10"],
+          ["Seller 4", "$60 cost", "Marginal", "$0"],
+          ["Seller 5", "$70 cost", "No", "$0"]
+        ]
+      }
+    ]
+  },
+  {
+    "slug": "fishery",
+    "title": "Fishery",
+    "subtitle": "Tragedy of the Commons & Common-Pool Resources",
+    "concept": "A shared fishery is a common-pool resource: rival (one person's harvest reduces stock for others) but non-excludable (hard to prevent anyone from fishing). Each fisher ignores the cost their harvest imposes on others — they capture all the private benefit but share the cost. The individually rational choice (harvest as much as possible) destroys the collective resource.",
+    "setup": "Players share a fishery with a regenerating fish stock. Each round you choose how many fish to harvest. The stock regenerates between rounds — but only if enough fish remain. If the total harvest exceeds the regeneration capacity, the stock declines. If the stock collapses, there are no fish left for anyone. Your goal is to maximise your cumulative harvest over the game.",
+    "keyInsight": "Open-access common-pool resources are systematically over-exploited in the Nash equilibrium. Each individual acts rationally, but the collective result is resource depletion. This is Hardin's Tragedy of the Commons — not a failure of morality, but a failure of incentive structure.",
+    "lessons": [
+      "In open access (no property rights, no regulation), the Nash equilibrium is over-exploitation. Each fisher's optimal response is to harvest more — until the stock collapses. This is the equilibrium even though it is collectively disastrous.",
+      "The sustainable harvest level (maximum sustainable yield) is the amount that can be taken every period without depleting the stock. It requires all players to cooperate — restraining their individual harvest below the privately optimal level.",
+      "Ostrom's insight: private property rights and government regulation are not the only solutions. Well-designed community governance — with clear rules, monitoring, and graduated sanctions — can sustain cooperation even in common-pool resources.",
+      "The three standard solutions: privatisation (assign property rights so the owner internalises the full cost of depletion), regulation (quota systems, licences, taxes), and Ostrom-style community governance (local rules, peer enforcement)."
+    ],
+    "strategies": [
+      {
+        "name": "Harvest conservatively (sustainable level)",
+        "outcome": "Preserves the fishery and earns a steady long-term income. But you are exploited if others over-harvest — the stock still depletes, and your restraint benefits free-riders.",
+        "insight": "Conservation only works collectively. Unilateral restraint is altruistic but not sufficient — and not individually rational if others are over-harvesting."
+      },
+      {
+        "name": "Maximise personal harvest each round",
+        "outcome": "Short-run gains but collapses the fishery within a few rounds. Once the stock is depleted, everyone earns zero — including you. The Nash equilibrium in open access.",
+        "insight": "The tragedy is that this is privately rational right up to the moment of collapse. Each additional fish you take is worth more to you than its cost to you — even though the cost to the group is high."
+      },
+      {
+        "name": "Cooperate and agree on quotas",
+        "outcome": "The efficient outcome — maximises long-run total harvest. Requires communication, monitoring (can you trust others to respect their quota?), and enforcement (what happens to cheaters?).",
+        "insight": "Voluntary cooperation works when groups are small, members know each other, violations are observable, and sanctions are credible. These are exactly Ostrom's conditions for successful self-governance."
+      }
+    ],
+    "classroomObservations": "Show the stock level across rounds — the depletion trajectory is stark. Ask students: when did you first realise the fishery was in trouble? Why didn't you cut back then? This reveals the collective action problem in real time. Then ask: what rule change would have produced a better outcome? This connects the game to real fishery management policy.",
+    "realWorld": "Atlantic cod collapse (Canada, 1990s), groundwater depletion (Ogallala Aquifer, US), deforestation, ocean plastic pollution, and congestion on public roads all follow the tragedy of the commons structure. Tradeable permits (carbon markets), fishing quotas, and Ostrom's community governance models are real policy responses.",
+    "tip": "Watch the stock level indicator carefully. Once it starts falling, it accelerates — depletion is non-linear. The time to act is before the stock drops below the regeneration threshold, not after.",
+    "furtherReading": "Hardin (1968) — The Tragedy of the Commons; Ostrom (1990) — Governing the Commons (Nobel Prize 2009); Gordon (1954) — The Economic Theory of a Common-Property Resource: The Fishery",
+    "numericalExample": "Stock=100 fish, regeneration=20%/round, 5 players. Sustainable harvest per player = 20 total / 5 = 4 fish/round. If everyone takes 4: stock stays at 100, each earns 4/round forever. If each takes 10: total harvest=50, stock falls to 50, regeneration=10, next round stock=60... then 52... then 42... collapse in ~7 rounds. Nash equilibrium = over-harvest = eventual zero earnings.",
+    "tables": [
+      {
+        "title": "Fishery Simulation: 5 Players, Starting Stock=100, Regen=20%",
+        "headers": ["Round", "Strategy", "Stock Start", "Total Harvest", "Regeneration", "Stock End", "Avg Earnings/Player"],
+        "rows": [
+          ["1-5", "All sustainable (4 each)", "100", "20", "20 (100x20%)", "100", "4 per round"],
+          ["1", "All over-harvest (10 each)", "100", "50", "10 (50x20%)", "60", "10 (one-time gain)"],
+          ["2", "All over-harvest (10 each)", "60", "50", "2 (10x20%)", "12", "10 (last round!)"],
+          ["3", "All over-harvest (10 each)", "12", "12 (stock depleted)", "0", "0", "2.4 (nothing left)"],
+          ["4+", "Collapsed", "0", "0", "0", "0", "$0 forever"]
+        ]
+      },
+      {
+        "title": "Policy Solutions: Pros and Cons",
+        "headers": ["Solution", "Mechanism", "Works When", "Weakness"],
+        "rows": [
+          ["Private property rights", "Owner internalises all costs/benefits", "Good resource is divisible (e.g. land)", "Hard to assign rights to fish/air/water"],
+          ["Government quota", "Regulator sets max harvest", "Strong enforcement capacity", "Requires monitoring; quota-setting is political"],
+          ["Tradeable permits", "Quotas can be bought/sold for efficiency", "Cap is credible and enforced", "Distributional concerns; can concentrate ownership"],
+          ["Ostrom community governance", "Local rules, peer monitoring, graduated sanctions", "Small, stable, identifiable group", "Breaks down with large anonymous groups"]
+        ]
+      }
+    ]
+  },
+  {
+    "slug": "bank-run",
+    "title": "Bank Run",
+    "subtitle": "Coordination Failure & Self-Fulfilling Crises",
+    "concept": "Banks borrow short (deposits) and lend long (illiquid loans). If all depositors withdraw simultaneously, the bank must liquidate assets at a loss and may fail — even if it would have been solvent otherwise. The run is self-fulfilling: if you believe others will run, it is rational to run too, which causes the very crisis you feared.",
+    "setup": "You are a depositor in a bank. The bank has invested your deposits in long-term assets. If you withdraw early, you get your full deposit back (the bank liquidates assets at a discount to pay you). If the bank stays open and you wait, you earn the full return. But if too many depositors withdraw, the bank fails and late withdrawers get nothing.",
+    "keyInsight": "Bank runs are a coordination failure with two equilibria: 'no run' (everyone waits, the bank stays solvent, everyone earns the full return) and 'run' (everyone withdraws, the bank fails, early movers recover their deposits, late movers get nothing). Both are self-fulfilling. Which equilibrium occurs depends on beliefs.",
+    "lessons": [
+      "The bank run is a prisoner's dilemma: if you believe others won't run, you should wait (better returns). If you believe others will run, you should run first (recover your deposit before the bank fails). Expectations drive the outcome.",
+      "Deposit insurance eliminates the run equilibrium by guaranteeing deposits regardless of what others do. Once 'wait' is always safe, 'run' is never rational — the coordination failure disappears. This is why deposit insurance was introduced after the Great Depression bank panics.",
+      "Solvent banks can fail due to runs — the crisis is not caused by underlying insolvency but by coordinated panic. This is the key insight of Diamond & Dybvig: banking fragility is intrinsic to the maturity mismatch, not just to bad loans.",
+      "Central banks act as lenders of last resort for the same reason: by guaranteeing to lend to solvent banks under pressure, they eliminate the run equilibrium before it starts."
+    ],
+    "strategies": [
+      {
+        "name": "Wait (don't run)",
+        "outcome": "Best outcome if others also wait — you earn the full return on your deposits. Catastrophic if others run and you wait too long — you are last in the queue when the bank has already failed.",
+        "insight": "Waiting is optimal in the 'good' equilibrium. The risk is being caught in the 'bad' equilibrium — where others have already decided to run."
+      },
+      {
+        "name": "Run (withdraw immediately)",
+        "outcome": "Safe regardless of what others do — you get your deposit back before the bank potentially fails. But if everyone runs, this precipitates the bank failure that motivates the run in the first place.",
+        "insight": "Running is individually rational under panic but collectively self-defeating. Each runner is rational; the aggregate is disastrous."
+      },
+      {
+        "name": "Wait if you receive credible information the bank is solvent",
+        "outcome": "The socially optimal strategy requires credible, public information about bank health. Transparency, stress tests, and central bank backstops are designed to provide this credibility.",
+        "insight": "Sunspot equilibria: runs can be triggered by irrelevant public signals (a rumour, a news headline) that coordinate depositor expectations. Regulation aims to eliminate these multiple equilibria."
+      }
+    ],
+    "classroomObservations": "Show the two equilibrium outcomes side by side: what each depositor earns if everyone waits vs. what they earn if everyone runs. The 'run' equilibrium is individually rational but collectively disastrous. Ask: what information would make you confident enough to wait? This reveals the role of transparency and credibility in financial stability.",
+    "realWorld": "Northern Rock (UK, 2007) — queues around the block from a Twitter rumour. Silicon Valley Bank (US, 2023) — fastest bank run in history, driven by instant digital withdrawals. The Great Depression — 9,000 bank failures in the 1930s before deposit insurance. Each case illustrates how coordination failure can destroy solvent institutions.",
+    "tip": "Ask yourself: do I believe the bank is solvent? Do I believe others believe the bank is solvent? It is not enough to know the bank is safe — you also need to believe others know it. This is the game of higher-order beliefs that drives crises.",
+    "furtherReading": "Diamond & Dybvig (1983) — Bank Runs, Deposit Insurance, and Liquidity (Nobel Prize 2022); Kindleberger (1978) — Manias, Panics, and Crashes; Calomiris & Gorton (1991) — The Origins of Banking Panics",
+    "numericalExample": "Bank has $1,000 in deposits, invested in assets worth $1,200 if held to maturity but only $900 if liquidated early. 100 depositors, each with $10. If 90 run: bank liquidates $900, pays 90 runners $10 each, last 10 depositors get $0. If 0 run: all get $12 at maturity. The $2 gain from waiting vs. the $10 loss from being last drives the panic.",
+    "tables": [
+      {
+        "title": "Bank Run: Two Equilibrium Outcomes",
+        "headers": ["Scenario", "# Who Run", "Assets Liquidated", "Early Withdrawers Get", "Late Withdrawers Get", "Socially Efficient?"],
+        "rows": [
+          ["No run (good equilibrium)", "0", "$0", "—", "$12 each at maturity", "Yes — maximum value"],
+          ["Full run (bad equilibrium)", "100", "$900 (liquidated at loss)", "First 90 get $10 each", "Last 10 get $0", "No — $300 value destroyed"],
+          ["Partial run (unstable)", "50", "$500 liquidated", "50 get $10 each", "Remaining 50 get $1,400/$50 = $4.50...", "No — unstable, triggers more runs"]
+        ]
+      },
+      {
+        "title": "How Policy Tools Change the Equilibrium",
+        "headers": ["Policy Tool", "Mechanism", "Effect on Run Incentive", "Historical Example"],
+        "rows": [
+          ["Deposit insurance (up to limit)", "Guarantees deposits regardless of others' behaviour", "Eliminates run equilibrium: 'wait' always safe", "FDIC (US, 1933), FSCS (UK)"],
+          ["Central bank lender of last resort", "CB lends to solvent banks facing liquidity pressure", "Removes fear of insolvency from run", "Bank of England, Federal Reserve"],
+          ["Suspension of convertibility", "Bank can refuse withdrawals if run starts", "Prevents first-come-first-served dynamic", "US National Banking Era pre-1913"]
+        ]
+      }
+    ]
+  },
+  {
+    "slug": "asset-bubble",
+    "title": "Asset Bubble",
+    "subtitle": "Speculation, Momentum & the Greater Fool Theory",
+    "concept": "Asset prices can rise far above fundamental value when traders believe they can sell to a 'greater fool' at a higher price. Each trader may know the asset is overvalued but buys anyway — expecting to exit before the crash. Bubbles are rational at the individual level yet collectively destabilising.",
+    "setup": "Players buy and sell an asset across multiple rounds. The asset has a known fundamental value (the present value of its cash flows). The market price is determined by supply and demand. Players can buy if they think the price will rise further, or sell if they think the peak has passed. The bubble eventually collapses to fundamental value — but the timing is uncertain.",
+    "keyInsight": "Bubbles can be rational even when everyone knows the asset is overpriced. The greater fool theory: as long as there is a buyer willing to pay more, buying at an inflated price can be profitable. Bubbles collapse when the pool of greater fools runs out — and no one can predict exactly when that is.",
+    "lessons": [
+      "The fundamental value of an asset is the present value of all future cash flows. When price diverges from fundamental value, it is a bubble. But 'knowing' this doesn't help you profit from it — you still need to time your exit correctly.",
+      "Keynes's observation: 'Markets can remain irrational longer than you can remain solvent.' Short-selling a bubble is dangerous because the bubble can inflate far further before collapsing.",
+      "Feedback loops sustain bubbles: rising prices attract more buyers (momentum trading), which raises prices further, which attracts more buyers. This is positive feedback — the opposite of the negative feedback that keeps equilibrium prices stable.",
+      "Crashes are typically sudden and severe. The bubble collapses when expectations shift — either from a triggering event or from a critical mass of sellers. The shift from inflated to fundamental value can happen in days."
+    ],
+    "strategies": [
+      {
+        "name": "Buy early, sell before peak",
+        "outcome": "Highly profitable if you time it correctly. Requires either superior information about when the bubble will burst or a disciplined exit rule (e.g. 'sell when price exceeds 2× fundamental value').",
+        "insight": "Bubbles make early entrants rich and late entrants poor. The difference between a smart speculator and a greater fool is timing — and timing is notoriously unreliable."
+      },
+      {
+        "name": "Buy and hold through the crash",
+        "outcome": "You eventually receive the fundamental value — but you gave up the opportunity to sell high. If you paid inflated prices, you incur a loss. Long-run investors avoid this by not buying above fundamental value.",
+        "insight": "Buy-and-hold strategies protect against bubble losses only if you buy at or below fundamental value. Buying into a bubble and holding is not the same as long-term investing."
+      },
+      {
+        "name": "Never buy above fundamental value",
+        "outcome": "You miss speculative gains but avoid catastrophic losses. You purchase only when price ≤ fundamental value and sell when it rises above. Boring but reliable.",
+        "insight": "Value investing: buy what is cheap relative to fundamentals. This is Buffett's approach. It requires patience and the ability to sit out bubbles while watching others profit — psychologically very difficult."
+      }
+    ],
+    "classroomObservations": "Show the price path vs. the fundamental value line. The gap is the bubble. Ask: at what point did you know it was a bubble? Why did you keep buying (or holding)? This reveals the psychological forces that sustain bubbles — FOMO, herding, overconfidence, and the conviction that 'this time is different'.",
+    "realWorld": "Tulip mania (1637), South Sea Bubble (1720), dot-com bubble (1999-2001), US housing bubble (2003-2008), and cryptocurrency cycles all share the same structure: prices rise far above fundamentals, sustained by expectations of further gains, and crash suddenly when those expectations reverse.",
+    "tip": "The question is not 'is this a bubble?' but 'when will it pop?' Bubbles can last far longer than fundamental analysis suggests. If you trade in a bubble, set a hard exit price before you enter — decision-making under euphoria is unreliable.",
+    "furtherReading": "Shiller (2000) — Irrational Exuberance; Kindleberger (1978) — Manias, Panics, and Crashes; Brunnermeier (2008) — Bubbles, entry in New Palgrave Dictionary of Economics",
+    "numericalExample": "Asset fundamental value = $10. In round 1 price rises to $15 (50% above fundamental). A trader buys at $15 expecting to sell at $20. If everyone does this and price reaches $20, early buyers profit $5. But when the last buyer has no one to sell to, the crash is sudden: price falls to $10 in one round. The last buyer loses $10. Winner = early movers. Loser = whoever holds when music stops.",
+    "tables": [
+      {
+        "title": "Asset Bubble Life Cycle: Price vs. Fundamental Value",
+        "headers": ["Phase", "Round", "Fundamental Value", "Market Price", "Price/Fundamental Ratio", "Smart Money Action"],
+        "rows": [
+          ["Pre-bubble", "1", "$10", "$10", "1.0x", "Buy (fairly valued)"],
+          ["Early bubble", "2-3", "$10", "$13", "1.3x", "Hold — momentum attractive"],
+          ["Peak bubble", "4-5", "$10", "$18", "1.8x", "Sell (overvalued by 80%)"],
+          ["Euphoria", "6", "$10", "$22", "2.2x", "Exit urgently"],
+          ["Crash", "7", "$10", "$10", "1.0x", "Buy again (reset)"],
+          ["Post-crash", "8+", "$10", "$8", "0.8x", "Accumulate (undervalued)"]
+        ]
+      },
+      {
+        "title": "Historical Bubbles: Price-to-Fundamental at Peak",
+        "headers": ["Bubble", "Year", "Asset Class", "Peak Overvaluation", "Crash Size"],
+        "rows": [
+          ["Dutch Tulip Mania", "1637", "Tulip bulbs", "~6,000x annual wage for one bulb", "-99% in weeks"],
+          ["Dot-com bubble", "1999-2000", "Tech stocks (NASDAQ)", "P/E ratio >100x (vs. normal 15-20x)", "-78% peak to trough"],
+          ["US Housing", "2006-2007", "Residential property", "~2x long-run average price-to-income", "-30% nationally, -50% some markets"],
+          ["Bitcoin (2017)", "2017", "Cryptocurrency", "~$20,000 (from $1,000 in Jan 2017)", "-84% by Dec 2018"]
+        ]
+      }
+    ]
+  },
+  {
+    "slug": "portfolio-frontier",
+    "title": "Portfolio Frontier",
+    "subtitle": "Diversification, Mean-Variance Optimisation & the Efficient Frontier",
+    "concept": "By combining assets whose returns are not perfectly correlated, investors can reduce portfolio risk without sacrificing expected return. The efficient frontier is the set of portfolios that offer the maximum expected return for each level of risk (standard deviation). Portfolios below the frontier are inefficient — dominated by something better.",
+    "setup": "You choose portfolio weights across multiple assets, each with different expected returns and volatilities. The return and risk of your portfolio depend on both the individual assets and the correlations between them. Your goal is to build the portfolio with the highest expected return for a given level of risk you are willing to accept.",
+    "keyInsight": "Diversification is the only free lunch in finance. Combining two risky assets almost always reduces total portfolio risk when their returns are not perfectly correlated — without reducing the weighted average expected return. The efficient frontier shows exactly how much risk reduction is achievable through optimal combinations.",
+    "lessons": [
+      "Risk has two components: systematic risk (affecting all assets — macroeconomic shocks, interest rates) cannot be diversified away. Idiosyncratic risk (specific to one company — management failures, product recalls) can be eliminated by holding enough assets.",
+      "Correlation is the key variable. Two assets with returns that are negatively correlated (move in opposite directions) provide maximum diversification benefit — the portfolio variance can be lower than either individual asset's variance.",
+      "The minimum-variance portfolio has the lowest risk possible. The tangency portfolio has the highest Sharpe ratio (return per unit of risk). CAPM says every investor should hold the tangency portfolio combined with the risk-free asset — this is the market portfolio.",
+      "Mean-variance optimisation is sensitive to input estimates. Small errors in expected return estimates cause large changes in optimal weights. In practice, portfolios often use equal weights or factor models rather than exact optimisation to avoid overfitting."
+    ],
+    "strategies": [
+      {
+        "name": "Hold a single high-return asset",
+        "outcome": "Bears all idiosyncratic risk of that asset. Never on the efficient frontier unless all assets are perfectly correlated. You are taking undiversified risk that earns no extra expected return.",
+        "insight": "Concentrated portfolios are only rational if you have genuine informational edge on a specific asset. Without edge, concentration is just uncompensated risk."
+      },
+      {
+        "name": "Build a diversified portfolio on the efficient frontier",
+        "outcome": "Achieves the best attainable risk-return combination. The specific point on the frontier depends on your risk tolerance — more risk-averse investors choose portfolios closer to the minimum-variance point.",
+        "insight": "Efficient portfolios dominate inefficient ones: for the same expected return, you take less risk. There is no reason to hold an inefficient portfolio if a better one is available."
+      },
+      {
+        "name": "Hold the market index portfolio",
+        "outcome": "According to CAPM, this is the tangency portfolio — the best risky portfolio for any investor. Combined with the risk-free asset, it generates any desired risk-return combination on the capital market line.",
+        "insight": "Index investing is mean-variance optimal under CAPM assumptions. The practical implication: low-cost index funds are hard to beat on a risk-adjusted basis after fees."
+      }
+    ],
+    "classroomObservations": "Show the efficient frontier diagram with individual assets plotted inside it. Ask: why are some portfolios outside the frontier? (They are not — individual assets are inside, never outside.) Point to the minimum-variance portfolio and the tangency portfolio. Ask: where on the frontier would a very risk-averse investor choose? A risk-neutral one?",
+    "realWorld": "Pension funds (liability-driven investment), endowment funds (Yale model), risk-parity strategies (Bridgewater's All Weather fund), and robo-advisors (Betterment, Wealthfront) all implement mean-variance thinking. The shift from active stock-picking to passive index investing over the last 40 years is partly a practical application of portfolio theory.",
+    "tip": "Correlation between assets is what drives diversification benefit. An asset with low expected return but negative correlation with your existing portfolio can still be valuable — it reduces risk without adding much. Don't evaluate assets in isolation; evaluate them as additions to an existing portfolio.",
+    "furtherReading": "Markowitz (1952) — Portfolio Selection (Nobel Prize 1990); Sharpe (1964) — Capital Asset Prices: A Theory of Market Equilibrium Under Conditions of Risk; Fama & French (1992) — The Cross-Section of Expected Stock Returns",
+    "numericalExample": "Asset A: return 10%, std dev 20%. Asset B: return 10%, std dev 20%. If correlation = +1.0: 50/50 portfolio std dev = 20% (no diversification benefit). If correlation = 0: portfolio std dev = 14.1% (same return, 30% less risk). If correlation = -1.0: portfolio std dev = 0% (zero risk, 10% return — the perfect hedge). Correlation is everything.",
+    "tables": [
+      {
+        "title": "How Correlation Affects Portfolio Risk (Both Assets: Return=10%, StdDev=20%, Weights=50/50)",
+        "headers": ["Correlation (r)", "Portfolio Return", "Portfolio Std Dev", "Risk Reduction vs. Single Asset", "Interpretation"],
+        "rows": [
+          ["+1.0 (perfect positive)", "10%", "20%", "0%", "No diversification — assets move together"],
+          ["+0.5", "10%", "17.3%", "13%", "Partial benefit"],
+          ["0 (uncorrelated)", "10%", "14.1%", "29%", "Significant benefit — independent risks cancel"],
+          ["-0.5", "10%", "10%", "50%", "Strong benefit"],
+          ["-1.0 (perfect negative)", "10%", "0%", "100%", "Perfect hedge — zero portfolio risk!"]
+        ]
+      },
+      {
+        "title": "Efficient Frontier Key Points",
+        "headers": ["Portfolio", "Expected Return", "Risk (Std Dev)", "Sharpe Ratio", "Who Should Hold It"],
+        "rows": [
+          ["Minimum-variance", "Lowest E(r)", "Lowest possible risk", "Moderate", "Most risk-averse investors"],
+          ["Tangency portfolio", "Moderate", "Moderate", "Highest (best risk-return)", "All investors (CAPM prediction)"],
+          ["Maximum-return", "Highest E(r)", "Highest", "May be low", "Risk-neutral investors"],
+          ["Any point below frontier", "Lower E(r)", "Same risk", "Worse", "Dominated — never hold"]
+        ]
+      }
+    ]
+  },
+  {
+    "slug": "monte-carlo-pi",
+    "title": "Monte Carlo Pi",
+    "subtitle": "Simulation, Randomness & the Law of Large Numbers",
+    "concept": "Random points are scattered uniformly inside a unit square. The fraction that fall inside the inscribed quarter-circle estimates π/4. As the number of points grows, the estimate converges to the true value. This illustrates Monte Carlo simulation: using random sampling to approximate quantities that are difficult to compute analytically.",
+    "setup": "Random points are generated in a square. Each point is tested: does it fall inside the inscribed circle? The ratio of points inside the circle to total points estimates π/4. Your contribution is adding more sample points — each one refines the estimate. The law of large numbers guarantees convergence, but convergence is slow.",
+    "keyInsight": "Randomness can solve deterministic problems. Monte Carlo methods approximate values that are hard to compute exactly by simulating the underlying random process and averaging the results. The accuracy improves with the square root of the number of samples — doubling precision requires quadrupling the sample size.",
+    "lessons": [
+      "The Law of Large Numbers: the sample average converges to the population mean as the sample size grows. With enough samples, any Monte Carlo estimate becomes arbitrarily accurate — but 'enough' can be very large.",
+      "Error scales as 1/√n: to reduce estimation error by half, you need 4× as many samples. To gain one decimal place of accuracy, you need 100× more samples. This slow convergence is the fundamental cost of Monte Carlo methods.",
+      "Variance reduction techniques make Monte Carlo more efficient without adding samples: stratified sampling (divide the space into regions and sample from each), antithetic variates (use paired correlated samples), and importance sampling (oversample from the most important regions).",
+      "Monte Carlo is most valuable for high-dimensional problems where analytical integration is impossible. For simple problems like π, other methods are far more efficient — but the same logic scales to 1,000-dimensional financial models."
+    ],
+    "strategies": [
+      {
+        "name": "More samples → better estimate",
+        "outcome": "The estimate converges toward π (3.14159...). With 100 samples: accurate to ~1 decimal place. With 10,000 samples: ~2 decimal places. With 1,000,000 samples: ~3 decimal places.",
+        "insight": "Slow convergence is a fundamental property of random sampling — not a failure of the method. For most real-world applications, 3-4 significant figures is sufficient and easily achievable."
+      },
+      {
+        "name": "Examine variance of estimates across runs",
+        "outcome": "Run the simulation multiple times with the same sample size. The spread of estimates gives you the standard error — a direct measure of how uncertain your estimate is.",
+        "insight": "Monte Carlo is not just about point estimates — the variance across runs quantifies uncertainty. This is especially important in finance and risk management, where knowing the range of outcomes matters as much as the mean."
+      }
+    ],
+    "classroomObservations": "Show the scatter plot of points coloured by inside/outside the circle. Watch the estimate converge as more points are added. Point out the oscillation — individual estimates bounce around even as they converge. This is the noise that 1/√n characterises. Ask: how would you use this logic to price a stock option? (Replace the circle with an option payoff function.)",
+    "realWorld": "Derivative pricing (Black-Scholes can be solved analytically, but exotic options require Monte Carlo), value-at-risk (VaR) in risk management, drug clinical trial planning (sample size calculations), particle physics simulations, and climate model uncertainty quantification all use Monte Carlo methods.",
+    "tip": "To estimate the uncertainty in your Monte Carlo estimate, run the simulation multiple times and compute the standard deviation of the estimates. The standard error is that standard deviation divided by √(number of runs). This tells you how confident to be in your answer.",
+    "furtherReading": "Metropolis & Ulam (1949) — The Monte Carlo Method; Glasserman (2004) — Monte Carlo Methods in Financial Engineering; Rubinstein & Kroese (2016) — Simulation and the Monte Carlo Method",
+    "numericalExample": "True pi = 3.14159... With n=100 samples, estimate is accurate to ~1 decimal place (error ~0.1). n=10,000: ~2 decimal places (error ~0.01). n=1,000,000: ~3 decimal places (error ~0.001). To gain 1 extra decimal place, you need 100x more samples. This is the 1/sqrt(n) convergence rate — slow but guaranteed.",
+    "tables": [
+      {
+        "title": "Monte Carlo Pi: Sample Size vs. Accuracy",
+        "headers": ["Samples (n)", "Typical Pi Estimate", "Error Size", "Decimal Places Accurate", "Computation Time (approx)"],
+        "rows": [
+          ["100", "3.0 to 3.3", "~0.1", "1", "Instant"],
+          ["1,000", "3.10 to 3.18", "~0.04", "1-2", "Instant"],
+          ["10,000", "3.13 to 3.15", "~0.01", "2", "< 1 second"],
+          ["100,000", "3.139 to 3.144", "~0.003", "2-3", "< 1 second"],
+          ["1,000,000", "3.1413 to 3.1419", "~0.001", "3", "1-2 seconds"],
+          ["100,000,000", "3.14159 +/- 0.0001", "~0.0001", "4-5", "Minutes"]
+        ]
+      },
+      {
+        "title": "Monte Carlo in Finance: Estimating Option Payoff",
+        "headers": ["Application", "What's Simulated", "Output", "Why Not Analytical?"],
+        "rows": [
+          ["European call option", "Stock price paths (GBM)", "Average payoff = option price", "Black-Scholes works, but MC validates it"],
+          ["Asian option", "Path-average stock prices", "Average of averages = price", "No closed-form solution"],
+          ["Basket option (10 stocks)", "10 correlated price paths", "Payoff based on basket value", "Correlation structure too complex"],
+          ["Value at Risk (VaR)", "Portfolio returns under many scenarios", "5th percentile loss", "Distribution is non-normal"]
+        ]
+      }
+    ]
+  },
+  {
+    "slug": "conflict-of-interest",
+    "title": "Conflict of Interest",
+    "subtitle": "Agency Problems in Finance & Professional Services",
+    "concept": "A conflict of interest arises when a person has private incentives that diverge from the duties they owe to someone else. In financial markets and professional services, advisers, analysts, auditors, and fund managers regularly face situations where their personal gain conflicts with their clients' best interests.",
+    "setup": "Players act as financial advisers or professionals who make recommendations on behalf of clients. Unknown to the client, the adviser may have a financial interest in a particular recommendation (e.g. a higher commission, a referral fee, a shareholding). The game tests whether advisers act in clients' interests or their own, and whether clients can detect the bias.",
+    "keyInsight": "Conflicts of interest are pervasive in finance and professional services — and difficult to eliminate because: (1) advisers always know more than clients (information asymmetry), and (2) monitoring is expensive. Disclosure is the legal minimum but does not eliminate the conflict and may actually make it worse (moral licensing).",
+    "lessons": [
+      "The conflict arises from the combination of information asymmetry (the client doesn't know the adviser's private incentive) and the adviser's discretion (the adviser makes recommendations the client relies on).",
+      "Disclosure has a counterintuitive effect: studies show that once advisers disclose a conflict, they feel morally licensed to give more biased advice — as if disclosure has transferred the ethical responsibility to the client.",
+      "Structural solutions are more effective than disclosure: independence requirements (separating advice from product sales), fiduciary duties (legal obligation to act in the client's interest), and fee-only compensation (no commissions).",
+      "Reputation provides some constraint: advisers with long-term client relationships have more to lose from exploitation. Short-term or one-time transactions are more susceptible to conflicts."
+    ],
+    "strategies": [
+      {
+        "name": "Act in the client's best interest",
+        "outcome": "The legally required and ethically correct outcome. May forgo personal gain but builds reputation and avoids legal liability. The outcome that well-designed incentive structures try to induce.",
+        "insight": "Acting in the client's interest is rational when: (1) the relationship is long-term (reputation matters), (2) there is regulatory monitoring, or (3) professional norms are strong and internalised."
+      },
+      {
+        "name": "Exploit the conflict (self-deal)",
+        "outcome": "Short-run gain for the adviser. Long-run costs: reputational damage if detected, regulatory sanctions, and personal liability. Social harm: clients receive suboptimal advice and market trust erodes.",
+        "insight": "Self-dealing is rational in one-shot anonymous interactions with weak monitoring. This is why financial regulation focuses heavily on disclosure, licensing, and fiduciary duties."
+      },
+      {
+        "name": "Disclose the conflict transparently",
+        "outcome": "The legal minimum. Allows clients to make informed decisions — in theory. In practice, clients often cannot evaluate complex conflicts and still defer to the adviser.",
+        "insight": "Disclosure is necessary but not sufficient. Clients lack the expertise to adjust for disclosed conflicts. Structural separation (e.g. banning commission-based advice) is more effective."
+      }
+    ],
+    "classroomObservations": "Ask students: did knowing about the conflict change how they interpreted the adviser's recommendation? Research shows it usually doesn't — clients continue to trust advisers even after disclosure. This is the real-world failure that justifies fiduciary rules beyond mere disclosure.",
+    "realWorld": "Research analyst conflicts in investment banking (dot-com era: analysts rated stocks 'buy' while privately calling them 'dogs'), auditor conflicts (Big Four firms earn consulting fees from audit clients), insurance broker kickbacks (undisclosed commissions), credit rating agency conflicts (issuers pay for ratings), and pension adviser conflicts (fund managers paying for shelf space).",
+    "tip": "The key question to ask of any recommendation: how does this adviser get paid? Fee structures reveal incentives. A commission-based adviser has an incentive to recommend high-commission products. A fee-only adviser earns the same regardless of what they recommend.",
+    "furtherReading": "Jensen & Meckling (1976) — Theory of the Firm; Cain, Loewenstein & Moore (2005) — The Dirt on Coming Clean: Perverse Effects of Disclosing Conflicts of Interest; UK FCA (2012) — Retail Distribution Review (banned commission-based advice)",
+    "numericalExample": "An adviser recommends Fund A (2% commission) vs Fund B (0.5% commission) on a $100,000 investment. Fund A earns the adviser $2,000/year; Fund B earns $500. Even if Fund B has a 1% better annual return, the adviser earns $1,500 more recommending A. Over 10 years: client loses ~$13,000 in foregone returns (1%/yr compounded); adviser gains $15,000 in extra commissions. The conflict is financially significant.",
+    "tables": [
+      {
+        "title": "Commission Conflict: 10-Year Impact on $100,000 Investment",
+        "headers": ["Fund", "Annual Return", "Annual Commission", "10-Year Client Value", "10-Year Adviser Commission", "Who Benefits?"],
+        "rows": [
+          ["Fund A (high commission)", "6%", "2% of assets", "$134,000 (net of fees)", "$22,000 total", "Adviser"],
+          ["Fund B (low commission)", "7%", "0.5% of assets", "$162,000 (net of fees)", "$6,000 total", "Client"],
+          ["Difference", "+1% return", "-1.5% commission", "+$28,000 to client", "+$16,000 to adviser for recommending A", "Conflict is large"]
+        ]
+      },
+      {
+        "title": "Conflict of Interest: Disclosure vs. Structural Solutions",
+        "headers": ["Approach", "Mechanism", "Effectiveness", "Real-World Example"],
+        "rows": [
+          ["Disclosure only", "Adviser tells client about conflict", "Low — clients still defer to advisers", "Standard practice before UK RDR"],
+          ["Fee-only compensation", "Adviser paid flat fee, no commission", "High — removes financial incentive to bias", "UK post-RDR (2013), US fiduciary rule"],
+          ["Independence requirement", "Adviser cannot work for product provider", "High — structural separation", "Independent financial advisers (IFAs)"],
+          ["Fiduciary duty", "Legal obligation to act in client's best interest", "Moderate — enforcement is costly", "US Investment Advisers Act, UK FCA rules"]
+        ]
+      }
+    ]
+  },
+  {
+    "slug": "director-duties",
+    "title": "Director Duties",
+    "subtitle": "Corporate Governance & Fiduciary Obligations",
+    "concept": "Corporate directors owe fiduciary duties to shareholders: primarily the duty of care (make decisions with due diligence and skill) and the duty of loyalty (act in shareholders' interests, not your own). These duties are enforced through legal liability and the Business Judgment Rule — which protects directors who act in good faith but not those who breach loyalty.",
+    "setup": "Players act as directors of a corporation facing various governance decisions: approving transactions, overseeing management, handling related-party dealings, and responding to takeover bids. Each decision involves a trade-off between shareholder value, personal benefit, and legal compliance. Good governance decisions protect the company; poor ones expose directors to liability.",
+    "keyInsight": "Good corporate governance reduces agency costs — the costs arising from the misalignment between managers' interests and shareholders' interests. Directors are the key institutional mechanism for ensuring managers act in shareholders' interests. When the board fails, the consequences (fraud, value destruction, regulatory action) are typically severe.",
+    "lessons": [
+      "The Business Judgment Rule: courts give directors wide discretion for operational decisions, provided they are (1) adequately informed, (2) acting in good faith, and (3) free of personal conflict. All three conditions must be met — failing any one removes the protection.",
+      "The duty of loyalty is stricter than the duty of care: courts scrutinise related-party transactions, director compensation, and takeover decisions where directors have personal interests with particular scepticism. The burden of proof shifts to the director to show fairness.",
+      "Board independence is the structural solution to loyalty conflicts: independent directors (no employment or financial relationship with management) are better positioned to oversee management objectively. Post-Sarbanes-Oxley, US listed companies require independent audit, remuneration, and nomination committees.",
+      "The board's core governance functions: selecting and dismissing the CEO, setting executive pay, overseeing financial reporting, managing strategic risk, and protecting shareholder rights in M&A transactions."
+    ],
+    "strategies": [
+      {
+        "name": "Act in shareholders' best interest with proper process",
+        "outcome": "Protected by the Business Judgment Rule. Decisions that turn out badly but were made with due process are not actionable. The rule encourages informed risk-taking without making directors liable for all bad outcomes.",
+        "insight": "Good process is as important as good outcomes in corporate law. Document your deliberations, take independent advice, and disclose conflicts — these are defences, not formalities."
+      },
+      {
+        "name": "Approve a related-party transaction without scrutiny",
+        "outcome": "Breach of the duty of loyalty if you have a personal interest in the transaction. Even if the transaction is at fair value, failure to follow proper approval procedures creates liability.",
+        "insight": "Related-party transactions (contracts between the company and a director's other business interests) require full disclosure, independent board approval, and often shareholder vote. The process must be demonstrably fair."
+      },
+      {
+        "name": "Rubber-stamp management recommendations",
+        "outcome": "Breach of the duty of care if directors fail to exercise independent judgment. 'Going along' with management on major decisions without proper scrutiny is a governance failure.",
+        "insight": "The board's oversight function only has value if directors ask hard questions and push back. Passive boards are legal and reputational liabilities — as the Enron and Theranos cases demonstrated."
+      }
+    ],
+    "classroomObservations": "Discuss the real cases: Smith v. Van Gorkom (director approved a merger over a phone call with no financial analysis — breached duty of care), In re Walt Disney (director compensation was approved but challenged — survived scrutiny because process was adequate). Ask: what separates a protected business judgment from a liability-creating governance failure?",
+    "realWorld": "Enron (board waived conflict-of-interest policies for SPE transactions), WorldCom (audit committee failed to detect massive fraud), Theranos (board had no medical experts despite being a medical device company), and more recently, Silicon Valley Bank (board risk committee had no banking risk experience) — all examples of governance failures with catastrophic consequences.",
+    "tip": "Directors are not expected to be perfect — they are expected to be diligent and loyal. The Business Judgment Rule is generous to directors who act in good faith with adequate information. But it provides no protection when personal interests conflict with shareholder interests and proper procedures are not followed.",
+    "furtherReading": "Smith v. Van Gorkom (1985) — Delaware Supreme Court on duty of care; In re Caremark International (1996) — Director oversight duties; Sarbanes-Oxley Act (2002) — Post-Enron governance reforms; Cadbury Report (1992) — UK corporate governance code origins",
+    "numericalExample": "Smith v. Van Gorkom (1985): Trans Union CEO Van Gorkom approved a $55/share merger in a 2-hour meeting with no financial analysis. Board approved it in 20 minutes. Delaware Supreme Court: breach of duty of care — not because the price was wrong, but because the process was inadequate. Directors personally liable for $23.5m. The Business Judgment Rule requires adequate information, not perfect decisions.",
+    "tables": [
+      {
+        "title": "Duty of Care vs. Duty of Loyalty: Key Differences",
+        "headers": ["Duty", "Core Obligation", "Standard of Review", "Typical Breach", "Business Judgment Rule Protection?"],
+        "rows": [
+          ["Duty of Care", "Be informed and diligent", "Gross negligence standard (lenient)", "Approving major transaction without analysis", "Yes, if acted in good faith with information"],
+          ["Duty of Loyalty", "Prefer shareholders over self", "Entire fairness (strict)", "Self-dealing, usurping corporate opportunity", "No — burden shifts to director to prove fairness"]
+        ]
+      },
+      {
+        "title": "Business Judgment Rule: When Are Directors Protected?",
+        "headers": ["Condition", "Required?", "If Missing, Result"],
+        "rows": [
+          ["Decision made in good faith", "Yes", "No protection — intentional harm or bad faith loses BJR"],
+          ["Director was adequately informed", "Yes", "No protection — duty of care breach (Van Gorkom)"],
+          ["No personal financial conflict", "Yes", "No protection — switches to entire fairness review"],
+          ["Decision is rationally related to company interest", "Yes", "Rare failure — courts give wide latitude here"]
+        ]
+      }
+    ]
+  },
+  {
+    "slug": "market-survival",
+    "title": "Market Survival",
+    "subtitle": "Competitive Dynamics, Cost Efficiency & Firm Exit",
+    "concept": "In competitive markets, firms that cannot cover their costs exit, while efficient firms survive and potentially grow. Price competition drives prices toward cost, and economic profit tends toward zero in the long run. The market acts as a selection mechanism — rewarding efficiency and penalising waste.",
+    "setup": "You manage a firm competing in a market with multiple rivals. Each period you set prices or choose output, incur costs, and earn revenues. If your revenues fall below your costs persistently, you exit the market. New entrants appear when profits attract them. Your goal is to survive and maximise cumulative profits over the game.",
+    "keyInsight": "Long-run competitive equilibrium is zero economic profit — not zero accounting profit. All costs must be covered, including the opportunity cost of capital. Firms that earn above-normal profits attract entry; firms that incur losses exit. The market reaches equilibrium when price equals the minimum of the average total cost curve.",
+    "lessons": [
+      "Short-run vs. long-run equilibrium: in the short run, firms can earn profits or losses (capacity and entry are fixed). In the long run, entry and exit drive economic profits to zero. The long-run equilibrium price is the minimum average total cost.",
+      "Fixed vs. variable costs matter for exit decisions: in the short run, a firm should continue operating as long as price exceeds average variable cost (contribution to fixed costs). In the long run, all costs are variable — exit if price < average total cost.",
+      "Efficiency and survival: firms with lower costs survive longer and can price more aggressively. Cost advantages can come from scale economies, better technology, lower input costs, or superior organisation.",
+      "Dynamic competition: the market is never in static equilibrium. Firms invest in cost reduction, product innovation, and market expansion. The survival of the fittest is a selection process, not a static outcome."
+    ],
+    "strategies": [
+      {
+        "name": "Price competitively and control costs",
+        "outcome": "Survive by matching market prices while keeping costs below revenue. Efficiency is the sustainable competitive advantage in a market with competitive entry.",
+        "insight": "Cost leadership: being the lowest-cost producer allows you to price at market rates and earn positive margin. It also allows aggressive price-cutting when necessary to defend market share."
+      },
+      {
+        "name": "Price above market to protect margin",
+        "outcome": "Lose market share to lower-priced rivals. Sustainable only if your product has genuine differentiation that customers value enough to pay the premium.",
+        "insight": "Premium pricing requires differentiation. Without it, pricing above market is a recipe for exit. The choice between cost leadership and differentiation is Porter's fundamental strategic trade-off."
+      },
+      {
+        "name": "Invest in cost reduction",
+        "outcome": "Short-run sacrifice of profit for long-run competitive advantage. Firms that invest in efficiency improvements can survive market downturns that drive out higher-cost rivals.",
+        "insight": "Long-run survival requires reinvestment. Standing still while rivals improve is equivalent to falling behind. This is why competitive markets drive productivity growth."
+      }
+    ],
+    "classroomObservations": "Show which firms survived and which exited. Ask: what distinguished survivors from exiters? Was it pricing strategy, cost structure, or luck? This connects to the empirical finding that the most productive firms grow and the least productive exit — markets perform selection, not just allocation.",
+    "realWorld": "Retail (Amazon drove out Borders, Circuit City, Toys R Us — all failed to match Amazon's cost structure), airlines (low-cost carriers Ryanair and easyJet drove out legacy carriers on short-haul routes), and manufacturing (Chinese entry into textiles eliminated many Western producers) all illustrate market selection at work.",
+    "tip": "Track your costs per unit as carefully as your revenues. Firms often fail not because of pricing mistakes but because of cost structures that looked sustainable at higher volumes. Fixed costs become fatal when volumes fall.",
+    "furtherReading": "Alchian (1950) — Uncertainty, Evolution and Economic Theory; Porter (1980) — Competitive Strategy; Hopenhayn (1992) — Entry, Exit, and Firm Dynamics in Long Run Equilibrium",
+    "numericalExample": "Firm A: price=$20, unit cost=$15, contribution=$5. Fixed costs=$1,000/month. Break-even volume = 1,000/5 = 200 units. If demand falls to 150 units: revenue=$3,000, variable cost=$2,250, contribution=$750, loss=$250/month. Short-run: stay open (contribution >0). Long-run: exit if no improvement (can't cover fixed costs). This is the shutdown rule in practice.",
+    "tables": [
+      {
+        "title": "Short-Run vs Long-Run Exit Decision",
+        "headers": ["Scenario", "Price", "AVC (Avg Variable Cost)", "AFC (Avg Fixed Cost)", "ATC (Total)", "Decision", "Reasoning"],
+        "rows": [
+          ["Profitable", "$20", "$12", "$5", "$17", "Operate and grow", "P > ATC: economic profit"],
+          ["Normal return", "$17", "$12", "$5", "$17", "Operate, don't expand", "P = ATC: zero economic profit"],
+          ["Loss, continue short-run", "$14", "$12", "$5", "$17", "Operate short-run, exit long-run", "P > AVC: contribution covers some fixed cost"],
+          ["Shutdown short-run", "$10", "$12", "$5", "$17", "Shut down immediately", "P < AVC: can't even cover variable costs"]
+        ]
+      },
+      {
+        "title": "Market Selection Over Time: Efficient vs. Inefficient Firms",
+        "headers": ["Firm Type", "Unit Cost", "Market Price", "Margin", "Long-Run Outcome"],
+        "rows": [
+          ["Most efficient", "$8", "$15", "+$7", "Survives, grows, may drive others out"],
+          ["Average efficiency", "$13", "$15", "+$2", "Survives at zero economic profit"],
+          ["Slightly inefficient", "$16", "$15", "-$1", "Exits in long run"],
+          ["Very inefficient", "$20", "$15", "-$5", "Exits immediately or needs subsidy"]
+        ]
+      }
+    ]
+  },
+  {
+    "slug": "ab-testing",
+    "title": "A/B Testing",
+    "subtitle": "Multiplayer Experiment Simulation: Variant Choice, Timing & Profit",
+    "concept": "A/B testing is a repeated decision system, not a one-time statistics quiz. Teams choose between two variants, decide how long to run tests, and then face delayed sales outcomes with noise. Good teams balance speed and evidence quality so they ship profitable changes while avoiding false winners.",
+    "setup": "Two teams compete across 5-6 rounds. In each round, each team selects between two options (Variant A or Variant B), sets traffic split and test duration, then submits. A clearly visible progression control is used to move time: 'Advance 1 Day' and 'Advance 5 Days'. After advancing time, the round reveals sales impact (increase, decrease, or no meaningful change), confidence quality, and profit effect. Teams decide whether to ship, hold, or rerun. Final ranking is cumulative profit.",
+    "keyInsight": "The fastest team does not always win, and the most cautious team can miss profitable opportunities. Winning requires good test discipline: enough evidence to avoid false positives, but not so much delay that opportunity cost destroys value.",
+    "lessons": [
+      "Test duration is a strategic choice. Short windows are faster but noisier; longer windows reduce uncertainty but can delay gains.",
+      "A sales uplift is not enough by itself. Teams should evaluate incremental profit after implementation cost and discount effects.",
+      "False positives are expensive. Shipping a bad variant can reduce profit for multiple future rounds.",
+      "Sequential adaptation matters. Teams should update decisions from prior rounds rather than repeating fixed rules."
+    ],
+    "strategies": [
+      {
+        "name": "Fast iteration strategy",
+        "outcome": "Uses more 'Advance 1 Day' cycles to make rapid decisions and capture early upside.",
+        "insight": "Can outperform when effects are large, but risks overreacting to noise and shipping weak variants."
+      },
+      {
+        "name": "Evidence-first strategy",
+        "outcome": "Uses more 'Advance 5 Days' windows for stronger signal quality before shipping.",
+        "insight": "Reduces false-positive risk, but may lose profit due to slower rollout when true uplift exists."
+      },
+      {
+        "name": "Hybrid strategy",
+        "outcome": "Starts with fast checks, then extends duration only for borderline tests.",
+        "insight": "Often gives the best profit-risk balance by combining speed with selective rigor."
+      }
+    ],
+    "classroomObservations": "Show a per-round board with each team's variant choice, time-advance path (1 day vs 5 days), observed lift, and realized profit. Students quickly see that the same variant can look good on day 1 and weak by day 5, and that decision quality drives final profit more than headline conversion alone.",
+    "realWorld": "Product teams at major digital firms run experimentation programs with explicit tradeoffs between speed and certainty. The operational challenge is deciding when evidence is sufficient to ship, while controlling false positives and protecting long-run margin.",
+    "tip": "Use round scoring like: ProfitImpact = IncrementalRevenue - RolloutCost - BadShipPenalty. Rank teams by cumulative profit; use decision accuracy as a tie-breaker. Place 'Advance 1 Day' and 'Advance 5 Days' buttons near the decision panel so progression is obvious.",
+    "furtherReading": "Fisher (1935) - The Design of Experiments; Kohavi, Tang & Xu (2020) - Trustworthy Online Controlled Experiments; Deng et al. (2016) - Continuous Monitoring of A/B Tests",
+    "numericalExample": "Variant A: 5% conversion (baseline). Variant B: 6.5% conversion. Observed lift = +1.5pp. With n=1,000/group: Z = 1.56, p = 0.12 — not significant. With n=3,800/group: Z = 2.0, p = 0.046 — significant at 5%. Running too early gives a false positive ~30% of the time instead of 5%. The cost: shipping a bad variant that cuts profit for multiple rounds.",
+    "tables": [
+      {
+        "title": "Test Duration vs. Signal Quality Trade-off",
+        "headers": ["Days Run", "Sample Collected", "False Positive Risk", "False Negative Risk", "Recommended Action"],
+        "rows": [
+          ["1 day", "Small (noisy)", "Very high (~40%)", "High", "Never ship on 1-day data alone"],
+          ["5 days", "Medium", "High (~20%)", "Moderate", "Ship only if lift is very large (>30%)"],
+          ["14 days", "Good", "Moderate (~10%)", "Low", "Acceptable for large effects"],
+          ["30 days", "Large", "Low (~5%)", "Very low", "Standard: most reliable decisions"]
+        ]
+      },
+      {
+        "title": "Profit Impact of Correct vs. Incorrect Shipping Decisions",
+        "headers": ["Decision", "Scenario", "Short-Run Effect", "Multi-Round Profit Effect"],
+        "rows": [
+          ["Ship true winner", "Variant genuinely +10% revenue", "+$1,000/round", "+$5,000 over 5 rounds"],
+          ["Ship false positive", "Variant actually -5% revenue", "−$500/round", "−$2,500 over 5 rounds"],
+          ["Fail to ship true winner", "Miss +10% variant", "$0 change", "Opportunity cost: −$5,000"],
+          ["Correctly reject loser", "Avoid −5% variant", "$0 change", "Saved: +$2,500"]
+        ]
+      }
+    ]
+  },
+  {
+    "slug": "customer-churn",
+    "title": "Customer Churn",
+    "subtitle": "Multiplayer Retention Simulation: Risk Rules, Intervention & ROI",
+    "concept": "Customer churn management is a repeated targeting problem under uncertainty. Teams read customer behavior data, define risk patterns (for example: inactivity, low session depth, falling usage, poor NPS), and decide who should receive retention effort. Good churn strategy balances recall, precision, and intervention cost rather than maximizing outreach volume.",
+    "setup": "Two teams compete across 5-6 rounds. Each round starts with a fresh customer panel showing features such as days inactive, average sessions/week, spend trend, support tickets, tenure, and NPS. Teams submit threshold rules to classify high-risk customers (for example: inactive > X days and avg sessions < Y) and choose intervention mix (sales call, discount, onboarding support, service recovery). The simulator then reveals true churners, customers saved, false positives, and intervention cost. Winner is based on cumulative Net Retained Value, not raw saves.",
+    "keyInsight": "Saving the most customers is not always the best strategy. If a team flags too many low-risk customers, intervention spend rises and ROI collapses. Strong performance comes from identifying truly at-risk valuable customers and matching them with cost-effective interventions.",
+    "lessons": [
+      "Rule design is a precision-recall tradeoff. Lower thresholds catch more churners but increase false positives and sales workload.",
+      "Risk should be value-weighted. Saving a high-CLV account is usually worth more than saving multiple low-value accounts.",
+      "Intervention choice matters as much as detection. Discounts can improve short-run saves but may erode margin and train discount-seeking behavior.",
+      "Model drift is realistic. Patterns that worked in one round can weaken when market conditions or customer behavior shift."
+    ],
+    "strategies": [
+      {
+        "name": "High-precision targeting",
+        "outcome": "Targets fewer customers, yields lower outreach cost, and usually strong ROI. Risk: some true churners are missed.",
+        "insight": "Best when intervention capacity is limited and false-positive cost is high."
+      },
+      {
+        "name": "High-recall targeting",
+        "outcome": "Catches more true churners and can boost gross saves. Risk: high false positives can make the program unprofitable.",
+        "insight": "Useful when churn shock risk is high, but only with strict budget control."
+      },
+      {
+        "name": "Segmented intervention strategy",
+        "outcome": "Uses different actions by risk/type (for example, onboarding for low-usage new users, service recovery for dissatisfied users, selective discount for price-sensitive users).",
+        "insight": "Usually delivers the best Net Retained Value because treatment cost is matched to likely response."
+      }
+    ],
+    "classroomObservations": "Show per-round confusion metrics (TP, FP, FN), customers saved, and profit impact. Students quickly learn that the team with the highest save count can still lose if targeting is noisy or intervention spend is excessive. Debrief threshold changes round-by-round and how teams adapted to pattern drift.",
+    "realWorld": "Telecom, SaaS, streaming, and banking retention teams all run this loop in production: risk scoring, queue prioritization, treatment assignment, and measured save uplift against cost. Mature teams optimize for retained value and margin impact, not just churn-rate optics.",
+    "tip": "Use this score each round: Net Retained Value = SavedValue - InterventionCost - FalsePositiveCost. Track precision (TP/(TP+FP)) and recall (TP/(TP+FN)) alongside ROI. Final winner should be cumulative Net Retained Value, with precision as tie-breaker.",
+    "furtherReading": "Fader & Hardie (2005) - A Note on Deriving the Pareto/NBD Model and Related Expressions; Gupta et al. (2006) - Modeling Customer Lifetime Value; Verbeke et al. (2012) - New Insights into Churn Prediction in the Telecommunication Sector",
+    "numericalExample": "100 at-risk customers, CLV=$1,200 each. Intervention cost=$50/customer. True churners=30, non-churners=70. If you target all 100: save 30 x $1,200 = $36,000 revenue, spend $5,000 on intervention. Net = $31,000. If you use a precision model and target only 40 (30 true + 10 false positives): save same 30 x $1,200, spend only $2,000. Net = $34,000 — $3,000 better. Precision matters.",
+    "tables": [
+      {
+        "title": "Churn Intervention: Precision vs. Recall Trade-off Example",
+        "headers": ["Strategy", "Customers Targeted", "True Saves (TP)", "False Positives (FP)", "Intervention Cost", "Revenue Saved", "Net Retained Value"],
+        "rows": [
+          ["Spray all (low precision)", "100", "30", "70", "$5,000", "$36,000", "$31,000"],
+          ["Precise model (high precision)", "40", "28", "12", "$2,000", "$33,600", "$31,600"],
+          ["Hyper-precise (very selective)", "15", "12", "3", "$750", "$14,400", "$13,650"],
+          ["No intervention", "0", "0", "0", "$0", "$0", "$0"]
+        ]
+      },
+      {
+        "title": "CLV Formula: How Churn Rate Drives Customer Value",
+        "headers": ["Monthly Revenue", "Gross Margin", "Monthly Churn Rate", "CLV = (Rev x Margin)/Churn", "Annual Revenue Lost per Churner"],
+        "rows": [
+          ["$100", "70%", "2%", "$100 x 0.70 / 0.02 = $3,500", "$1,200/yr"],
+          ["$100", "70%", "5%", "$100 x 0.70 / 0.05 = $1,400", "$1,200/yr"],
+          ["$100", "70%", "10%", "$100 x 0.70 / 0.10 = $700", "$1,200/yr"],
+          ["$200", "60%", "3%", "$200 x 0.60 / 0.03 = $4,000", "$2,400/yr"]
+        ]
+      }
+    ]
+  },
+  {
+    "slug": "market-basket",
+    "title": "Market Basket Analysis",
+    "subtitle": "Multiplayer Retail Simulation: Pairing, Margin & Competitive Response",
+    "concept": "Market basket analysis is strongest when used in a repeated decision game, not as a one-shot quiz. Teams use support, confidence, and lift to choose pair promotions in a shared market where both sides compete for the same demand. The winner is the team that turns basket intelligence into cumulative profit under constraints.",
+    "setup": "Two teams compete across 6 rounds (weeks). Each round, each team secretly selects one product pair to promote and one intensity (low, medium, high). Choices are revealed simultaneously. Demand updates from pair lift, promo intensity, and rivalry effects (if both teams target overlapping baskets, uplift is diluted). Teams then receive revenue, pay COGS and promo spend, and absorb stockout or markdown penalties. Final ranking is cumulative profit, with revenue as tie-breaker.",
+    "keyInsight": "There is no always-best pair. The best move depends on margin, inventory, and the opponent's current choice. A high-lift pair can still be a bad strategy when promo costs are high, inventory is tight, or both teams collide on the same segment.",
+    "lessons": [
+      "Support still matters: low-support pairs can look strong in one round but are unstable and create higher forecast error.",
+      "Lift is directional, not the objective. Teams must combine association strength with unit margin, promo cost, and inventory limits.",
+      "Competition changes payoffs. If both teams choose overlapping pairs, each side's incremental uplift is reduced.",
+      "Delayed effects matter. Repeated deep discounting can grow short-run volume but weaken later-round margin quality."
+    ],
+    "strategies": [
+      {
+        "name": "Balanced portfolio strategy",
+        "outcome": "Mix high-margin moderate-lift pairs with occasional high-lift volume plays. This usually produces steadier cumulative profit.",
+        "insight": "Winning the game is about risk-adjusted consistency, not just one big round."
+      },
+      {
+        "name": "Opponent-aware counter strategy",
+        "outcome": "Track rival picks and avoid direct overlap when collision penalties are high; redirect to under-contested segments.",
+        "insight": "A second-best pair in isolation can be best-in-round after accounting for competitive dilution."
+      },
+      {
+        "name": "High-intensity push strategy",
+        "outcome": "Can win single rounds on volume but becomes expensive if repeated and often triggers stockout or markdown penalties.",
+        "insight": "Use high intensity as a tactical move when inventory is deep and overlap risk is low."
+      }
+    ],
+    "classroomObservations": "Use a round log that shows both teams' pair choices, intensity, and profit decomposition (revenue, COGS, promo cost, penalties). Students quickly see that highest revenue can still lose on profit, and that repeated overlap destroys value for both sides.",
+    "realWorld": "Retailers use basket intelligence inside weekly competitive loops, not static reports: grocery bundles, e-commerce cross-sell slots, and quick-service combo campaigns are all adjusted against rival promotions and stock constraints.",
+    "tip": "Start with this model: UnitsSold = BaseDemand * PairLift * PromoMultiplier * CompetitionFactor * RandomShock. Profit = Revenue - COGS - PromoCost - StockoutPenalty - MarkdownPenalty. Keep cumulative profit as the primary win metric.",
+    "furtherReading": "Agrawal & Srikant (1994) - Fast Algorithms for Mining Association Rules; Han, Pei & Yin (2000) - Mining Frequent Patterns Without Candidate Generation; Linden, Smith & York (2003) - Amazon.com Recommendations: Item-to-Item Collaborative Filtering",
+    "numericalExample": "10,000 transactions. {Beer, Diapers} appear together 500 times: support=5%. Beer alone=2,000 times, diapers alone=1,000. Confidence(Beer->Diapers)=500/2000=25%. Baseline rate of diapers=10%. Lift=25%/10%=2.5. This means beer buyers buy diapers 2.5x more than average — a strong, actionable association. Place them near each other or cross-sell.",
+    "tables": [
+      {
+        "title": "Association Rule Metrics Explained with Example (10,000 Transactions)",
+        "headers": ["Metric", "Formula", "Beer+Diapers Example", "Interpretation"],
+        "rows": [
+          ["Support", "P(X and Y)", "500/10,000 = 5%", "5% of all baskets contain both — high enough to act on"],
+          ["Confidence", "P(Y|X) = Support / P(X)", "500/2,000 = 25%", "25% of beer buyers also buy diapers"],
+          ["Lift", "Confidence / P(Y)", "25% / 10% = 2.5", "Beer buyers 2.5x more likely than average to buy diapers"],
+          ["Expected (random)", "P(X) x P(Y)", "20% x 10% = 2%", "Only 2% expected by chance — far below actual 5%"]
+        ]
+      },
+      {
+        "title": "Interpreting Lift Values for Business Decisions",
+        "headers": ["Lift Value", "Meaning", "Example", "Action"],
+        "rows": [
+          ["Lift > 2.0", "Strong positive association", "Beer -> Diapers (Lift=2.5)", "Place adjacent, cross-sell, bundle"],
+          ["Lift 1.2-2.0", "Moderate positive association", "Bread -> Butter (Lift=1.5)", "Recommend, include in combo offer"],
+          ["Lift ~1.0", "No meaningful association", "Milk -> Random snack (Lift=1.02)", "Ignore — random co-occurrence"],
+          ["Lift < 1.0", "Negative association (substitutes)", "Pepsi -> Coca-Cola (Lift=0.3)", "Don't cross-sell; offer as alternative when out of stock"],
+          ["Support < 0.5%", "Too rare to rely on", "Caviar -> Champagne", "May be spurious — need more data"]
+        ]
+      }
+    ]
+  },
+  {
+    "slug": "social-influence",
+    "title": "The Signal",
+    "subtitle": "Social Proof, Information Cascades & Conformity Bias",
+    "concept": "When individuals don't know the truth, they often use others' beliefs as a signal. This 'social proof' can aggregate genuine information — but it can also cascade false beliefs through a group, producing confident collective errors.",
+    "setup": "Each round, players rate their confidence (0–100) that an economic statement is true. Before submitting, they see a social proof cue: '72% of people agree' or '18% of people agree'. Unknown to players, these percentages are randomly varied: roughly half the room sees a low figure (~15–30%) and half sees a high figure (~70–85%). After all rounds, the class compares the two groups' average confidence.",
+    "keyInsight": "If social proof systematically shifts confidence — independently of the statement's actual truth — that is conformity bias at work. A statement rated 65/100 by the high-proof group but 38/100 by the low-proof group has been distorted by the signal, not by evidence.",
+    "lessons": [
+      "Social proof is a genuine heuristic shortcut that can be both adaptive and dangerous.",
+      "Information cascades can cause rational individuals to ignore their private signals, creating collective errors (Bikhchandani, Hirshleifer & Welch 1992).",
+      "The Asch conformity experiments showed ~75% of subjects gave an obviously wrong answer at least once when confederates did so.",
+      "Financial bubbles, viral misinformation, and bank runs all share a common structure: people update on what others are doing rather than on fundamentals.",
+      "Diversity of independent signals is more informative than a large sample of correlated (socially influenced) signals."
+    ],
+    "strategies": [
+      "Anchoring independently: commit to your private assessment before looking at what others believe.",
+      "Source evaluation: ask whether the 'crowd' had access to independent information or was itself influenced.",
+      "Contrarian awareness: the value of a dissenting opinion rises as the majority grows larger.",
+      "Calibration: well-calibrated confidence tracks accuracy — overconfidence and underconfidence both have costs."
+    ],
+    "classroomObservations": [
+      "Groups shown high social proof typically rate statements 10–25 points higher on average than the low group — even for false statements.",
+      "The effect is usually larger for genuinely ambiguous statements (those students find hard to evaluate independently).",
+      "After the reveal, students are often surprised they were manipulated — this visceral reaction reinforces the concept.",
+      "Asking students to discuss which statements shifted them the most surfaces rich peer discussion about epistemic confidence."
+    ],
+    "realWorld": "The mechanism behind The Signal underlies social media virality (likes/shares as social proof), asset price bubbles (rising prices as 'proof' of value), preference falsification in authoritarian states, and jury deliberation dynamics. Cialdini's 'Influence' (1984) catalogued social proof as one of the six fundamental principles of persuasion.",
+    "tip": "After the debrief, ask: 'What would have made you more resistant to the social proof cue?' Common answers — more domain knowledge, more time to think, explicit awareness of the manipulation — surface actionable insights for real life.",
+    "furtherReading": [
+      { "author": "Bikhchandani, Hirshleifer & Welch (1992)", "title": "A Theory of Fads, Fashion, Custom, and Cultural Change as Informational Cascades", "journal": "Journal of Political Economy" },
+      { "author": "Asch (1951)", "title": "Effects of Group Pressure upon the Modification and Distortion of Judgments", "journal": "Groups, Leadership and Men (ed. Guetzkow)" },
+      { "author": "Cialdini (1984)", "title": "Influence: The Psychology of Persuasion", "journal": "Harper Collins" },
+      { "author": "Surowiecki (2004)", "title": "The Wisdom of Crowds", "journal": "Doubleday" }
+    ],
+    "numericalExample": "Suppose 40 students play 8 rounds. For a statement that is actually FALSE, the low-proof group (shown 18% agree) averages confidence = 35; the high-proof group (shown 82% agree) averages confidence = 62. The 27-point gap is pure social signal — the truth value of the statement was identical for both groups. Even more striking: both groups averaged above 50, meaning a majority in both groups leaned toward the wrong answer.",
+    "tables": [
+      {
+        "title": "Effect Size Guide",
+        "headers": ["Δ (High − Low avg)", "Interpretation", "Implication"],
+        "rows": [
+          ["< 5 pts", "Minimal social influence", "Students anchored well on private signals"],
+          ["5–15 pts", "Moderate conformity effect", "Social proof had noticeable but bounded pull"],
+          ["15–25 pts", "Strong conformity effect", "Most students updated heavily on the cue"],
+          ["> 25 pts", "Severe information cascade", "Private signals effectively abandoned — classic cascade"]
+        ]
+      }
+    ]
+  },
+  {
+    "slug": "crypto-bubble",
+    "title": "Crypto Bubble",
+    "subtitle": "Asset Bubbles, Minsky Moments & Algorithmic Contagion",
+    "concept": "Asset bubbles form when prices persistently exceed fundamental value — driven by momentum, extrapolative expectations, and FOMO. Minsky's financial instability hypothesis argues that stability itself breeds risk-taking: prolonged booms lead to increasingly fragile positions that collapse suddenly when confidence breaks.",
+    "setup": "Students trade tokens in a live double-sided order book. Each token pays a $10 dividend per period, so its fundamental value equals remaining periods × $10 (declining each round). Three algorithmic traders (Algo A/B/C) are always present, buying aggressively in early periods and panic-selling when the instructor fires the Minsky Moment shock. Students post bids and asks; trades execute whenever best bid ≥ best ask.",
+    "keyInsight": "Even rational students often drive prices above fundamental value — because buying above FV is individually rational if you expect to sell at an even higher price to the next buyer (the 'Greater Fool'). The Minsky Moment shows what happens when the chain of greater fools runs out: prices collapse faster than they rose, and leveraged positions are destroyed.",
+    "lessons": [
+      "Fundamental value is objectively calculable — yet markets routinely ignore it",
+      "Bubble dynamics require only a subset of optimistic buyers; rational traders can be swept along",
+      "Algorithmic traders can amplify both the boom (momentum buying) and the bust (panic liquidation)",
+      "Liquidity disappears exactly when it is most needed — bids vanish as crash unfolds",
+      "Post-bubble price recovery is slower than the crash — asymmetric volatility"
+    ],
+    "strategies": [
+      "Track the fundamental value line — any price above it is a pure speculation premium",
+      "Sell into strength: if others are still buying bullishly, that is your exit window",
+      "Watch the order book depth — thin bids signal fragility even if the last trade was high",
+      "Algo Traders reveal where the bots are: if they dominate bids, the bubble has bot support; when they flip to asks, the crash has begun",
+      "After the Minsky shock, consider aggressive asks — other human players may still be in denial"
+    ],
+    "classroomObservations": [
+      "Most sessions produce a clear bubble 30–60% above FV in periods 2–5 before the shock",
+      "Post-shock crashes often overshoot — prices fall below FV as panic sets in",
+      "Students who sold early often regret it mid-bubble; those who held late regret it most",
+      "Watching bots panic-sell makes the Minsky concept visceral and memorable",
+      "Debrief: ask who held, who sold into strength, who tried to buy the dip — maps directly to investor archetypes"
+    ],
+    "realWorld": "The 2017 Bitcoin rally (from ~$1K to $20K and back to $3K), the dot-com boom, 2008 mortgage securities, and 2021 meme stocks all exhibit the same structure: prices divorced from fundamentals, momentum-driven buying, sudden collapse when sentiment reverses. Hyman Minsky predicted this pattern 30 years before it became mainstream.",
+    "tip": "Fire the Minsky Moment mid-bubble for maximum impact — ideally around period 5–6 when prices are furthest above FV. Warn students beforehand that 'something may happen at any time' to keep them alert.",
+    "furtherReading": [
+      { "title": "Smith, Suchanek & Williams (1988) — Bubbles, Crashes, and Endogenous Expectations in Experimental Asset Markets", "url": "https://www.jstor.org/stable/1912325" },
+      { "title": "Minsky (1992) — The Financial Instability Hypothesis", "url": "https://www.levyinstitute.org/pubs/wp74.pdf" },
+      { "title": "Brunnermeier (2008) — Bubbles (New Palgrave Dictionary of Economics)", "url": "https://scholar.princeton.edu/sites/default/files/bubbles_0.pdf" },
+      { "title": "Shiller (2000) — Irrational Exuberance (overview)", "url": "https://www.irrationalexuberance.com" }
+    ],
+    "numericalExample": "Period 3 of 10 → FV = 7 × $10 = $70. If the last trade was $110, the speculation premium is $40 (57% above FV). A player holding 4 tokens has $160 in 'air' that evaporates if the market corrects. After the Minsky shock in period 5 (FV = $60), algo panic-sells drive prices to $35 — 42% below FV — before recovering.",
+    "tables": [
+      {
+        "title": "Fundamental Value Schedule (10-period game)",
+        "headers": ["Period", "FV per Token", "Implied Bubble if Trade = $90"],
+        "rows": [
+          ["1", "$100", "−$10 (below FV)"],
+          ["2", "$90", "$0 (at FV)"],
+          ["3", "$80", "+$10 (12.5% premium)"],
+          ["4", "$70", "+$20 (28.6% premium)"],
+          ["5", "$60", "+$30 (50% premium)"],
+          ["6", "$50", "+$40 (80% premium)"],
+          ["7", "$40", "+$50 (125% premium)"],
+          ["8", "$30", "+$60 (200% premium)"],
+          ["9", "$20", "+$70 (350% premium)"],
+          ["10", "$10", "+$80 (800% premium)"]
+        ]
+      }
+    ]
+  },
+  {
+    "slug": "xero-reconciliation",
+    "title": "Xero Reconciliation",
+    "subtitle": "Solo Simulation: Bank Reconciliation, Duplicate Detection & GST Return",
+    "concept": "Bank reconciliation is the process of matching a business's internal accounting records against its bank statement. In practice this means categorising transactions, spotting errors like duplicates, and ensuring the GST return reflects only legitimate transactions. In New Zealand, GST-registered businesses must file returns showing GST collected on sales minus GST paid on purchases — the net amount goes to or from IRD.",
+    "setup": "Students work solo through three randomised NZ business scenarios (café, IT consulting, retail). Each scenario has three phases: (1) categorise bank transactions into Revenue, Cost of Sales, Expense, or Wages; (2) identify which transaction is a duplicate; (3) complete a simplified GST return by calculating GST on sales and GST on purchases. The game uses a Xero-inspired interface to mirror real-world accounting software.",
+    "keyInsight": "Reconciliation is not just tidying up — it is the control that catches errors before they affect tax obligations, financial statements, and business decisions. A single duplicate transaction can simultaneously overstate expenses, understate profit, and incorrectly claim GST input credits.",
+    "lessons": [
+      "Categorising transactions correctly is the foundation of both management accounts and tax compliance. Revenue, Cost of Sales, Expenses, and Wages each affect profit differently.",
+      "Duplicate transactions are the most common bank reconciliation error. They arise from double-entry by suppliers, bank re-processing, or manual data entry mistakes.",
+      "GST in New Zealand is 15%. Businesses collect GST on sales and claim it back on purchases. Net GST payable = GST on sales minus GST on purchases.",
+      "Wages are not subject to GST — a common point of confusion. PAYE (income tax withheld) is separate from the GST system entirely.",
+      "Monthly reconciliation prevents errors from compounding across multiple GST return periods."
+    ],
+    "strategies": [
+      {
+        "name": "Systematic categorisation",
+        "outcome": "Assign all transactions before reviewing any — then check your work as a set.",
+        "insight": "Processing transactions in batch reduces context-switching errors and makes patterns (like duplicates) more visible."
+      },
+      {
+        "name": "Duplicate detection heuristic",
+        "outcome": "Look for identical descriptions and amounts on different dates — especially with suppliers who invoice regularly.",
+        "insight": "Duplicates rarely appear on the same date. A second identical charge days later is the most common pattern."
+      },
+      {
+        "name": "GST reconciliation check",
+        "outcome": "Verify: GST on sales = total revenue × 3/23 (or amount ÷ 1.15 × 0.15). GST on purchases = same formula applied to GST-bearing expenses.",
+        "insight": "If your calculated net GST seems unusually high or low, check whether a wage or exempt item was incorrectly included."
+      }
+    ],
+    "classroomObservations": "Students often struggle most with wages (no GST) and with spotting duplicates when descriptions are nearly identical. Debrief by showing what the P&L and GST return would look like with and without the duplicate — the downstream effect makes the stakes concrete.",
+    "realWorld": "In New Zealand, GST-registered businesses with turnover over $60,000 must file GST returns (typically every two months). Errors in reconciliation flow directly into incorrect GST returns, which can trigger IRD audits and interest charges. Xero is the dominant accounting platform for NZ SMEs and automates much of the matching — but humans still need to review and approve categorisations.",
+    "tip": "After the game, show students the actual NZ GST return form (IR3B) and walk through how the numbers from this simulation map to each box. Box 5 (total sales incl. GST), Box 13 (GST on sales), Box 11 (total purchases incl. GST), Box 15 (GST on purchases), Box 20 (net GST).",
+    "furtherReading": "Inland Revenue NZ — GST guide (IR375); Xero — Bank reconciliation in New Zealand; IRD — GST return filing (IR3B)",
+    "numericalExample": "Bay Brew Café Jan 2026: Revenue $14,950 incl. GST → GST on sales = $14,950 ÷ 1.15 × 0.15 = $1,950. Purchases (excl. wages) $5,428 incl. GST → GST on purchases = $5,428 ÷ 1.15 × 0.15 = $708. Net GST payable to IRD = $1,950 − $708 = $1,242. If the duplicate $2,300 charge had not been caught, GST on purchases would have been $708 + $300 = $1,008 — overstating the claim by $300.",
+    "tables": [
+      {
+        "title": "Account Categories and GST Treatment (NZ)",
+        "headers": ["Category", "Examples", "GST Applies?", "Effect on GST Return"],
+        "rows": [
+          ["Revenue", "Sales, client invoices, catering", "Yes (collect 15%)", "Increases GST payable (Box 13)"],
+          ["Cost of Sales", "Stock, ingredients, direct materials", "Yes (claim 15%)", "Reduces GST payable (Box 15)"],
+          ["Expense", "Rent, power, software, marketing", "Yes (claim 15%)", "Reduces GST payable (Box 15)"],
+          ["Wages", "Staff salaries, contractor pay (PAYE)", "No", "No effect on GST return"]
+        ]
+      },
+      {
+        "title": "Impact of Undetected Duplicate Transaction",
+        "headers": ["Financial Statement", "Without Duplicate", "With Duplicate", "Error"],
+        "rows": [
+          ["Cost of Sales", "$2,000", "$4,000", "+$2,000 overstated"],
+          ["Gross Profit", "$11,000", "$9,000", "−$2,000 understated"],
+          ["GST on purchases (Box 15)", "$708", "$1,008", "+$300 overclaimed"],
+          ["Net GST payable", "$1,242", "$942", "−$300 underpaid to IRD"]
+        ]
+      },
+      {
+        "title": "Answer Key — Scenario 1: Bay Brew Café Ltd (ANZ, January 2026)",
+        "headers": ["#", "Date", "Payee", "Description", "Amount (incl. GST)", "Correct Account", "Note"],
+        "rows": [
+          ["1", "3 Jan",  "Point of Sale",         "Sales — Point of Sale",        "$11,500", "200 — Sales",                   "Revenue ↑"],
+          ["2", "5 Jan",  "Staff Wages",           "Wages — Barista staff",         "$4,800",  "477 — Wages & Salaries",        "No GST"],
+          ["3", "7 Jan",  "Peak Roasters Ltd",     "Coffee beans — January order",  "$2,300",  "310 — Cost of Goods Sold",      "Ingredient stock"],
+          ["4", "10 Jan", "Mercury Energy",        "Electricity — January",         "$345",    "445 — Light, Power, Heating",   ""],
+          ["5", "12 Jan", "Catering Event",        "Sales — Corporate catering",    "$3,450",  "200 — Sales",                   "Revenue ↑"],
+          ["6", "14 Jan", "Countdown Supermarket", "Kitchen supplies",              "$460",    "310 — Cost of Goods Sold",      "Consumables used in production"],
+          ["7", "15 Jan", "ANZ Bank",              "Bank fees — January",           "$23",     "404 — Bank Fees & Charges",     ""],
+          ["8", "20 Jan", "CBD Landlord Ltd",      "Rent — CBD premises",           "$2,300",  "461 — Rent",                    ""],
+          ["9", "25 Jan", "Peak Roasters Ltd",     "Coffee beans — January order",  "$2,300",  "⚠ DUPLICATE — Flag, do not reconcile", "Same payee, amount, description as #3"]
+        ]
+      },
+      {
+        "title": "Answer Key — Scenario 2: TechSpark Consulting Ltd (Westpac, February 2026)",
+        "headers": ["#", "Date", "Payee", "Description", "Amount (incl. GST)", "Correct Account", "Note"],
+        "rows": [
+          ["1", "2 Feb",  "Apex Solutions Ltd",    "Client payment received — Project Alpha", "$23,000", "200 — Sales",                   "Revenue ↑ (consulting fee received)"],
+          ["2", "4 Feb",  "Xero",                  "Xero subscription — Feb",                "$69",     "437 — IT & Software",           ""],
+          ["3", "6 Feb",  "Rackspace",             "Cloud hosting — Feb",                    "$575",    "437 — IT & Software",           ""],
+          ["4", "10 Feb", "Momentum Ltd",          "Client payment received — Project Beta",  "$11,500", "200 — Sales",                   "Revenue ↑ (consulting fee received)"],
+          ["5", "14 Feb", "Development Team",      "Wages — February",                       "$9,800",  "477 — Wages & Salaries",        "No GST"],
+          ["6", "18 Feb", "Rackspace",             "Cloud hosting — Feb",                    "$575",    "⚠ DUPLICATE — Flag, do not reconcile", "Identical to #3; same date and amount suggest system re-process"],
+          ["7", "20 Feb", "Vodafone",              "Mobile plan — February",                 "$115",    "473 — Telephone & Internet",    ""],
+          ["8", "24 Feb", "Thorndon Office Park",  "Rent — February",                        "$1,725",  "461 — Rent",                    ""],
+          ["9", "28 Feb", "NZ Post",               "Courier — urgent delivery",              "$46",     "424 — Freight & Courier",       ""]
+        ]
+      },
+      {
+        "title": "Answer Key — Scenario 3: Coastal Apparel Ltd (BNZ, March 2026)",
+        "headers": ["#", "Date", "Payee", "Description", "Amount (incl. GST)", "Correct Account", "Note"],
+        "rows": [
+          ["1", "3 Mar",  "In-Store Sales",  "Retail sales — March",          "$34,500", "200 — Sales",                   "Revenue ↑"],
+          ["2", "5 Mar",  "Shopify",         "Online sales — March",          "$5,750",  "200 — Sales",                   "Revenue ↑ (Shopify passes through sales)"],
+          ["3", "7 Mar",  "NZ Fashion Ltd",  "Stock purchase — March order",  "$11,500", "310 — Cost of Goods Sold",      "Clothing stock for resale"],
+          ["4", "10 Mar", "Retail Staff",    "Wages — March",                 "$8,200",  "477 — Wages & Salaries",        "No GST"],
+          ["5", "12 Mar", "Shopify",         "Shopify subscription — March",  "$69",     "437 — IT & Software",           "Platform fee ≠ sales revenue"],
+          ["6", "14 Mar", "Mercury Energy",  "Electricity — March",           "$460",    "445 — Light, Power, Heating",   ""],
+          ["7", "18 Mar", "Riccarton Mall",  "Rent — March",                  "$3,450",  "461 — Rent",                    ""],
+          ["8", "22 Mar", "NZ Fashion Ltd",  "Stock purchase — March order",  "$11,500", "⚠ DUPLICATE — Flag, do not reconcile", "Identical to #3; supplier double-invoiced"],
+          ["9", "26 Mar", "Google",          "Google Ads — March",            "$575",    "400 — Advertising & Marketing", ""]
+        ]
+      }
+    ]
+  },
+  {
+    "slug": "capital-structure-lab",
+    "title": "Capital Structure Lab",
+    "subtitle": "Debt, Equity, WACC, and Value Creation",
+    "concept": "Capital structure is the mix of debt and equity a firm uses to finance projects. Debt is usually cheaper but increases financial risk. Equity is safer for solvency but more expensive and dilutive. The central decision is whether project returns exceed the firm's weighted average cost of capital (WACC).",
+    "setup": "You run a company for four rounds. Each round you choose one project and decide its funding split across internal cash, debt, and equity. The simulation calculates WACC, realized returns, leverage, and credit rating updates automatically.",
+    "keyInsight": "A project creates value only when return exceeds cost of capital. Funding choices change that cost. More debt can lift returns at first, then backfire as risk and borrowing cost rise.",
+    "lessons": [
+      "Debt is often the cheapest source of capital, but not at high leverage.",
+      "Equity reduces default pressure but raises the hurdle rate and dilutes ownership.",
+      "WACC is not static; it changes as leverage and credit rating evolve.",
+      "High-return projects can still destroy value when financing cost is mismanaged.",
+      "Good finance strategy balances upside, resilience, and future flexibility."
+    ],
+    "strategies": [
+      {
+        "name": "Balanced Funding",
+        "outcome": "Uses a mix of internal cash, moderate debt, and selective equity to keep WACC controlled.",
+        "insight": "Usually strongest for consistent value creation over multiple rounds."
+      },
+      {
+        "name": "Aggressive Leverage",
+        "outcome": "Boosts near-term debt funding and can look attractive early.",
+        "insight": "Often triggers rating pressure and rising debt cost in later rounds."
+      },
+      {
+        "name": "Overly Conservative",
+        "outcome": "Avoids debt almost entirely and leans heavily on equity/internal cash.",
+        "insight": "Stable but may miss positive-NPV opportunities because the effective hurdle stays high."
+      }
+    ],
+    "classroomObservations": "Students typically understand debt vs equity much faster when they see credit rating and WACC move after their own choices. Debrief by asking when their leverage shifted from helpful to harmful.",
+    "realWorld": "The same logic appears in corporate treasury, infrastructure finance, private equity capital stacks, and startup financing rounds.",
+    "tip": "Before locking a round, compare expected project return against current WACC and ask how this funding mix changes next-round flexibility.",
+    "numericalExample": "If a $300,000 project realizes 14% and current WACC is 9%, value created is roughly $15,000. If WACC rises to 13% because leverage became too high, the same realized return creates only about $3,000.",
+    "tables": [
+      {
+        "title": "Funding Trade-off Cheat Sheet",
+        "headers": ["Funding Source", "Typical Cost", "Main Benefit", "Main Risk"],
+        "rows": [
+          ["Internal Cash", "Opportunity cost only", "No dilution, no new debt burden", "Limited capacity"],
+          ["Debt", "Usually lower than equity", "Cheaper capital at moderate leverage", "Higher distress risk and rating pressure"],
+          ["Equity", "Usually highest", "Balance sheet resilience", "Dilution and higher hurdle rate"]
+        ]
+      }
+    ]
+  }
+]

@@ -1,0 +1,77 @@
+.ult-page {
+  --bg: radial-gradient(circle at top, #fffbeb 0%, #f8fafc 100%);
+  --card-bg: rgba(255,255,255,0.94);
+  --accent: #d97706;
+  --accent2: #f59e0b;
+  --text: #0f172a;
+  --text-muted: #64748b;
+  --border: rgba(148,163,184,0.25);
+  min-height: 100vh;
+  background: var(--bg);
+  color: var(--text);
+  padding: 1.5rem;
+  font-family: inherit;
+}
+[data-theme='dark'] .ult-page {
+  --bg: radial-gradient(circle at top, #451a03 0%, #020617 100%);
+  --card-bg: rgba(15,23,42,0.6);
+  --text: #f8fafc;
+  --text-muted: #94a3b8;
+  --border: rgba(255,255,255,0.1);
+}
+.ult-shell { max-width: 900px; margin: 0 auto; }
+.ult-hero { text-align: center; margin-bottom: 2rem; }
+.ult-hero h1 { font-size: 2.5rem; font-weight: 800; margin: 0; background: linear-gradient(135deg, #d97706, #ea580c); -webkit-background-clip: text; background-clip: text; -webkit-text-fill-color: transparent; }
+.ult-sub { color: var(--text-muted); font-size: 0.95rem; margin-top: 0.4rem; max-width: 640px; margin-left: auto; margin-right: auto; }
+.ult-card { background: var(--card-bg); border: 1px solid var(--border); border-radius: 1rem; padding: 1.5rem; margin-bottom: 1rem; backdrop-filter: blur(10px); }
+.ult-card h2, .ult-card h3 { margin: 0 0 0.75rem; font-weight: 700; }
+.ult-desc { color: var(--text-muted); font-size: 0.88rem; margin: 0 0 0.75rem; }
+.ult-input { width: 100%; box-sizing: border-box; padding: 0.6rem 0.9rem; border-radius: 0.5rem; border: 1px solid var(--border); background: var(--card-bg); color: var(--text); font-size: 0.95rem; }
+.ult-btn { padding: 0.6rem 1.4rem; border-radius: 0.5rem; font-weight: 600; cursor: pointer; border: none; font-size: 0.9rem; transition: opacity 0.15s; }
+.ult-btn:disabled { opacity: 0.5; cursor: not-allowed; }
+.ult-btn-primary { background: var(--accent); color: #fff; }
+.ult-btn-secondary { background: transparent; border: 1px solid var(--border); color: var(--text); }
+.ult-btn-danger { background: #ef4444; color: #fff; }
+.ult-btn-accept { background: #16a34a; color: #fff; font-size: 1.1rem; padding: 1rem 2rem; flex: 1; border-radius: 0.75rem; }
+.ult-btn-reject { background: #dc2626; color: #fff; font-size: 1.1rem; padding: 1rem 2rem; flex: 1; border-radius: 0.75rem; }
+.ult-setup-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 1rem; }
+.ult-action-btns { display: flex; gap: 1rem; margin-top: 1rem; }
+.ult-split-display { display: flex; gap: 1rem; align-items: center; margin: 1.25rem 0; }
+.ult-split-box { flex: 1; border-radius: 0.75rem; padding: 1rem; text-align: center; border: 2px solid var(--border); }
+.ult-split-keep { border-color: rgba(37,99,235,0.3); background: rgba(37,99,235,0.05); }
+.ult-split-offer { border-color: rgba(217,119,6,0.4); background: rgba(217,119,6,0.08); }
+.ult-split-label { display: block; font-size: 0.75rem; color: var(--text-muted); text-transform: uppercase; letter-spacing: 0.05em; }
+.ult-split-val { display: block; font-size: 2rem; font-weight: 800; }
+.ult-split-keep .ult-split-val { color: #2563eb; }
+.ult-split-offer .ult-split-val { color: var(--accent); }
+.ult-split-arrow { font-size: 1.5rem; color: var(--text-muted); }
+.ult-offer-display { background: rgba(217,119,6,0.08); border: 2px solid rgba(217,119,6,0.3); border-radius: 1rem; padding: 1.5rem; text-align: center; margin: 1rem 0; }
+.ult-offer-label { font-size: 0.85rem; color: var(--text-muted); margin-bottom: 0.5rem; }
+.ult-offer-amount { font-size: 3rem; font-weight: 900; color: var(--accent); }
+.ult-offer-keep { font-size: 0.85rem; color: var(--text-muted); margin-top: 0.25rem; }
+.ult-info-card { background: linear-gradient(135deg, rgba(217,119,6,0.08), rgba(234,88,12,0.05)); }
+.ult-info-row { display: flex; gap: 1.5rem; flex-wrap: wrap; }
+.ult-info-item { display: flex; flex-direction: column; gap: 0.2rem; }
+.ult-info-label { font-size: 0.72rem; color: var(--text-muted); text-transform: uppercase; letter-spacing: 0.05em; }
+.ult-info-val { font-size: 1.2rem; font-weight: 800; color: var(--accent); }
+.ult-waiting { text-align: center; padding: 1.5rem; color: var(--text-muted); font-style: italic; }
+.ult-round-hist { font-size: 0.83rem; }
+.ult-hist-row { display: flex; gap: 0.75rem; padding: 0.4rem 0; border-bottom: 1px solid var(--border); align-items: center; }
+.ult-badge { padding: 0.2rem 0.6rem; border-radius: 1rem; font-size: 0.75rem; font-weight: 700; }
+.ult-badge-accept { background: rgba(22,163,74,0.15); color: #16a34a; }
+.ult-badge-reject { background: rgba(220,38,38,0.15); color: #dc2626; }
+.ult-players-list { display: flex; gap: 0.5rem; flex-wrap: wrap; margin-bottom: 0.5rem; }
+.ult-chip { background: var(--accent); color: #fff; padding: 0.3rem 0.8rem; border-radius: 1rem; font-size: 0.85rem; }
+.ult-score-row { display: flex; gap: 0.75rem; padding: 0.4rem 0; border-bottom: 1px solid var(--border); align-items: center; }
+.ult-score-row.is-me { color: var(--accent); font-weight: 700; }
+.ult-rank { font-weight: 700; width: 2rem; }
+.ult-pname { flex: 1; }
+.ult-pts { font-weight: 700; }
+.ult-event-log { max-height: 200px; overflow-y: auto; font-size: 0.82rem; color: var(--text-muted); }
+.ult-event { padding: 0.2rem 0; border-bottom: 1px solid var(--border); }
+.ult-final-row { display: flex; gap: 1rem; align-items: center; padding: 0.5rem; border-radius: 0.5rem; margin-bottom: 0.25rem; }
+.ult-final-row.winner { background: rgba(217,119,6,0.1); font-weight: 700; }
+.ult-room-code { font-size: 1.4rem; font-family: monospace; color: var(--accent); }
+.ult-error { background: rgba(239,68,68,0.1); color: #ef4444; border: 1px solid rgba(239,68,68,0.3); border-radius: 0.5rem; padding: 0.75rem; margin-top: 0.75rem; }
+.ult-loading { text-align: center; padding: 4rem; color: var(--text-muted); }
+.ult-role-badge { display: inline-block; padding: 0.2rem 0.6rem; border-radius: 0.75rem; font-size: 0.78rem; font-weight: 600; background: rgba(217,119,6,0.1); color: var(--accent); }

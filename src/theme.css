@@ -1,0 +1,134 @@
+:root {
+    /* Fonts */
+    --font-main: 'Plus Jakarta Sans',
+        system-ui,
+        -apple-system,
+        sans-serif;
+    --font-mono: 'JetBrains Mono',
+        monospace;
+
+    /* Light Mode (Legacy Match) */
+    --bg-page: #f8fafc;
+    /* Matches original modern bg */
+    --bg-card: #ffffff;
+    --bg-sidebar: #ffffff;
+    --bg-hover: #f1f5f9;
+    --bg-subtle: #f1f5f9;
+    --bg-input: #f8fafc;
+    /* Slate 100 */
+
+    /* Gradients (Restoring Sleekness) */
+    --bg-gradient-hero: linear-gradient(135deg, #eff6ff 0%, #ffffff 100%);
+    --bg-gradient-header: linear-gradient(180deg, #ffffff, #fbfdff);
+    --bg-gradient-input: linear-gradient(180deg, #ffffff, #fcfeff);
+    --bg-gradient-button: linear-gradient(180deg, #ffffff 0%, #fbfdff 100%);
+    --bg-gradient-subnav: #ffffff;
+    /* Fallback or specific */
+
+    --text-main: #0f172a;
+    /* Slate 900 */
+    --text-secondary: #334155;
+    /* Slate 700 */
+    --text-muted: #64748b;
+    /* Slate 500 */
+    --text-accent: #2563eb;
+    /* Blue 600 - Original Accent */
+    --text-inverse: #ffffff;
+
+    --border-color: #e2e8f0;
+    /* Slate 200 - Lighter border for cards */
+    --border-light: #f1f5f9;
+    /* Slate 100 */
+    --border-dark: #cbd5e1;
+    /* Slate 300 - Accents */
+
+    --shadow-card: 0 4px 6px -1px rgba(0, 0, 0, 0.05),
+        0 2px 4px -1px rgba(0, 0, 0, 0.03);
+    --shadow-hover: 0 10px 15px -3px rgba(0, 0, 0, 0.1),
+        0 4px 6px -2px rgba(0, 0, 0, 0.05);
+
+    /* Semantic Colors */
+    --color-success: #10b981;
+    --color-warning: #f59e0b;
+    --color-danger: #ef4444;
+    --color-info: #3b82f6;
+
+    /* Nav Icons (Sleek Restoration) */
+    --nav-icon-bg: #e2e8f0;
+    /* Default light grey background */
+    --nav-icon-color: #64748b;
+    /* Muted text */
+    --nav-icon-active-bg: #2563eb;
+    /* Blue active background */
+    --nav-icon-active-color: #ffffff;
+    /* White active text */
+    /* Scrollbar (Light Mode - Sleek Gray) */
+    --scrollbar-thumb-bg: #cbd5e1;
+    --scrollbar-thumb-border: #f8fafc;
+    --scrollbar-track-bg: transparent;
+}
+
+[data-theme='dark'] {
+    /* Dark Mode */
+    --bg-page: #0f172a;
+    /* Slate 900 */
+    --bg-card: #1e293b;
+    /* Slate 800 */
+    --bg-sidebar: #1e293b;
+    --bg-hover: #334155;
+    --bg-subtle: rgba(255, 255, 255, 0.05);
+    /* Slate 700 */
+    --bg-input: #0f172a;
+
+    /* Gradients (Dark Mode - Flat or Subtle) */
+    --bg-gradient-hero: #1e293b;
+    --bg-gradient-header: #1e293b;
+    --bg-gradient-input: #0f172a;
+    --bg-gradient-button: #1e293b;
+    --bg-gradient-subnav: #334155;
+
+    --text-main: #f8fafc;
+    /* Slate 50 */
+    --text-secondary: #cbd5e1;
+    /* Slate 300 */
+    --text-muted: #94a3b8;
+    /* Slate 400 */
+    --text-accent: #dbeafe;
+    /* Blue 100 */
+    --text-inverse: #0f172a;
+
+    --border-color: #334155;
+    /* Slate 700 */
+    --border-light: #1e293b;
+    --border-dark: #475569;
+
+    --shadow-card: 0 4px 6px -1px rgba(0, 0, 0, 0.3);
+    --shadow-hover: 0 10px 15px -3px rgba(0, 0, 0, 0.4);
+
+    /* Semantic Colors - Adjusted for Dark Mode */
+
+    /* Scrollbar (Dark Mode) */
+    --scrollbar-thumb-bg: #475569;
+    /* Slate 600 - Visible but not jarring */
+    --scrollbar-thumb-border: #1e293b;
+    /* Match sidebar bg */
+    --scrollbar-track-bg: rgba(0, 0, 0, 0.2);
+    --scrollbar-track-bg: rgba(0, 0, 0, 0.2);
+
+    --color-success: #34d399;
+    --color-warning: #fbbf24;
+    --color-danger: #f87171;
+    --color-info: #60a5fa;
+
+    /* Nav Icons (Dark Mode) */
+    --nav-icon-bg: #334155;
+    --nav-icon-color: #94a3b8;
+    --nav-icon-active-bg: #60a5fa;
+    --nav-icon-active-color: #0f172a;
+}
+
+body {
+    background-color: var(--bg-page);
+    color: var(--text-main);
+    transition: background-color 0.3s ease, color 0.3s ease;
+}

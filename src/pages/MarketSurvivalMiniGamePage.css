@@ -1,0 +1,354 @@
+.msv-page {
+  --bg: radial-gradient(circle at top, #fffbeb 0%, #f8fafc 100%);
+  --card-bg: rgba(255, 255, 255, 0.94);
+  --accent: #d97706;
+  --accent2: #f59e0b;
+  --text: #0f172a;
+  --text-muted: #64748b;
+  --border: rgba(148, 163, 184, 0.25);
+  min-height: 100vh;
+  background: var(--bg);
+  color: var(--text);
+  padding: 1.5rem;
+  font-family: inherit;
+}
+
+[data-theme='dark'] .msv-page {
+  --bg: radial-gradient(circle at top, #1c1400 0%, #020617 100%);
+  --card-bg: rgba(15, 23, 42, 0.6);
+  --text: #f8fafc;
+  --text-muted: #94a3b8;
+  --border: rgba(255, 255, 255, 0.1);
+}
+
+.msv-shell {
+  max-width: 1100px;
+  margin: 0 auto;
+}
+
+.msv-hero {
+  text-align: center;
+  margin-bottom: 2rem;
+}
+
+.msv-hero h1 {
+  font-size: 2.5rem;
+  font-weight: 800;
+  margin: 0;
+  background: linear-gradient(135deg, #d97706, #dc2626);
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+.msv-sub {
+  color: var(--text-muted);
+  font-size: 0.95rem;
+  margin-top: 0.4rem;
+  max-width: 640px;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.msv-card {
+  background: var(--card-bg);
+  border: 1px solid var(--border);
+  border-radius: 1rem;
+  padding: 1.5rem;
+  margin-bottom: 1rem;
+  backdrop-filter: blur(10px);
+}
+
+.msv-card h2,
+.msv-card h3 {
+  margin: 0 0 0.75rem;
+  font-weight: 700;
+}
+
+.msv-desc {
+  color: var(--text-muted);
+  font-size: 0.88rem;
+  margin: 0 0 0.75rem;
+}
+
+.msv-input {
+  width: 100%;
+  box-sizing: border-box;
+  padding: 0.6rem 0.9rem;
+  border-radius: 0.5rem;
+  border: 1px solid var(--border);
+  background: var(--card-bg);
+  color: var(--text);
+  font-size: 0.95rem;
+}
+
+.msv-btn {
+  padding: 0.6rem 1.4rem;
+  border-radius: 0.5rem;
+  font-weight: 600;
+  cursor: pointer;
+  border: none;
+  font-size: 0.9rem;
+  transition: opacity 0.15s;
+}
+
+.msv-btn:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+.msv-btn-primary {
+  background: var(--accent);
+  color: #fff;
+}
+
+.msv-btn-secondary {
+  background: transparent;
+  border: 1px solid var(--border);
+  color: var(--text);
+}
+
+.msv-btn-danger {
+  background: #ef4444;
+  color: #fff;
+}
+
+.msv-game-grid {
+  display: grid;
+  grid-template-columns: 1fr 300px;
+  gap: 1rem;
+}
+
+@media (max-width: 768px) {
+  .msv-game-grid {
+    grid-template-columns: 1fr;
+  }
+}
+
+.msv-info-card {
+  background: linear-gradient(135deg, rgba(217, 119, 6, 0.08), rgba(245, 158, 11, 0.05));
+}
+
+.msv-info-row {
+  display: flex;
+  gap: 1.5rem;
+  flex-wrap: wrap;
+}
+
+.msv-info-item {
+  display: flex;
+  flex-direction: column;
+  gap: 0.2rem;
+}
+
+.msv-info-label {
+  font-size: 0.72rem;
+  color: var(--text-muted);
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+}
+
+.msv-info-val {
+  font-size: 1.2rem;
+  font-weight: 800;
+  color: var(--accent);
+}
+
+.msv-slider-group {
+  margin: 1rem 0;
+}
+
+.msv-slider-group label {
+  display: block;
+  font-size: 0.85rem;
+  color: var(--text-muted);
+  margin-bottom: 0.4rem;
+  font-weight: 600;
+}
+
+.msv-slider {
+  width: 100%;
+  accent-color: var(--accent);
+}
+
+.msv-slider-value {
+  font-size: 1.4rem;
+  font-weight: 800;
+  color: var(--accent);
+  margin: 0.25rem 0;
+}
+
+.msv-slider-hint {
+  font-size: 0.82rem;
+  color: var(--text-muted);
+  margin-top: 0.15rem;
+}
+
+.msv-waiting {
+  text-align: center;
+  padding: 1.5rem;
+  color: var(--text-muted);
+  font-style: italic;
+}
+
+.msv-players-list {
+  display: flex;
+  gap: 0.5rem;
+  flex-wrap: wrap;
+  margin-bottom: 0.5rem;
+}
+
+.msv-chip {
+  background: var(--accent);
+  color: #fff;
+  padding: 0.3rem 0.8rem;
+  border-radius: 1rem;
+  font-size: 0.85rem;
+}
+
+.msv-score-row {
+  display: flex;
+  gap: 0.75rem;
+  padding: 0.4rem 0;
+  border-bottom: 1px solid var(--border);
+  align-items: center;
+}
+
+.msv-score-row.is-me {
+  color: var(--accent);
+  font-weight: 700;
+}
+
+.msv-rank {
+  font-weight: 700;
+  width: 2rem;
+}
+
+.msv-pname {
+  flex: 1;
+}
+
+.msv-pts {
+  font-weight: 700;
+}
+
+.msv-event-log {
+  max-height: 180px;
+  overflow-y: auto;
+  font-size: 0.82rem;
+  color: var(--text-muted);
+}
+
+.msv-event {
+  padding: 0.2rem 0;
+  border-bottom: 1px solid var(--border);
+}
+
+.msv-results-table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 0.88rem;
+}
+
+.msv-results-table th {
+  background: rgba(217, 119, 6, 0.1);
+  padding: 0.5rem 0.75rem;
+  text-align: left;
+  font-weight: 700;
+  font-size: 0.78rem;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+}
+
+.msv-results-table td {
+  padding: 0.5rem 0.75rem;
+  border-bottom: 1px solid var(--border);
+}
+
+.msv-results-table tr.is-winner td {
+  background: rgba(217, 119, 6, 0.08);
+  font-weight: 700;
+}
+
+.msv-path-legend {
+  display: flex;
+  gap: 1rem;
+  flex-wrap: wrap;
+  margin-bottom: 0.75rem;
+  font-size: 0.82rem;
+}
+
+.msv-legend-item {
+  display: flex;
+  align-items: center;
+  gap: 0.4rem;
+}
+
+.msv-legend-line {
+  width: 24px;
+  height: 3px;
+  border-radius: 2px;
+}
+
+.msv-legend-target {
+  background: #16a34a;
+  border: 2px dashed #16a34a;
+}
+
+.msv-legend-bankrupt {
+  background: #dc2626;
+  border: 2px dashed #dc2626;
+}
+
+.msv-final-row {
+  display: flex;
+  gap: 1rem;
+  align-items: center;
+  padding: 0.5rem;
+  border-radius: 0.5rem;
+  margin-bottom: 0.25rem;
+}
+
+.msv-final-row.winner {
+  background: rgba(217, 119, 6, 0.1);
+  font-weight: 700;
+}
+
+.msv-room-code {
+  font-size: 1.4rem;
+  font-family: monospace;
+  color: var(--accent);
+}
+
+.msv-error {
+  background: rgba(239, 68, 68, 0.1);
+  color: #ef4444;
+  border: 1px solid rgba(239, 68, 68, 0.3);
+  border-radius: 0.5rem;
+  padding: 0.75rem;
+  margin-top: 0.75rem;
+}
+
+.msv-loading {
+  text-align: center;
+  padding: 4rem;
+  color: var(--text-muted);
+}
+
+.msv-badge-target {
+  background: rgba(22, 163, 74, 0.15);
+  color: #16a34a;
+  padding: 0.1rem 0.5rem;
+  border-radius: 0.75rem;
+  font-size: 0.78rem;
+  font-weight: 600;
+}
+
+.msv-badge-bankrupt {
+  background: rgba(220, 38, 38, 0.15);
+  color: #dc2626;
+  padding: 0.1rem 0.5rem;
+  border-radius: 0.75rem;
+  font-size: 0.78rem;
+  font-weight: 600;
+}

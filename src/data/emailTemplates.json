@@ -1,0 +1,14 @@
+{
+    "teamInvitation": {
+        "subject": "Your Team Access for the Simulation: {{teamName}}",
+        "body": "Hello {{teamName}},\n\nYou have been registered for the simulation. Here are your access details:\n\nTeam Login Code: {{teamCode}}\nTeam Login PIN: {{teamPin}}\n\nYou can login at: {{loginUrl}}\n\nGood luck!\nBest regards,\nEducator"
+    },
+    "educatorWelcome": {
+        "subject": "Welcome to AI Decision Lab - Your Educator Account is Ready!",
+        "body": "Hello,\n\nThanks for choosing AI Decision Lab. Your educator account has been created and is ready for use.\n\nHere are your login details:\nEmail: {{email}}\nPIN: {{pin}}\n\nYou can login at: {{loginUrl}}\n\nWe are excited to have you on board!\n\nBest regards,\nThe AI Decision Lab Team"
+    },
+    "creditPurchase": {
+        "subject": "Thank you for your purchase - AI Decision Lab Credits",
+        "body": "Hello,\n\nThank you for choosing AI Decision Lab. We have successfully processed your purchase of {{amount}} game credits. Your account balance is now {{balance}} credits.\n\nYou can view and download your invoice here: {{invoiceUrl}}\n\nIf you have any questions, please don't hesitate to reach out.\n\nBest regards,\nThe AI Decision Lab Team"
+    }
+}

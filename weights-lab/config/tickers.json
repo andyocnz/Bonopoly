@@ -1,0 +1,31 @@
+{
+  "industries": [
+    {
+      "id": "oil",
+      "label": "Oil & Gas",
+      "tickers": [
+        { "ticker": "BP", "name": "BP" },
+        { "ticker": "XOM", "name": "Exxon Mobil" },
+        { "ticker": "CVX", "name": "Chevron" }
+      ]
+    },
+    {
+      "id": "automotive",
+      "label": "Automotive",
+      "tickers": [
+        { "ticker": "TSLA", "name": "Tesla" },
+        { "ticker": "TM", "name": "Toyota" },
+        { "ticker": "GM", "name": "General Motors" }
+      ]
+    },
+    {
+      "id": "electronics",
+      "label": "Electronics",
+      "tickers": [
+        { "ticker": "AAPL", "name": "Apple" },
+        { "ticker": "005930.KS", "name": "Samsung Electronics" },
+        { "ticker": "SONY", "name": "Sony" }
+      ]
+    }
+  ]
+}

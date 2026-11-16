@@ -1,0 +1,484 @@
+.fishery-page {
+  --bg-ocean: radial-gradient(circle at top left, #eff6ff 0%, #f8fafc 100%);
+  --bg-card: rgba(255, 255, 255, 0.94);
+  --accent-emerald: #10b981;
+  --accent-blue: #2563eb;
+  --accent-rose: #f43f5e;
+  --accent-amber: #f59e0b;
+  --text-primary: #0f172a;
+  --text-secondary: #64748b;
+  --input-bg: rgba(255, 255, 255, 0.92);
+  --input-text: #0f172a;
+  --border-color: rgba(148, 163, 184, 0.25);
+  --glass-effect: blur(10px);
+  min-height: 100vh;
+  background: var(--bg-ocean);
+  color: var(--text-primary);
+  padding: 1.5rem;
+  font-family: inherit;
+}
+
+[data-theme='dark'] .fishery-page {
+  --bg-ocean: radial-gradient(circle at top left, #0c2135 0%, #020617 100%);
+  --bg-card: rgba(15, 23, 42, 0.6);
+  --accent-emerald: #10b981;
+  --accent-blue: #3b82f6;
+  --accent-rose: #f43f5e;
+  --accent-amber: #f59e0b;
+  --text-primary: #f8fafc;
+  --text-secondary: #94a3b8;
+  --input-bg: rgba(15, 23, 42, 0.8);
+  --input-text: #f8fafc;
+  --border-color: rgba(255, 255, 255, 0.1);
+  --glass-effect: blur(12px);
+}
+
+.fishery-shell {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+  width: 100%;
+  max-width: 1280px;
+  margin: 0 auto;
+}
+
+.fishery-lobby-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 1.25rem;
+  align-items: start;
+}
+
+.fishery-lobby-grid > * {
+  min-width: 0;
+}
+
+@media (max-width: 900px) {
+  .fishery-lobby-grid {
+    grid-template-columns: 1fr;
+  }
+}
+
+.fishery-hero {
+  text-align: center;
+  margin-bottom: 2rem;
+}
+
+.fishery-hero h1 {
+  font-size: 3rem;
+  font-weight: 800;
+  letter-spacing: -0.02em;
+  margin: 0;
+  background: linear-gradient(135deg, #38bdf8 0%, #10b981 100%);
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+.fishery-sub {
+  color: var(--text-secondary);
+  font-size: 1.1rem;
+  margin-top: 0.5rem;
+}
+
+.fishery-card {
+  background: var(--bg-card);
+  backdrop-filter: var(--glass-effect);
+  -webkit-backdrop-filter: var(--glass-effect);
+  border: 1px solid var(--border-color);
+  border-radius: 16px;
+  padding: 1.5rem;
+  transition: transform 0.2s ease, border-color 0.2s ease;
+  box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+}
+
+.fishery-grid {
+  display: grid;
+  grid-template-columns: 1.5fr 1fr;
+  gap: 1.5rem;
+  margin-top: 0.75rem;
+}
+
+.fishery-game-layout {
+  display: grid;
+  grid-template-columns: 2fr 1fr;
+  gap: 1.25rem;
+  align-items: start;
+}
+
+.fishery-main-col {
+  min-width: 0;
+}
+
+.fishery-sidebar {
+  min-width: 0;
+}
+
+@media (max-width: 1000px) {
+  .fishery-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .fishery-game-layout {
+    grid-template-columns: 1fr;
+  }
+}
+
+/* --- STAT BOXES --- */
+.fishery-stats {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 1rem;
+  margin-bottom: 0.8rem;
+}
+
+.stat-box {
+  background: var(--bg-card);
+  padding: 1rem;
+  border-radius: 12px;
+  border: 1px solid var(--border-color);
+}
+
+.stat-box .label {
+  font-size: 0.8rem;
+  color: var(--text-secondary);
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  margin-bottom: 0.4rem;
+}
+
+.stat-box .value {
+  font-size: 1.8rem;
+  font-weight: 700;
+}
+
+/* --- STOCK METER --- */
+.stock-container {
+  margin-top: 0;
+  margin-bottom: 0;
+}
+
+.stock-header {
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 0.6rem;
+  font-size: 0.9rem;
+}
+
+.stock-bar-bg {
+  height: 12px;
+  background: rgba(255, 255, 255, 0.05);
+  border-radius: 6px;
+  overflow: hidden;
+}
+
+.stock-bar-fill {
+  height: 100%;
+  background: linear-gradient(90deg, #0ea5e9, #10b981);
+  transition: width 0.5s ease;
+}
+
+.stock-bar-fill.warning {
+  background: linear-gradient(90deg, #f59e0b, #ef4444);
+}
+
+/* --- FORMS --- */
+.fishery-form-group {
+  display: flex;
+  flex-direction: column;
+  gap: 0.4rem;
+}
+
+.fishery-form-group label {
+  font-size: 0.85rem;
+  font-weight: 500;
+  color: var(--text-secondary);
+}
+
+.fishery-input {
+  background: var(--input-bg);
+  border: 1px solid var(--border-color);
+  border-radius: 8px;
+  padding: 0.75rem;
+  color: var(--input-text);
+  font-size: 1rem;
+  transition: border-color 0.2s;
+}
+
+.fishery-input:focus {
+  outline: none;
+  border-color: var(--accent-blue);
+}
+
+/* --- BUTTONS --- */
+.fishery-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0.75rem 1.5rem;
+  border-radius: 10px;
+  font-weight: 600;
+  cursor: pointer;
+  border: 1px solid transparent;
+  transition: all 0.2s;
+  gap: 0.5rem;
+  font-size: 1rem;
+}
+
+.fishery-btn.primary {
+  background: var(--accent-blue);
+  color: #fff;
+}
+
+.fishery-btn.primary:hover {
+  background: #2563eb;
+  transform: translateY(-1px);
+}
+
+.fishery-btn.ghost {
+  background: transparent;
+  border-color: var(--border-color);
+  color: var(--text-secondary);
+}
+
+.fishery-btn.ghost:hover {
+  border-color: var(--accent-blue);
+  color: var(--text-primary);
+}
+
+.fishery-btn:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+  transform: none;
+}
+
+/* --- TABLE --- */
+.fishery-table {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+.fishery-table th {
+  text-align: left;
+  font-size: 0.8rem;
+  color: var(--text-secondary);
+  text-transform: uppercase;
+  padding: 1rem 0.5rem;
+  border-bottom: 1px solid var(--border-color);
+}
+
+.fishery-table td {
+  padding: 1rem 0.5rem;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+  font-size: 0.95rem;
+}
+
+/* --- OCEAN VISUAL --- */
+.fishery-ocean-view {
+  height: 200px;
+  background: linear-gradient(180deg, #1e40af 0%, #0c2135 100%);
+  border-radius: 12px;
+  position: relative;
+  overflow: hidden;
+  margin-bottom: 0;
+  box-shadow: inset 0 0 40px rgba(0, 0, 0, 0.5);
+}
+
+.ocean-bubble {
+  position: absolute;
+  bottom: -20px;
+  background: rgba(255, 255, 255, 0.2);
+  border-radius: 50%;
+  animation: bubbleUp 4s infinite ease-in;
+}
+
+@keyframes bubbleUp {
+  0% {
+    transform: translateY(0) translateX(0);
+    opacity: 0;
+  }
+
+  20% {
+    opacity: 0.6;
+  }
+
+  80% {
+    opacity: 0.6;
+  }
+
+  100% {
+    transform: translateY(-200px) translateX(20px);
+    opacity: 0;
+  }
+}
+
+.fish-container {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  pointer-events: none;
+}
+
+.animated-fish {
+  position: absolute;
+  filter: drop-shadow(0 2px 4px rgba(0, 0, 0, 0.3));
+  display: inline-block;
+  color: #7dd3fc;
+  text-shadow: 0 0 8px rgba(125, 211, 252, 0.35);
+}
+
+@keyframes tailWag {
+
+  0%,
+  100% {
+    transform: scaleX(1);
+  }
+
+  50% {
+    transform: scaleX(0.9);
+  }
+}
+
+.fish-emoji {
+  display: inline-block;
+  font-size: 1.25rem;
+  line-height: 1;
+  animation: tailWag 0.3s infinite ease-in-out;
+}
+
+.fishery-overview-grid {
+  display: grid;
+  grid-template-columns: 1.3fr 1fr;
+  gap: 1rem;
+  align-items: stretch;
+  margin-bottom: 1rem;
+}
+
+.fishery-player-pill {
+  display: inline-flex;
+  align-items: center;
+  border: 1px solid var(--border-color);
+  background: var(--bg-card);
+  padding: 0.3rem 0.65rem;
+  border-radius: 999px;
+  font-size: 0.85rem;
+  color: var(--text-primary);
+}
+
+.fishery-overview-side {
+  display: grid;
+  gap: 0.8rem;
+}
+
+@media (max-width: 1100px) {
+  .fishery-overview-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .fishery-stats {
+    grid-template-columns: 1fr;
+  }
+}
+
+@keyframes swim {
+  0% {
+    transform: translate3d(-150px, 0, 0) rotateY(0deg);
+  }
+
+  25% {
+    transform: translate3d(25%, 10px, 0) rotateY(0deg);
+  }
+
+  45% {
+    transform: translate3d(100%, 0, 0) rotateY(0deg);
+  }
+
+  50% {
+    transform: translate3d(100%, 0, 0) rotateY(180deg);
+  }
+
+  75% {
+    transform: translate3d(25%, -10px, 0) rotateY(180deg);
+  }
+
+  95% {
+    transform: translate3d(-150px, 0, 0) rotateY(180deg);
+  }
+
+  100% {
+    transform: translate3d(-150px, 0, 0) rotateY(0deg);
+  }
+}
+
+@keyframes swim-alt {
+  0% {
+    transform: translate3d(-150px, 5px, 0) rotateY(0deg);
+  }
+
+  33% {
+    transform: translate3d(40%, -10px, 0) rotateY(0deg);
+  }
+
+  45% {
+    transform: translate3d(100%, 5px, 0) rotateY(0deg);
+  }
+
+  50% {
+    transform: translate3d(100%, 5px, 0) rotateY(180deg);
+  }
+
+  83% {
+    transform: translate3d(40%, 15px, 0) rotateY(180deg);
+  }
+
+  95% {
+    transform: translate3d(-150px, 5px, 0) rotateY(180deg);
+  }
+
+  100% {
+    transform: translate3d(-150px, 5px, 0) rotateY(0deg);
+  }
+}
+
+/* --- MISSION BANNER --- */
+.fishery-mission-banner {
+  background: rgba(59, 130, 246, 0.1);
+  border: 1px solid rgba(59, 130, 246, 0.2);
+  border-radius: 16px;
+  padding: 1.5rem;
+}
+
+/* --- UTILS --- */
+.emerald {
+  color: var(--accent-emerald);
+}
+
+.rose {
+  color: var(--accent-rose);
+}
+
+.amber {
+  color: var(--accent-amber);
+}
+
+.blue {
+  color: var(--accent-blue);
+}
+
+@keyframes pulse {
+  0% {
+    transform: scale(1);
+  }
+
+  50% {
+    transform: scale(1.02);
+  }
+
+  100% {
+    transform: scale(1);
+  }
+}
+
+.pulse {
+  animation: pulse 2s infinite ease-in-out;
+}

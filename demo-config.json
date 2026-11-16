@@ -1,0 +1,20 @@
+{
+  "demoGame": {
+    "enabled": true,
+    "rounds": 3,
+    "industry": "automotive",
+    "useRandomIndustry": false,
+    "humanTeamCount": 1,
+    "aiTeamCount": 3,
+    "aiDifficulty": "random",
+    "aiDifficultyOptions": ["easy", "medium", "hard"],
+    "teamNames": [
+      "APEX Motors",
+      "Rival Corp A",
+      "Rival Corp B",
+      "Rival Corp C"
+    ],
+    "autoAdvance": true,
+    "description": "Quick 3-round demo game with 1 human player vs 3 AI opponents"
+  }
+}

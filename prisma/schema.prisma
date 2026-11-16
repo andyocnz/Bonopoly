@@ -1,0 +1,325 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model Game {
+  id                     String     @id @default(uuid())
+  gameCode               String     @unique @db.VarChar(10)
+  name                   String     @db.VarChar(100)
+  status                 GameStatus @default(SETUP)
+  companyName            String     @default("TechCorp") @db.VarChar(50)
+  industry               String     @default("Electronics & Technology") @db.VarChar(100)
+  totalRounds            Int        @default(3)
+  hoursPerRound          Int?
+  vsComputer             Boolean    @default(false)
+  startingCash           Float      @default(15000000)
+  startingFactoriesUS    Int        @default(1)
+  startingFactoriesAsia  Int        @default(0)
+  capacityPerFactory     Int        @default(450000)
+  maxDebtRatio           Float      @default(0.4)
+  currentRound           Int        @default(0)
+  roundDeadline          DateTime?
+  scenarioSequence       Int[]      @default([0, 1, 2, 3])
+  createdAt              DateTime   @default(now())
+  updatedAt              DateTime   @updatedAt
+  startedAt              DateTime?
+  completedAt            DateTime?
+  gamePin                String     @db.VarChar(6)
+  marketDemandMode       String     @default("balanced")
+  marketDemandMultiplier Float      @default(1.0)
+  regionDemandSplit      Json?      // { us: 0.22, asia: 0.60, europe: 0.18 }
+  timezone               String     @default("Pacific/Auckland")
+  regionLabels           Json?
+  gameConfig             Json?
+  plantCostAsia          Float      @default(18000000)
+  plantCostUS            Float      @default(30000000)
+  startingDebt           Float      @default(20000000)
+  startingInventoryUnits Int        @default(100000)
+  startingShareCapital   Float      @default(60000000)
+  taxLossCarryforwardEnabled Boolean @default(false)
+  rounds                 Round[]
+  teams                  Team[]
+  educators              EducatorGame[]
+  tournamentEntries      TournamentGame[]
+
+  @@index([gameCode])
+  @@index([status])
+}
+
+model Team {
+  id           String            @id @default(uuid())
+  gameId       String
+  teamCode     String            @unique @db.VarChar(20)
+  name         String            @db.VarChar(50)
+  color        String            @default("#1e3a5f") @db.VarChar(7)
+  isComputer   Boolean           @default(false)
+  introSeen    Boolean           @default(false)
+  displayOrder Int               @default(0)
+  createdAt    DateTime          @default(now())
+  lastActiveAt DateTime          @default(now())
+  aiProfile    Json?
+  teamPin      String            @db.VarChar(6)
+  decisions    Decision[]
+  gameStates   GameState[]
+  game         Game              @relation(fields: [gameId], references: [id], onDelete: Cascade)
+  results      TeamRoundResult[]
+
+  @@index([gameId])
+  @@index([teamCode])
+}
+
+model Round {
+  id           String      @id @default(uuid())
+  gameId       String
+  roundNumber  Int
+  status       RoundStatus @default(PENDING)
+  scenarioId   Int         @default(0)
+  startedAt    DateTime?
+  deadline     DateTime?
+  completedAt  DateTime?
+  marketDemand Json?
+  createdAt    DateTime    @default(now())
+  game         Game        @relation(fields: [gameId], references: [id], onDelete: Cascade)
+
+  @@unique([gameId, roundNumber])
+  @@index([gameId])
+}
+
+model GameState {
+  id                       String   @id @default(uuid())
+  teamId                   String
+  roundNumber              Int
+  factoriesUS              Int      @default(1)
+  factoriesAsia            Int      @default(0)
+  pendingInvestments       Json?
+  unlockedTechLevel        Int      @default(1)
+  unlockedFeatures         Int      @default(0)
+  cumulativeResearchHours  Float    @default(0)
+  cumulativeTechInvestment Float    @default(0)
+  brandReputation          Float    @default(50)
+  inventory                Int      @default(0)
+  inventoryUS              Int      @default(0)
+  inventoryAsia            Int      @default(0)
+  cashBalance              Float    @default(30000000)
+  longTermDebt             Float    @default(30000000)
+  shareCapital             Float    @default(70000000)
+  retainedEarnings         Float    @default(0)
+  taxLossCarryforward      Float    @default(0)
+  createdAt                DateTime @default(now())
+  team                     Team     @relation(fields: [teamId], references: [id], onDelete: Cascade)
+
+  @@unique([teamId, roundNumber])
+  @@index([teamId])
+}
+
+model Decision {
+  id          String    @id @default(uuid())
+  teamId      String
+  roundNumber Int
+  isSubmitted Boolean   @default(false)
+  isLocked    Boolean   @default(false)
+  submittedAt DateTime?
+  production  Json?
+  hr          Json?
+  rnd         Json?
+  investment  Json?
+  logistics   Json?
+  marketing   Json?
+  finance     Json?
+  createdAt   DateTime  @default(now())
+  updatedAt   DateTime  @updatedAt
+  team        Team      @relation(fields: [teamId], references: [id], onDelete: Cascade)
+
+  @@unique([teamId, roundNumber])
+  @@index([teamId])
+}
+
+model TeamRoundResult {
+  id          String   @id @default(uuid())
+  teamId      String
+  gameId      String
+  roundNumber Int
+  rank        Int
+
+  // Single source of truth: All data stored in fullResults JSON
+  fullResults Json
+
+  createdAt   DateTime @default(now())
+  team        Team     @relation(fields: [teamId], references: [id], onDelete: Cascade)
+
+  @@unique([teamId, roundNumber])
+  @@index([gameId, roundNumber])
+}
+
+enum GameStatus {
+  SETUP
+  ACTIVE
+  PAUSED
+  COMPLETED
+  ARCHIVED
+}
+
+enum RoundStatus {
+  PENDING
+  ACTIVE
+  CALCULATING
+  COMPLETED
+}
+
+model Admin {
+  id        String   @id @default(uuid())
+  username  String   @unique @db.VarChar(50)
+  password  String   @db.VarChar(255) // Hashed
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+
+model Educator {
+  id        String         @id @default(uuid())
+  email     String         @unique @db.VarChar(255)
+  pin       String         @db.VarChar(50)
+  credits   Int            @default(0)
+  createdAt DateTime       @default(now())
+  updatedAt DateTime       @updatedAt
+  games     EducatorGame[]
+  tournaments Tournament[]
+  transactions CreditTransaction[]
+  miniGameSessions MiniGameSession[]
+}
+
+model CreditTransaction {
+  id          String   @id @default(uuid())
+  educatorId  String
+  amount      Int      // The change amount (can be positive or negative)
+  balanceAfter Int      // The total balance after this transaction
+  type        String   // 'PURCHASE', 'BONUS', 'USAGE', 'REFUND', 'MANUAL_ADJUSTMENT'
+  description String?
+  adminUser   String?  // Username of the admin who performed the action
+  createdAt   DateTime @default(now())
+
+  educator    Educator @relation(fields: [educatorId], references: [id], onDelete: Cascade)
+
+  @@index([educatorId])
+}
+
+model EducatorGame {
+  id         String   @id @default(uuid())
+  educatorId String
+  gameId     String
+  createdAt  DateTime @default(now())
+
+  educator   Educator @relation(fields: [educatorId], references: [id], onDelete: Cascade)
+  game     Game     @relation(fields: [gameId], references: [id], onDelete: Cascade)
+
+  @@unique([educatorId, gameId])
+  @@index([educatorId])
+  @@index([gameId])
+}
+
+model Tournament {
+  id         String           @id @default(uuid())
+  name       String           @db.VarChar(100)
+  educatorId String
+  createdAt  DateTime         @default(now())
+  status     String           @default("ACTIVE") // ACTIVE, COMPLETED
+  
+  educator   Educator         @relation(fields: [educatorId], references: [id], onDelete: Cascade)
+  games      TournamentGame[]
+
+  @@index([educatorId])
+}
+
+model TournamentGame {
+  id           String     @id @default(uuid())
+  tournamentId String
+  gameId       String
+  groupName    String     @db.VarChar(50) // "Group A", "Group B", "Group C", "Group D", "Final"
+  isFinal      Boolean    @default(false)
+
+  tournament   Tournament @relation(fields: [tournamentId], references: [id], onDelete: Cascade)
+  game         Game       @relation(fields: [gameId], references: [id], onDelete: Cascade)
+  
+  @@unique([tournamentId, gameId])
+  @@index([tournamentId])
+  @@index([gameId])
+}
+
+enum MiniGameType {
+  BANK_RUN
+  FISHERY
+  DOUBLE_AUCTION
+  CREDIT_SCORE
+  ULTIMATUM
+  TRUST_GAME
+  PRISONERS_DILEMMA
+  MATCHING_PENNIES
+  PUBLIC_GOODS
+  COURNOT
+  BERTRAND
+  ENGLISH_AUCTION
+  BEAUTY_CONTEST
+  MONTE_CARLO_PI
+  MARKET_SURVIVAL
+  PORTFOLIO_FRONTIER
+  ADVERSE_SELECTION
+  SIGNALING_GAME
+  PRINCIPAL_AGENT
+  MONOPOLY_PRICING
+  ASSET_BUBBLE
+  MARKET_BASKET
+  AB_TESTING
+  CUSTOMER_CHURN
+  CONFLICT_OF_INTEREST
+  AD_AUCTION
+  DIRECTOR_DUTIES
+  SOCIAL_INFLUENCE
+  CRYPTO_BUBBLE
+  XERO_RECONCILIATION
+  CAPITAL_STRUCTURE_LAB
+  GAME_OF_LIFE
+}
+
+enum MiniGameSessionStatus {
+  LOBBY
+  ACTIVE
+  COMPLETED
+  ARCHIVED
+}
+
+model MiniGameSession {
+  id          String                @id @default(uuid())
+  educatorId  String
+  gameType    MiniGameType
+  title       String?               @db.VarChar(120)
+  status      MiniGameSessionStatus @default(LOBBY)
+  teamCount   Int                   @default(4)
+  configJson  Json?
+  roomCode    String?               @unique @db.VarChar(12)
+  hostToken   String?               @db.VarChar(120)
+  createdAt   DateTime              @default(now())
+  updatedAt   DateTime              @updatedAt
+
+  educator    Educator              @relation(fields: [educatorId], references: [id], onDelete: Cascade)
+  invites     MiniGameInvite[]
+
+  @@index([educatorId, createdAt])
+  @@index([gameType, status])
+}
+
+model MiniGameInvite {
+  id         String          @id @default(uuid())
+  sessionId  String
+  teamLabel  String          @db.VarChar(80)
+  joinToken  String          @unique @db.VarChar(120)
+  createdAt  DateTime        @default(now())
+  usedCount  Int             @default(0)
+
+  session    MiniGameSession @relation(fields: [sessionId], references: [id], onDelete: Cascade)
+
+  @@index([sessionId])
+}

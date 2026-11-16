@@ -1,0 +1,538 @@
+.bankrun-page {
+  --bg-primary: #f8fafc;
+  --bg-card: rgba(255, 255, 255, 0.95);
+  --border-color: rgba(148, 163, 184, 0.35);
+  --accent-blue: #2563eb;
+  --accent-emerald: #10b981;
+  --accent-amber: #f59e0b;
+  --accent-rose: #f43f5e;
+  --text-primary: #0f172a;
+  --text-secondary: #64748b;
+  --glass-effect: blur(10px);
+  min-height: 100vh;
+  background: radial-gradient(circle at top left, #eff6ff 0%, #f8fafc 100%);
+  color: var(--text-primary);
+  padding: 1rem 1.25rem;
+  font-family: inherit;
+}
+
+[data-theme='dark'] .bankrun-page {
+  --bg-primary: #020617;
+  --bg-card: rgba(15, 23, 42, 0.85);
+  --border-color: rgba(51, 65, 85, 0.5);
+  --accent-blue: #3b82f6;
+  --accent-emerald: #10b981;
+  --accent-amber: #f59e0b;
+  --accent-rose: #f43f5e;
+  --text-primary: #f8fafc;
+  --text-secondary: #94a3b8;
+  --glass-effect: blur(12px);
+  background: radial-gradient(circle at top left, #0f172a 0%, #020617 100%);
+}
+
+.bankrun-shell {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+  width: 100%;
+  max-width: 1280px;
+  margin: 0 auto;
+}
+
+.bankrun-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding-bottom: 0.5rem;
+  border-bottom: 1px solid var(--border-color);
+}
+
+.bankrun-header h1 {
+  font-size: 2.2rem;
+  font-weight: 800;
+  margin: 0;
+  background: linear-gradient(135deg, var(--text-primary) 0%, var(--text-secondary) 100%);
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+  letter-spacing: -0.025em;
+}
+
+.bankrun-sub {
+  color: var(--text-secondary);
+  margin: 0.2rem 0 0;
+  font-size: 1rem;
+}
+
+/* --- CARDS --- */
+.bankrun-card {
+  background: var(--bg-card);
+  backdrop-filter: var(--glass-effect);
+  -webkit-backdrop-filter: var(--glass-effect);
+  border: 1px solid var(--border-color);
+  border-radius: 16px;
+  padding: 1.1rem;
+  transition: transform 0.2s ease, border-color 0.2s ease;
+  box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+}
+
+.bankrun-card h2 {
+  margin: 0 0 1.2rem;
+  font-size: 1.25rem;
+  color: var(--text-primary);
+  display: flex;
+  align-items: center;
+  gap: 0.6rem;
+}
+
+/* --- LOBBY DESIGN --- */
+.bankrun-lobby {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+
+.bankrun-hero {
+  text-align: center;
+}
+
+.bankrun-hero h1 {
+  font-size: 2.2rem;
+  margin-bottom: 0.4rem;
+}
+
+.bankrun-lobby-grid {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+  gap: 1.25rem;
+  align-items: start;
+}
+
+.bankrun-icon-btn {
+  width: 42px;
+  min-width: 42px;
+  padding: 0.6rem;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1rem;
+}
+
+.bankrun-input-group {
+  display: flex;
+  flex-direction: column;
+  gap: 0.8rem;
+}
+
+.bankrun-input-group label {
+  font-size: 0.9rem;
+  font-weight: 500;
+  color: var(--text-secondary);
+}
+
+.bankrun-input-group input {
+  background: rgba(255, 255, 255, 0.55);
+  border: 1px solid var(--border-color);
+  border-radius: 10px;
+  padding: 0.8rem 1rem;
+  color: var(--text-primary);
+  font-size: 1rem;
+  outline: none;
+  transition: border-color 0.2s;
+}
+
+.bankrun-input-group input:focus {
+  border-color: var(--accent-blue);
+}
+
+[data-theme='dark'] .bankrun-input-group input {
+  background: rgba(255, 255, 255, 0.05);
+  color: #fff;
+}
+
+.bankrun-toggle-tabs {
+  display: flex;
+  background: var(--border-color);
+  border-radius: 12px;
+  padding: 0.3rem;
+  gap: 0.3rem;
+}
+
+.bankrun-toggle-tabs button {
+  flex: 1;
+  background: transparent;
+  border: none;
+  border-radius: 10px;
+  padding: 0.6rem;
+  color: var(--text-secondary);
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.2s;
+}
+
+.bankrun-toggle-tabs button.active {
+  background: var(--bg-card);
+  color: var(--text-primary);
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.15);
+}
+
+/* --- GAME GRID --- */
+.bankrun-game-layout {
+  display: grid;
+  grid-template-columns: 2fr 1fr;
+  gap: 1.5rem;
+}
+
+@media (max-width: 1000px) {
+  .bankrun-game-layout {
+    grid-template-columns: 1fr;
+  }
+}
+
+@media (max-width: 980px) {
+  .bankrun-lobby-grid {
+    grid-template-columns: 1fr;
+  }
+}
+
+.bankrun-vault-status {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 1rem;
+  margin-bottom: 1.5rem;
+}
+
+.stat-box {
+  background: var(--bg-card);
+  padding: 1.2rem;
+  border-radius: 12px;
+  border: 1px solid var(--border-color);
+}
+
+.stat-box .label {
+  font-size: 0.8rem;
+  color: var(--text-secondary);
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  margin-bottom: 0.4rem;
+}
+
+.stat-box .value {
+  font-size: 1.8rem;
+  font-weight: 700;
+  font-variant-numeric: tabular-nums;
+}
+
+.value.blue {
+  color: var(--accent-blue);
+}
+
+.value.emerald {
+  color: var(--accent-emerald);
+}
+
+.value.amber {
+  color: var(--accent-amber);
+}
+
+.value.rose {
+  color: var(--accent-rose);
+}
+
+/* --- LIQUIDITY METER --- */
+.liquidity-container {
+  margin-top: 1.5rem;
+}
+
+.liquidity-header {
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 0.6rem;
+  font-size: 0.9rem;
+}
+
+.liquidity-bar-bg {
+  height: 12px;
+  background: var(--border-color);
+  border-radius: 6px;
+  overflow: hidden;
+  position: relative;
+}
+
+.liquidity-bar-fill {
+  height: 100%;
+  background: linear-gradient(90deg, var(--accent-blue), var(--accent-emerald));
+  transition: width 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.liquidity-bar-fill.critical {
+  background: linear-gradient(90deg, var(--accent-rose), var(--accent-amber));
+}
+
+/* --- ACTION CARDS --- */
+.action-zone {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 1rem;
+  margin-top: 2rem;
+}
+
+.action-card {
+  padding: 1.5rem;
+  border-radius: 16px;
+  border: 2px solid transparent;
+  background: var(--bg-card);
+  cursor: pointer;
+  text-align: center;
+  transition: all 0.3s cubic-bezier(0.23, 1, 0.32, 1);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 1rem;
+}
+
+.action-card.withdraw {
+  border-color: rgba(244, 63, 94, 0.2);
+}
+
+.action-card.withdraw:hover {
+  background: rgba(244, 63, 94, 0.1);
+  border-color: var(--accent-rose);
+  transform: translateY(-4px);
+  box-shadow: 0 10px 20px -5px rgba(244, 63, 94, 0.2);
+}
+
+.action-card.wait {
+  border-color: rgba(16, 185, 129, 0.2);
+}
+
+.action-card.wait:hover {
+  background: rgba(16, 185, 129, 0.1);
+  border-color: var(--accent-emerald);
+  transform: translateY(-4px);
+  box-shadow: 0 10px 20px -5px rgba(16, 185, 129, 0.2);
+}
+
+.action-card h3 {
+  margin: 0;
+  font-size: 1.25rem;
+}
+
+.action-card p {
+  margin: 0;
+  font-size: 0.9rem;
+  color: var(--text-secondary);
+}
+
+.action-icon {
+  font-size: 2.5rem;
+}
+
+/* --- TABLE --- */
+.bankrun-table {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+.bankrun-table th {
+  text-align: left;
+  font-size: 0.8rem;
+  color: var(--text-secondary);
+  text-transform: uppercase;
+  padding: 1rem 0.5rem;
+  border-bottom: 1px solid var(--border-color);
+}
+
+.bankrun-table td {
+  padding: 1rem 0.5rem;
+  border-bottom: 1px solid var(--border-color);
+  font-size: 0.95rem;
+}
+
+.bankrun-table tr:last-child td {
+  border-bottom: none;
+}
+
+.payout-badge {
+  background: rgba(16, 185, 129, 0.15);
+  color: var(--accent-emerald);
+  padding: 0.2rem 0.6rem;
+  border-radius: 6px;
+  font-weight: 600;
+  font-size: 0.85rem;
+}
+
+/* --- EVENT LOG --- */
+.event-log-container {
+  max-height: 400px;
+  overflow-y: auto;
+  padding-right: 0.5rem;
+}
+
+.event-log-container::-webkit-scrollbar {
+  width: 4px;
+}
+
+.event-log-container::-webkit-scrollbar-thumb {
+  background: var(--border-color);
+  border-radius: 2px;
+}
+
+.event-item {
+  padding: 0.6rem 0;
+  border-bottom: 1px solid var(--border-color);
+  font-size: 0.9rem;
+  display: flex;
+  gap: 0.8rem;
+}
+
+.event-time {
+  color: var(--text-secondary);
+  font-family: monospace;
+}
+
+/* --- UTILS --- */
+.bankrun-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0.75rem 1.5rem;
+  border-radius: 10px;
+  font-weight: 600;
+  cursor: pointer;
+  border: 1px solid transparent;
+  transition: all 0.2s;
+  gap: 0.5rem;
+  font-size: 1rem;
+}
+
+.bankrun-btn.primary {
+  background: var(--accent-blue);
+  color: #fff;
+}
+
+.bankrun-btn.primary:hover {
+  background: #2563eb;
+  transform: translateY(-1px);
+}
+
+.bankrun-btn.ghost {
+  background: transparent;
+  border-color: var(--border-color);
+  color: var(--text-secondary);
+}
+
+.bankrun-btn.ghost:hover {
+  border-color: var(--accent-blue);
+  color: var(--text-primary);
+}
+
+.bankrun-btn:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+  transform: none;
+}
+
+.bankrun-error {
+  background: rgba(244, 63, 94, 0.1);
+  color: var(--accent-rose);
+  padding: 1rem;
+  border-radius: 12px;
+  border: 1px solid rgba(244, 63, 94, 0.2);
+  margin-top: 1rem;
+  font-weight: 500;
+}
+
+.phase-tag {
+  padding: 0.3rem 0.8rem;
+  border-radius: 20px;
+  font-size: 0.75rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+}
+
+.phase-tag.lobby {
+  background: rgba(59, 130, 246, 0.2);
+  color: var(--accent-blue);
+}
+
+.phase-tag.playing {
+  background: rgba(16, 185, 129, 0.2);
+  color: var(--accent-emerald);
+}
+
+.phase-tag.results {
+  background: rgba(245, 158, 11, 0.2);
+  color: var(--accent-amber);
+}
+
+.day-badge {
+  font-weight: 800;
+  color: var(--text-primary);
+}
+
+@keyframes actionPulse {
+  0% {
+    transform: scale(1);
+  }
+
+  50% {
+    transform: scale(1.02);
+    border-color: var(--accent-blue);
+  }
+
+  100% {
+    transform: scale(1);
+  }
+}
+
+.action-card.pulse:not(:hover) {
+  animation: actionPulse 2s infinite ease-in-out;
+}
+
+/* --- VAULT ANIMATIONS --- */
+@keyframes vaultShake {
+
+  0%,
+  100% {
+    transform: translateX(0);
+  }
+
+  25% {
+    transform: translateX(-4px) rotate(-1deg);
+  }
+
+  75% {
+    transform: translateX(4px) rotate(1deg);
+  }
+}
+
+.vault-unstable {
+  animation: vaultShake 0.4s infinite ease-in-out;
+  border: 2px solid var(--accent-rose) !important;
+  box-shadow: 0 0 25px rgba(244, 63, 94, 0.4);
+}
+
+@keyframes moneyFlow {
+  0% {
+    transform: translateY(0) scale(1);
+    opacity: 0;
+  }
+
+  20% {
+    opacity: 1;
+  }
+
+  100% {
+    transform: translateY(-40px) scale(0.8);
+    opacity: 0;
+  }
+}
+
+.money-particle {
+  position: absolute;
+  pointer-events: none;
+  font-size: 1.2rem;
+  animation: moneyFlow 1s forwards ease-out;
+}

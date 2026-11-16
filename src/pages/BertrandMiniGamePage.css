@@ -1,0 +1,66 @@
+.ber-page {
+  --bg: radial-gradient(circle at top right, #fff1f2 0%, #f8fafc 100%);
+  --card-bg: rgba(255,255,255,0.94);
+  --accent: #e11d48;
+  --text: #0f172a;
+  --text-muted: #64748b;
+  --border: rgba(148,163,184,0.25);
+  min-height: 100vh;
+  background: var(--bg);
+  color: var(--text);
+  padding: 1.5rem;
+  font-family: inherit;
+}
+[data-theme='dark'] .ber-page {
+  --bg: radial-gradient(circle at top right, #4c0519 0%, #020617 100%);
+  --card-bg: rgba(15,23,42,0.6);
+  --text: #f8fafc;
+  --text-muted: #94a3b8;
+  --border: rgba(255,255,255,0.1);
+}
+.ber-shell { max-width: 1100px; margin: 0 auto; }
+.ber-hero { text-align: center; margin-bottom: 2rem; }
+.ber-hero h1 { font-size: 2.5rem; font-weight: 800; margin: 0; background: linear-gradient(135deg, #e11d48, #f97316); -webkit-background-clip: text; background-clip: text; -webkit-text-fill-color: transparent; }
+.ber-sub { color: var(--text-muted); font-size: 0.9rem; margin-top: 0.4rem; max-width: 600px; margin-left: auto; margin-right: auto; }
+.ber-card { background: var(--card-bg); border: 1px solid var(--border); border-radius: 1rem; padding: 1.5rem; margin-bottom: 1rem; backdrop-filter: blur(10px); }
+.ber-card h2, .ber-card h3 { margin: 0 0 0.75rem; font-weight: 700; }
+.ber-desc { color: var(--text-muted); font-size: 0.88rem; margin: 0 0 0.75rem; }
+.ber-input { width: 100%; box-sizing: border-box; padding: 0.6rem 0.9rem; border-radius: 0.5rem; border: 1px solid var(--border); background: var(--card-bg); color: var(--text); font-size: 0.95rem; }
+.ber-btn { padding: 0.6rem 1.4rem; border-radius: 0.5rem; font-weight: 600; cursor: pointer; border: none; font-size: 0.9rem; }
+.ber-btn:disabled { opacity: 0.5; cursor: not-allowed; }
+.ber-btn-primary { background: var(--accent); color: #fff; }
+.ber-btn-secondary { background: transparent; border: 1px solid var(--border); color: var(--text); }
+.ber-btn-danger { background: #ef4444; color: #fff; }
+.ber-setup-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 1rem; }
+.ber-game-grid { display: grid; grid-template-columns: 1fr 300px; gap: 1rem; }
+@media (max-width: 768px) { .ber-game-grid { grid-template-columns: 1fr; } }
+.ber-info-card { background: linear-gradient(135deg, rgba(225,29,72,0.08), rgba(249,115,22,0.04)); }
+.ber-info-row { display: flex; gap: 1.5rem; flex-wrap: wrap; }
+.ber-info-item { display: flex; flex-direction: column; gap: 0.2rem; }
+.ber-info-label { font-size: 0.72rem; color: var(--text-muted); text-transform: uppercase; }
+.ber-info-val { font-size: 1.1rem; font-weight: 800; color: var(--accent); }
+.ber-price-preview { display: flex; gap: 0.75rem; flex-wrap: wrap; }
+.ber-price-box { flex: 1; background: rgba(225,29,72,0.06); border: 1px solid var(--border); border-radius: 0.5rem; padding: 0.6rem; text-align: center; min-width: 80px; }
+.ber-mc-box { border-color: rgba(59,130,246,0.4); background: rgba(59,130,246,0.05); }
+.ber-price-label { display: block; font-size: 0.75rem; color: var(--text-muted); }
+.ber-price-val { display: block; font-size: 1.4rem; font-weight: 800; color: var(--accent); }
+.ber-waiting { text-align: center; padding: 1.5rem; color: var(--text-muted); font-style: italic; }
+.ber-profits { font-size: 0.85rem; }
+.ber-profit-row { display: flex; gap: 1rem; padding: 0.35rem 0; border-bottom: 1px solid var(--border); }
+.ber-profit-row.is-me { color: var(--accent); font-weight: 700; }
+.ber-won { color: #16a34a; font-weight: 700; }
+.ber-lost { color: var(--text-muted); }
+.ber-firms-list { display: flex; gap: 0.5rem; flex-wrap: wrap; margin-bottom: 0.5rem; }
+.ber-chip { background: var(--accent); color: #fff; padding: 0.3rem 0.8rem; border-radius: 1rem; font-size: 0.85rem; }
+.ber-score-row { display: flex; gap: 0.75rem; padding: 0.4rem 0; border-bottom: 1px solid var(--border); align-items: center; }
+.ber-score-row.is-me { color: var(--accent); font-weight: 700; }
+.ber-rank { font-weight: 700; width: 2rem; }
+.ber-fname { flex: 1; }
+.ber-pts { font-weight: 700; }
+.ber-event-log { max-height: 180px; overflow-y: auto; font-size: 0.82rem; color: var(--text-muted); }
+.ber-event { padding: 0.2rem 0; border-bottom: 1px solid var(--border); }
+.ber-final-row { display: flex; gap: 1rem; align-items: center; padding: 0.5rem; border-radius: 0.5rem; margin-bottom: 0.25rem; }
+.ber-final-row.winner { background: rgba(225,29,72,0.1); font-weight: 700; }
+.ber-room-code { font-size: 1.4rem; font-family: monospace; color: var(--accent); }
+.ber-error { background: rgba(239,68,68,0.1); color: #ef4444; border: 1px solid rgba(239,68,68,0.3); border-radius: 0.5rem; padding: 0.75rem; margin-top: 0.75rem; }
+.ber-loading { text-align: center; padding: 4rem; color: var(--text-muted); }

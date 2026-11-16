@@ -1,0 +1,40 @@
+.mg-live-how-panel {
+  margin: -0.4rem auto 1rem;
+  max-width: 1120px;
+  border: 1px solid color-mix(in srgb, var(--mg-accent) 45%, #ffffff 55%);
+  background: color-mix(in srgb, var(--mg-accent) 10%, var(--mg-surface));
+  border-radius: 14px;
+  padding: 0.85rem 1rem;
+}
+
+.mg-live-how-panel h3 {
+  margin: 0 0 0.5rem;
+  font-size: 0.95rem;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  color: var(--mg-accent);
+}
+
+.mg-live-how-panel ul {
+  margin: 0;
+  padding-left: 1.1rem;
+  display: grid;
+  gap: 0.35rem;
+}
+
+.mg-live-how-panel li {
+  font-size: 0.9rem;
+  line-height: 1.35;
+  color: var(--mg-text);
+}
+
+@media (max-width: 700px) {
+  .mg-live-how-panel {
+    margin-top: -0.2rem;
+    padding: 0.75rem 0.85rem;
+  }
+
+  .mg-live-how-panel li {
+    font-size: 0.86rem;
+  }
+}

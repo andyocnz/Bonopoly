@@ -1,0 +1,343 @@
+.mcp-page {
+  --bg: radial-gradient(circle at top, #f0fdf4 0%, #f8fafc 100%);
+  --card-bg: rgba(255, 255, 255, 0.94);
+  --accent: #059669;
+  --accent2: #10b981;
+  --text: #0f172a;
+  --text-muted: #64748b;
+  --border: rgba(148, 163, 184, 0.25);
+  min-height: 100vh;
+  background: var(--bg);
+  color: var(--text);
+  padding: 1.5rem;
+  font-family: inherit;
+}
+
+[data-theme='dark'] .mcp-page {
+  --bg: radial-gradient(circle at top, #022c22 0%, #020617 100%);
+  --card-bg: rgba(15, 23, 42, 0.6);
+  --text: #f8fafc;
+  --text-muted: #94a3b8;
+  --border: rgba(255, 255, 255, 0.1);
+}
+
+.mcp-shell {
+  max-width: 1100px;
+  margin: 0 auto;
+}
+
+.mcp-hero {
+  text-align: center;
+  margin-bottom: 2rem;
+}
+
+.mcp-hero h1 {
+  font-size: 2.5rem;
+  font-weight: 800;
+  margin: 0;
+  background: linear-gradient(135deg, #059669, #0d9488);
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+.mcp-sub {
+  color: var(--text-muted);
+  font-size: 0.95rem;
+  margin-top: 0.4rem;
+  max-width: 640px;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.mcp-card {
+  background: var(--card-bg);
+  border: 1px solid var(--border);
+  border-radius: 1rem;
+  padding: 1.5rem;
+  margin-bottom: 1rem;
+  backdrop-filter: blur(10px);
+}
+
+.mcp-card h2,
+.mcp-card h3 {
+  margin: 0 0 0.75rem;
+  font-weight: 700;
+}
+
+.mcp-desc {
+  color: var(--text-muted);
+  font-size: 0.88rem;
+  margin: 0 0 0.75rem;
+}
+
+.mcp-input {
+  width: 100%;
+  box-sizing: border-box;
+  padding: 0.6rem 0.9rem;
+  border-radius: 0.5rem;
+  border: 1px solid var(--border);
+  background: var(--card-bg);
+  color: var(--text);
+  font-size: 0.95rem;
+}
+
+.mcp-btn {
+  padding: 0.6rem 1.4rem;
+  border-radius: 0.5rem;
+  font-weight: 600;
+  cursor: pointer;
+  border: none;
+  font-size: 0.9rem;
+  transition: opacity 0.15s;
+}
+
+.mcp-btn:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+.mcp-btn-primary {
+  background: var(--accent);
+  color: #fff;
+}
+
+.mcp-btn-secondary {
+  background: transparent;
+  border: 1px solid var(--border);
+  color: var(--text);
+}
+
+.mcp-btn-danger {
+  background: #ef4444;
+  color: #fff;
+}
+
+.mcp-game-grid {
+  display: grid;
+  grid-template-columns: 1fr 300px;
+  gap: 1rem;
+}
+
+@media (max-width: 768px) {
+  .mcp-game-grid {
+    grid-template-columns: 1fr;
+  }
+}
+
+.mcp-info-card {
+  background: linear-gradient(135deg, rgba(5, 150, 105, 0.08), rgba(13, 148, 136, 0.05));
+}
+
+.mcp-info-row {
+  display: flex;
+  gap: 1.5rem;
+  flex-wrap: wrap;
+}
+
+.mcp-info-item {
+  display: flex;
+  flex-direction: column;
+  gap: 0.2rem;
+}
+
+.mcp-info-label {
+  font-size: 0.72rem;
+  color: var(--text-muted);
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+}
+
+.mcp-info-val {
+  font-size: 1.2rem;
+  font-weight: 800;
+  color: var(--accent);
+}
+
+.mcp-slider-group {
+  margin: 1rem 0;
+}
+
+.mcp-slider-group label {
+  display: block;
+  font-size: 0.85rem;
+  color: var(--text-muted);
+  margin-bottom: 0.4rem;
+  font-weight: 600;
+}
+
+.mcp-slider {
+  width: 100%;
+  accent-color: var(--accent);
+}
+
+.mcp-slider-value {
+  font-size: 1.4rem;
+  font-weight: 800;
+  color: var(--accent);
+  margin: 0.25rem 0;
+}
+
+.mcp-cost-hint {
+  font-size: 0.82rem;
+  color: var(--text-muted);
+  margin-top: 0.25rem;
+}
+
+.mcp-budget-bar {
+  height: 8px;
+  border-radius: 4px;
+  background: rgba(148, 163, 184, 0.2);
+  overflow: hidden;
+  margin: 0.5rem 0;
+}
+
+.mcp-budget-fill {
+  height: 100%;
+  background: var(--accent);
+  transition: width 0.3s;
+  border-radius: 4px;
+}
+
+.mcp-waiting {
+  text-align: center;
+  padding: 1.5rem;
+  color: var(--text-muted);
+  font-style: italic;
+}
+
+.mcp-players-list {
+  display: flex;
+  gap: 0.5rem;
+  flex-wrap: wrap;
+  margin-bottom: 0.5rem;
+}
+
+.mcp-chip {
+  background: var(--accent);
+  color: #fff;
+  padding: 0.3rem 0.8rem;
+  border-radius: 1rem;
+  font-size: 0.85rem;
+}
+
+.mcp-score-row {
+  display: flex;
+  gap: 0.75rem;
+  padding: 0.4rem 0;
+  border-bottom: 1px solid var(--border);
+  align-items: center;
+}
+
+.mcp-score-row.is-me {
+  color: var(--accent);
+  font-weight: 700;
+}
+
+.mcp-rank {
+  font-weight: 700;
+  width: 2rem;
+}
+
+.mcp-pname {
+  flex: 1;
+}
+
+.mcp-pts {
+  font-weight: 700;
+}
+
+.mcp-event-log {
+  max-height: 180px;
+  overflow-y: auto;
+  font-size: 0.82rem;
+  color: var(--text-muted);
+}
+
+.mcp-event {
+  padding: 0.2rem 0;
+  border-bottom: 1px solid var(--border);
+}
+
+.mcp-results-table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 0.88rem;
+}
+
+.mcp-results-table th {
+  background: rgba(5, 150, 105, 0.1);
+  padding: 0.5rem 0.75rem;
+  text-align: left;
+  font-weight: 700;
+  font-size: 0.78rem;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+}
+
+.mcp-results-table td {
+  padding: 0.5rem 0.75rem;
+  border-bottom: 1px solid var(--border);
+}
+
+.mcp-results-table tr.is-winner td {
+  background: rgba(5, 150, 105, 0.08);
+  font-weight: 700;
+}
+
+.mcp-pi-display {
+  text-align: center;
+  padding: 1rem;
+  font-size: 1rem;
+  color: var(--text-muted);
+}
+
+.mcp-pi-display strong {
+  color: var(--accent);
+  font-size: 1.2rem;
+}
+
+.mcp-final-row {
+  display: flex;
+  gap: 1rem;
+  align-items: center;
+  padding: 0.5rem;
+  border-radius: 0.5rem;
+  margin-bottom: 0.25rem;
+}
+
+.mcp-final-row.winner {
+  background: rgba(5, 150, 105, 0.1);
+  font-weight: 700;
+}
+
+.mcp-room-code {
+  font-size: 1.4rem;
+  font-family: monospace;
+  color: var(--accent);
+}
+
+.mcp-error {
+  background: rgba(239, 68, 68, 0.1);
+  color: #ef4444;
+  border: 1px solid rgba(239, 68, 68, 0.3);
+  border-radius: 0.5rem;
+  padding: 0.75rem;
+  margin-top: 0.75rem;
+}
+
+.mcp-loading {
+  text-align: center;
+  padding: 4rem;
+  color: var(--text-muted);
+}
+
+.mcp-outcome-win {
+  color: #16a34a;
+  font-weight: 800;
+}
+
+.mcp-outcome-lose {
+  color: #dc2626;
+  font-weight: 800;
+}

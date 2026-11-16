@@ -1,0 +1,55 @@
+/* CryptoBubbleMiniGamePage.css — crypto colour overrides on top of AssetBubbleMiniGamePage.css */
+
+.cb-page {
+  --cb-accent: #a78bfa; /* purple */
+  --cb-accent-glow: rgba(167, 139, 250, 0.15);
+  --cb-shock: #facc15; /* yellow for Minsky */
+}
+
+/* Info card accent border */
+.cb-page .cb-info-card {
+  border-color: var(--cb-accent) !important;
+  background: var(--cb-accent-glow) !important;
+}
+
+/* Primary button — purple */
+.cb-page .cb-btn-primary {
+  background: linear-gradient(135deg, #7c3aed 0%, #6d28d9 100%) !important;
+  box-shadow: 0 2px 8px rgba(124, 58, 237, 0.35) !important;
+}
+.cb-page .cb-btn-primary:hover:not(:disabled) {
+  background: linear-gradient(135deg, #8b5cf6 0%, #7c3aed 100%) !important;
+}
+
+/* Shock banner — yellow instead of red */
+.cb-page .cb-shock-banner {
+  background: linear-gradient(135deg, #78350f 0%, #451a03 100%);
+  border-color: var(--cb-shock);
+}
+
+/* Shock trigger button */
+.cb-page .cb-shock-btn {
+  background: linear-gradient(135deg, #854d0e 0%, #713f12 100%) !important;
+  border-color: var(--cb-shock) !important;
+  color: var(--cb-shock) !important;
+}
+.cb-page .cb-shock-btn:hover:not(:disabled) {
+  background: linear-gradient(135deg, #a16207 0%, #854d0e 100%) !important;
+}
+
+/* Bot rows — subtle purple tint */
+.cb-page .cb-bot-row {
+  opacity: 0.85;
+  font-style: italic;
+}
+
+/* Event log crypto styling */
+.cb-page .ab-event-log {
+  font-family: 'Courier New', monospace;
+  font-size: 0.78rem;
+}
+
+/* Room code chip */
+.cb-page .ab-room-code {
+  color: var(--cb-accent);
+}

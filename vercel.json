@@ -1,0 +1,32 @@
+{
+    "buildCommand": "npm run vercel-build",
+    "outputDirectory": "dist",
+    "functions": {
+        "api/index.js": {
+            "memory": 1024,
+            "maxDuration": 30
+        }
+    },
+    "routes": [
+        {
+            "src": "/api/(.*)",
+            "dest": "/api/index.js"
+        },
+        {
+            "src": "^/$",
+            "status": 308,
+            "headers": { "Location": "/home" }
+        },
+        {
+            "src": "/home",
+            "dest": "/landing.html"
+        },
+        {
+            "handle": "filesystem"
+        },
+        {
+            "src": "/(.*)",
+            "dest": "/index.html"
+        }
+    ]
+}

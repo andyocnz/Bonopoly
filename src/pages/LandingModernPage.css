@@ -1,0 +1,322 @@
+/* Scoped styles for the Modern Landing Page */
+.landing-modern-root {
+    --bg: #020617;
+    --text: #f8fafc;
+    --accent: #0ea5e9;
+    --accent-dark: #0284c7;
+    --danger: #ef4444;
+    --warning: #f59e0b;
+    --success: #10b981;
+    --glass: rgba(15, 23, 42, 0.65);
+
+    background: var(--bg);
+    color: var(--text);
+    overflow-x: hidden;
+    font-family: 'Inter', system-ui, sans-serif;
+    scroll-behavior: smooth;
+}
+
+.landing-modern-root .font-display {
+    font-family: 'Outfit', sans-serif;
+    font-weight: 700;
+}
+
+.landing-modern-root .glass {
+    background: var(--glass);
+    backdrop-filter: blur(12px);
+    border: 1px solid rgba(255, 255, 255, 0.08);
+    border-radius: 1.5rem;
+}
+
+.landing-modern-root .grid-bg {
+    background-image: radial-gradient(circle at 1px 1px, rgba(14, 165, 233, 0.12) 1px, transparent 0);
+    background-size: 40px 40px;
+}
+
+.landing-modern-root .scan {
+    position: absolute;
+    inset: 0;
+    pointer-events: none;
+    background: linear-gradient(to bottom, transparent, var(--accent), transparent);
+    opacity: 0.15;
+    animation: scan 12s linear infinite;
+    z-index: 5;
+}
+
+@keyframes scan {
+    0% {
+        transform: translateY(-100%);
+    }
+
+    100% {
+        transform: translateY(100%);
+    }
+}
+
+/* Classroom OS Section Styles */
+.landing-modern-root #educational-intro,
+.landing-modern-root #educational-intro h1,
+.landing-modern-root #educational-intro h2,
+.landing-modern-root #educational-intro h3,
+.landing-modern-root #educational-intro p,
+.landing-modern-root #educational-intro span {
+    font-family: 'Plus Jakarta Sans', sans-serif !important;
+}
+
+.landing-modern-root #educational-intro {
+    background-color: #ffffff;
+    color: #0f172a;
+    letter-spacing: -0.01em;
+}
+
+.landing-modern-root .skill-tag {
+    background: #f1f5f9;
+    padding: 4px 12px;
+    border-radius: 6px;
+    font-size: 0.75rem;
+    font-weight: 600;
+    color: #475569;
+}
+
+.landing-modern-root .educational-hero-gradient {
+    background: radial-gradient(circle at 0% 0%, #f8fafc 0%, #ffffff 100%);
+}
+
+.landing-modern-root .feature-border {
+    border-left: 2px solid #e2e8f0;
+    padding-left: 1.5rem;
+    transition: border-color 0.3s ease;
+}
+
+.landing-modern-root .feature-border:hover {
+    border-color: #3b82f6;
+}
+
+.landing-modern-root .finance-preview {
+    background: #020617;
+    border-radius: 12px;
+    overflow: hidden;
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    position: relative;
+}
+
+.landing-modern-root .finance-mini-canvas {
+    width: 100%;
+    height: 200px;
+    display: block;
+}
+
+.landing-modern-root .finance-hud {
+    position: absolute;
+    top: 10px;
+    left: 10px;
+    pointer-events: none;
+    font-family: monospace;
+}
+
+.landing-modern-root .finance-hud-title {
+    font-size: 10px;
+    color: #fff;
+    opacity: 0.5;
+    letter-spacing: 2px;
+}
+
+.landing-modern-root .finance-pnl {
+    position: absolute;
+    bottom: 10px;
+    left: 10px;
+    font-weight: 800;
+}
+
+.landing-modern-root .finance-mini-scanline {
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(to bottom, transparent 50%, rgba(14, 165, 233, 0.05) 50%);
+    background-size: 100% 4px;
+    z-index: 5;
+    pointer-events: none;
+}
+
+.landing-modern-root .section {
+    min-height: 100vh;
+    display: flex;
+    align-items: center;
+    position: relative;
+    padding: 6rem 1.5rem 4rem;
+}
+
+.landing-modern-root .hero-gradient {
+    background: linear-gradient(135deg, #0f172a 0%, #020617 100%);
+}
+
+.landing-modern-root .bg-hero-pattern {
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 800 800'%3E%3Cdefs%3E%3CradialGradient id='g'%3E%3Cstop offset='0%25' stop-color='%230ea5e9' /%3E%3Cstop offset='100%25' stop-color='transparent' /%3E%3C/radialGradient%3E%3C/defs%3E%3Ccircle cx='400' cy='400' r='600' fill='url(%23g)' opacity='0.08' /%3E%3C/svg%3E");
+    background-size: cover;
+}
+
+.landing-modern-root .range-slider {
+    width: 100%;
+    height: 8px;
+    border-radius: 5px;
+    background: rgba(255, 255, 255, 0.1);
+    outline: none;
+    -webkit-appearance: none;
+}
+
+.landing-modern-root .range-slider::-webkit-slider-thumb {
+    -webkit-appearance: none;
+    width: 20px;
+    height: 20px;
+    border-radius: 50%;
+    background: var(--accent);
+    cursor: pointer;
+    box-shadow: 0 2px 8px rgba(14, 165, 233, 0.4);
+}
+
+.landing-modern-root .efficiency-meter {
+    position: relative;
+    width: 45px;
+    height: 140px;
+    background: rgba(255, 255, 255, 0.05);
+    border-radius: 2rem;
+    overflow: hidden;
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-end;
+}
+
+.landing-modern-root .meter-fill {
+    width: 100%;
+    background: var(--success);
+    transition: height 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+    border-radius: 2rem;
+    z-index: 2;
+}
+
+.landing-modern-root .meter-zones {
+    position: absolute;
+    inset: 0;
+    display: flex;
+    flex-direction: column-reverse;
+    z-index: 1;
+}
+
+.landing-modern-root .zone-low {
+    height: 60%;
+    background: rgba(16, 185, 129, 0.1);
+}
+
+.landing-modern-root .zone-mid {
+    height: 20%;
+    background: rgba(16, 185, 129, 0.2);
+}
+
+.landing-modern-root .zone-high {
+    height: 20%;
+    background: rgba(245, 158, 11, 0.1);
+}
+
+/* Terminal Style Story */
+.landing-modern-root .story-page {
+    background: linear-gradient(135deg, #0f172a 0%, #020617 100%);
+    color: #e0e0e0;
+    font-family: 'JetBrains Mono', monospace;
+}
+
+.landing-modern-root .crt-overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(rgba(18, 16, 16, 0) 50%, rgba(0, 0, 0, 0.25) 50%);
+    background-size: 100% 2px;
+    pointer-events: none;
+    z-index: 100;
+}
+
+.landing-modern-root .scanline {
+    width: 100%;
+    height: 100px;
+    background: linear-gradient(0deg, rgba(0, 0, 0, 0) 0%, rgba(0, 255, 157, 0.05) 50%, rgba(0, 0, 0, 0) 100%);
+    opacity: 0.1;
+    position: absolute;
+    bottom: 100%;
+    animation: scanline 10s linear infinite;
+}
+
+@keyframes scanline {
+    0% {
+        bottom: 100%;
+    }
+
+    100% {
+        bottom: -100px;
+    }
+}
+
+.landing-modern-root .cursor {
+    display: inline-block;
+    width: 10px;
+    height: 1.2em;
+    background-color: #00ff9d;
+    margin-left: 5px;
+    animation: blink 1s infinite;
+    vertical-align: middle;
+}
+
+@keyframes blink {
+    50% {
+        opacity: 0;
+    }
+}
+
+.landing-modern-root .dark-select {
+    background-color: #0f172a;
+    color: #f8fafc;
+    border: 1px solid rgba(255, 255, 255, 0.3);
+    border-radius: 0.75rem;
+    padding: 0.85rem 1rem;
+    width: 100%;
+    cursor: pointer;
+}
+
+/* Star Transitions */
+.landing-modern-root .supernova-flash {
+    position: absolute;
+    inset: 0;
+    background: white;
+    opacity: 0;
+    z-index: 101;
+    pointer-events: none;
+}
+
+.landing-modern-root .active-supernova .supernova-flash {
+    animation: flashBurn 1.8s ease-out forwards;
+}
+
+@keyframes flashBurn {
+    0% {
+        opacity: 1;
+    }
+
+    40% {
+        opacity: 1;
+    }
+
+    100% {
+        opacity: 0;
+    }
+}
+
+/* Accordion */
+.landing-modern-root .accordion-content {
+    max-height: 0;
+    overflow: hidden;
+    transition: max-height 0.3s ease-out;
+}
+
+.landing-modern-root .accordion-item.active .accordion-content {
+    max-height: 500px;
+}

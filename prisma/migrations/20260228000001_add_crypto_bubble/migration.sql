@@ -1,0 +1,2 @@
+-- Add CRYPTO_BUBBLE to MiniGameType enum
+ALTER TYPE "MiniGameType" ADD VALUE IF NOT EXISTS 'CRYPTO_BUBBLE';

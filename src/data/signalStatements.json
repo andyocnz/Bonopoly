@@ -1,0 +1,74 @@
+[
+  {
+    "id": "s0",
+    "text": "The world's richest 1% collectively own less than 1% of total global wealth.",
+    "type": "clearly-false",
+    "correct": false,
+    "explanation": "The richest 1% own approximately 45–50% of global wealth (Oxfam / Credit Suisse Global Wealth Reports). This statement is the opposite of reality. It serves as a baseline: if the social proof cue shifted your confidence here, social influence was particularly strong.",
+    "topic": "Inequality"
+  },
+  {
+    "id": "s1",
+    "text": "Investing in stocks is safer than keeping money in a savings account over a 10-year horizon.",
+    "type": "counterintuitive-true",
+    "correct": true,
+    "explanation": "Historically, diversified equity portfolios have outperformed savings accounts over 10-year periods in most countries — despite short-term volatility. The risk premium on equities compensates patient investors.",
+    "topic": "Finance"
+  },
+  {
+    "id": "s2",
+    "text": "A company that raises its price will always earn higher profits.",
+    "type": "ambiguous",
+    "correct": false,
+    "explanation": "Higher prices reduce quantity demanded. If demand is elastic, revenue falls when price rises. Profit depends on both price and volume — a price hike can easily destroy profitability.",
+    "topic": "Economics"
+  },
+  {
+    "id": "s3",
+    "text": "In a competitive market, firms earn zero economic profit in the long run.",
+    "type": "counterintuitive-true",
+    "correct": true,
+    "explanation": "Free entry and exit drives prices to average total cost. Any positive profit attracts new entrants who compete it away. This is a core result of perfect competition.",
+    "topic": "Economics"
+  },
+  {
+    "id": "s4",
+    "text": "Printing more money always causes inflation.",
+    "type": "ambiguous",
+    "correct": false,
+    "explanation": "Money supply growth causes inflation only when the economy is near full capacity. During recessions or liquidity traps (e.g., post-2008), large monetary expansion can occur with minimal inflation, as seen in Japan and the US.",
+    "topic": "Macroeconomics"
+  },
+  {
+    "id": "s5",
+    "text": "Paying workers above the market wage can increase a firm's profits.",
+    "type": "counterintuitive-true",
+    "correct": true,
+    "explanation": "Efficiency wage theory (Shapiro & Stiglitz 1984) shows higher wages can raise productivity, reduce shirking, and lower turnover costs enough to more than offset the wage premium.",
+    "topic": "Labour Economics"
+  },
+  {
+    "id": "s6",
+    "text": "A trade deficit means a country is losing wealth to foreign nations.",
+    "type": "ambiguous",
+    "correct": false,
+    "explanation": "A trade deficit simply means a country imports more than it exports. It is matched by a capital account surplus — foreigners are investing in that country. The US has run persistent deficits while accumulating enormous wealth.",
+    "topic": "International Trade"
+  },
+  {
+    "id": "s7",
+    "text": "When everyone in a group acts rationally in their own self-interest, the group outcome is always optimal.",
+    "type": "ambiguous",
+    "correct": false,
+    "explanation": "This ignores externalities, public goods, and coordination failures. The Prisoner's Dilemma, Tragedy of the Commons, and bank runs all show individually rational behaviour producing collectively irrational outcomes.",
+    "topic": "Game Theory"
+  },
+  {
+    "id": "s8",
+    "text": "Advertising a product at a higher price than competitors can sometimes increase its market share.",
+    "type": "counterintuitive-true",
+    "correct": true,
+    "explanation": "Veblen goods and signalling effects are real: a higher price signals quality or status, attracting prestige-seeking buyers. Luxury brands routinely use this strategy. Thorstein Veblen described 'conspicuous consumption' in 1899.",
+    "topic": "Behavioural Economics"
+  }
+]

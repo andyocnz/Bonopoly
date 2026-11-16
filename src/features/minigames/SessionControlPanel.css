@@ -1,0 +1,95 @@
+.mg-session-panel {
+  display: grid;
+  gap: 0.65rem;
+}
+
+.mgsp-btn {
+  border: 1px solid rgba(15, 23, 42, 0.12);
+  border-radius: 12px;
+  padding: 0.75rem 1rem;
+  font-weight: 700;
+  font-size: 1rem;
+  cursor: pointer;
+}
+
+.mgsp-btn:disabled {
+  opacity: 0.55;
+  cursor: not-allowed;
+}
+
+.mgsp-primary {
+  background: #2563eb;
+  color: #fff;
+}
+
+.mgsp-secondary {
+  background: #fff;
+  color: #475569;
+}
+
+.mgsp-input {
+  border: 1px solid rgba(15, 23, 42, 0.12);
+  border-radius: 10px;
+  padding: 0.7rem 0.9rem;
+  font-size: 1rem;
+}
+
+.mg-session-panel-body {
+  display: grid;
+  gap: 0.65rem;
+  margin-top: 0.25rem;
+}
+.mg-session-panel-loading {
+  min-height: 32px;
+}
+
+.mg-session-row {
+  display: flex;
+  gap: 0.5rem;
+}
+
+.mg-session-status {
+  font-size: 0.85rem;
+  color: var(--text-secondary);
+}
+
+.mg-session-actions {
+  display: flex;
+  gap: 0.5rem;
+  flex-wrap: wrap;
+}
+
+.mg-session-names {
+  border: 1px solid var(--line, rgba(255, 255, 255, 0.12));
+  border-radius: 10px;
+  padding: 0.6rem;
+  min-height: 56px;
+  display: flex;
+  gap: 0.45rem;
+  flex-wrap: wrap;
+  align-items: center;
+}
+
+.mg-session-empty {
+  color: var(--text-secondary);
+  font-size: 0.9rem;
+}
+
+.mgsp-pill {
+  border: 1px solid rgba(15, 23, 42, 0.12);
+  border-radius: 999px;
+  padding: 0.25rem 0.7rem;
+  font-size: 0.95rem;
+  color: #1f2937;
+  background: #fff;
+}
+
+.mgsp-qr-wrap {
+  margin-top: 0.75rem;
+  display: flex;
+  justify-content: center;
+  background: #ffffff;
+  border-radius: 12px;
+  padding: 1rem;
+  box-shadow: 0 1px 4px rgba(0,0,0,0.10);
+}

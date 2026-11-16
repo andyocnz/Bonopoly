@@ -1,0 +1,18 @@
+version: '3.8'
+
+services:
+  postgres:
+    image: postgres:15-alpine
+    container_name: bonopoly-db
+    environment:
+      POSTGRES_USER: bonopoly
+      POSTGRES_PASSWORD: bonopoly123
+      POSTGRES_DB: bonopoly
+    ports:
+      - "5432:5432"
+    volumes:
+      - bonopoly_data:/var/lib/postgresql/data
+    restart: unless-stopped
+
+volumes:
+  bonopoly_data:
